@@ -1,0 +1,28 @@
+// 团队格式化规范 eslint + volar
+{
+  "editor.formatOnSave": true,
+  "eslint.validate": ["javascript", "html", "vue"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": false, //true：普通函数名后面加空格
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false //true：匿名函数后面加空格
+}
