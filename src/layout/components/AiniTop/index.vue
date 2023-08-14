@@ -101,7 +101,7 @@ const handleCommand = (cmd: string) => {
 const formatBredcrumbData = (currentMenuId: any) => {
 	bredcrumbData.value = [];
 	const menu: IMenu | undefined = permissionMenuList.value.find(
-		(x: IMenu) => x.id.toString() === currentMenuId
+		(x: IMenu) => x.id === currentMenuId
 	);
 	if (!menu) {
 		return;
