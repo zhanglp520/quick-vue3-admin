@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { userLogin, refreshToken } from "@/api/auth";
-import { LoginData, LoginParams, Token } from "@/types/auth";
+import { ILoginData, ILoginParams, IToken } from "@/types/auth";
 import { encryptForMd5 } from "@/utils/crypto";
 
-interface LoginState {
+interface ILoginState {
 	quickAccessToken: string;
 	quickRefreshToken: string;
 	expiresIn: number;
@@ -11,7 +11,7 @@ interface LoginState {
 	userName: string;
 }
 export const useAuthStore = defineStore("loginStore", {
-	state: (): LoginState => {
+	state: (): ILoginState => {
 		return {
 			quickAccessToken: "",
 			quickRefreshToken: "",
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore("loginStore", {
 		},
 	},
 	actions: {
-		login(form: LoginParams): Promise<LoginData> {
+		login(form: ILoginParams): Promise<ILoginData> {
 			const { tenant, username, password } = form;
 			return new Promise((resolve, reject) => {
 				userLogin({
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore("loginStore", {
 					});
 			});
 		},
-		refreshToken(token: Token) {
+		refreshToken(token: IToken) {
 			return new Promise((resolve, reject) => {
 				refreshToken(token)
 					.then((res) => {

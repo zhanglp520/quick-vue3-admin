@@ -14,7 +14,7 @@ import {
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
 import { downloadExcel, exportExcel } from "@/utils/download";
-import { User, SearchUser, UserPermissionButton } from "@/types/user";
+import { IUser, ISearchUser, IUserPermissionButton } from "@/types/user";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import { downloadFileStream } from "@/api/common";
@@ -36,10 +36,10 @@ import {
 const loginStore = useAuthStore();
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<User>>([]);
+const dataList = reactive<Array<IUser>>([]);
 const uploadRef = ref<HTMLElement | null>(null);
-const permissionBtn = computed<UserPermissionButton>(() => {
-	return userStore.getPermissionBtns as UserPermissionButton;
+const permissionBtn = computed<IUserPermissionButton>(() => {
+	return userStore.getPermissionBtns as IUserPermissionButton;
 });
 
 /**
@@ -54,7 +54,7 @@ const page = reactive<Page>({
 /**
  * 搜索
  */
-const searchForm = reactive<SearchUser>({
+const searchForm = reactive<ISearchUser>({
 	keyword: "",
 });
 const searchFormItems = reactive<Array<FormItem>>([
@@ -191,7 +191,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: User, done: any) => {
+const handleDelete = (item: IUser, done: any) => {
 	ElMessageBox.confirm(`你真的删除【${item.userName}】的用户吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -209,7 +209,7 @@ const handleDelete = (item: User, done: any) => {
 		});
 	});
 };
-const handleResetPassword = (item: User, done: any) => {
+const handleResetPassword = (item: IUser, done: any) => {
 	ElMessageBox.confirm(`你真的重置【${item.userName}】用户的密码吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -227,7 +227,7 @@ const handleResetPassword = (item: User, done: any) => {
 		});
 	});
 };
-const handleEnable = (item: User, done: any) => {
+const handleEnable = (item: IUser, done: any) => {
 	ElMessageBox.confirm(`你真的启用【${item.userName}】的用户吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -245,7 +245,7 @@ const handleEnable = (item: User, done: any) => {
 		});
 	});
 };
-const handleDisable = (item: User, done: any) => {
+const handleDisable = (item: IUser, done: any) => {
 	ElMessageBox.confirm(`你真的禁用【${item.userName}】的用户吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -272,27 +272,27 @@ const tableActionbar = reactive<Actionbar>({
 		{
 			name: "重置密码",
 			hidden: validatePermission(permissionBtn.value?.resetPassword),
-			click(item: User, done: any) {
+			click(item: IUser, done: any) {
 				handleResetPassword(item, done);
 			},
 		},
 		{
 			name: "启用",
 			hidden: validatePermission(permissionBtn.value?.enabled),
-			click(item: User, done: any) {
+			click(item: IUser, done: any) {
 				handleEnable(item, done);
 			},
-			render(row: User) {
+			render(row: IUser) {
 				return row.enabled === 0;
 			},
 		},
 		{
 			name: "禁用",
 			hidden: validatePermission(permissionBtn.value?.disabled),
-			click(item: User, done: any) {
+			click(item: IUser, done: any) {
 				handleDisable(item, done);
 			},
-			render(row: User) {
+			render(row: IUser) {
 				return row.enabled !== 0;
 			},
 		},
@@ -340,7 +340,7 @@ const tableColumns = reactive<Array<Column>>([
 		label: "是否启用",
 		prop: "enabled",
 		width: "200",
-		format: (row: User) => {
+		format: (row: IUser) => {
 			return row.enabled === 1 ? "启用" : "禁用";
 		},
 	},
@@ -433,7 +433,7 @@ const validateEmail = (value: string, callback: any) => {
 		callback();
 	}
 };
-const formModel = reactive<User>({
+const formModel = reactive<IUser>({
 	id: "",
 	userId: "",
 	userName: "",
@@ -536,7 +536,7 @@ const formItems = reactive<Array<FormItem>>([
 		prop: "remark",
 	},
 ]);
-const handleFormSubmit = (form: User, done: any) => {
+const handleFormSubmit = (form: IUser, done: any) => {
 	const row = { ...form };
 	if (row.id) {
 		updateUser(row).then(() => {

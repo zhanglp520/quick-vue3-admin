@@ -13,7 +13,7 @@ import {
 	listToTree,
 	validatePermission,
 } from "@/utils/index";
-import { Menu, MenuPermissionButton } from "@/types/menu";
+import { IMenu, IMenuPermissionButton } from "@/types/menu";
 import "@/assets/iconfont/quickIconFont.js";
 import quickIconFont from "@/config/quickIconFont.json";
 import { useUserStore } from "@/store/modules/user";
@@ -29,10 +29,10 @@ import {
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<Menu>>([]);
+const dataList = reactive<Array<IMenu>>([]);
 const parentTreeList = reactive<Array<Options>>([]);
-const permissionBtn = computed<MenuPermissionButton>(() => {
-	return userStore.getPermissionBtns as MenuPermissionButton;
+const permissionBtn = computed<IMenuPermissionButton>(() => {
+	return userStore.getPermissionBtns as IMenuPermissionButton;
 });
 /**
  * 工具栏
@@ -47,13 +47,13 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: Menu, done: any) => {
+const handleDelete = (item: IMenu, done: any) => {
 	ElMessageBox.confirm(`你真的删除【${item.menuName}】的菜单吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
 		type: "warning",
 	}).then(() => {
-		deleteMenu(item.id?.toString()).then(() => {
+		deleteMenu(item.id!).then(() => {
 			ElMessage({
 				type: "success",
 				message: "菜单删除成功",
@@ -101,7 +101,7 @@ const tableColumns = reactive<Array<Column>>([
 		label: "菜单类型",
 		prop: "menuType",
 		width: "200",
-		format: (row: Menu) => {
+		format: (row: IMenu) => {
 			if (row.menuType === 0) {
 				return "目录";
 			}
@@ -128,7 +128,7 @@ const tableColumns = reactive<Array<Column>>([
 		label: "是否外链",
 		prop: "link",
 		width: "200",
-		format: (row: Menu) => {
+		format: (row: IMenu) => {
 			return row.link === 1 ? "外链" : "非外链";
 		},
 	},
@@ -136,7 +136,7 @@ const tableColumns = reactive<Array<Column>>([
 		label: "是否启用",
 		prop: "enabled",
 		width: "200",
-		format: (row: Menu) => {
+		format: (row: IMenu) => {
 			return !row.enabled ? "启用" : "禁用";
 		},
 	},
@@ -144,7 +144,7 @@ const tableColumns = reactive<Array<Column>>([
 		label: "是否显示",
 		prop: "status",
 		width: "200",
-		format: (row: Menu) => {
+		format: (row: IMenu) => {
 			return row.status ? "显示" : "不显示";
 		},
 	},
@@ -163,7 +163,7 @@ const load = () => {
 		dataList.length = 0;
 		dataList.push(...menuTree);
 
-		const parentMenuList = menuList.filter((x) => x.menuType !== 2);
+		const parentMenuList = menuList.filter((x: IMenu) => x.menuType !== 2);
 		const parentTree = listToTree(parentMenuList, 0, {
 			pId: "pId",
 		});
@@ -183,7 +183,7 @@ const dialogTitle = reactive({
 	edit: "修改菜单",
 	detail: "菜单详情",
 });
-const formModel = reactive<Menu>({
+const formModel = reactive<IMenu>({
 	id: "",
 	menuId: "",
 	menuName: "",
@@ -348,7 +348,7 @@ const formItems = reactive<Array<FormItem>>([
 		prop: "linkUrl",
 	},
 ]);
-const handleFormSubmit = (form: Menu, done: any) => {
+const handleFormSubmit = (form: IMenu, done: any) => {
 	const row = { ...form };
 	if (!row.pId) {
 		row.pId = "0";

@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import eslintPlugin from "vite-plugin-eslint";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	base: "./",
 	plugins: [
 		vue(),
 		eslintPlugin({
@@ -11,9 +13,16 @@ export default defineConfig({
 		}),
 	],
 	resolve: {
-		alias: {
-			"@": "/src",
-		},
+		alias: [
+			{
+				find: "@",
+				replacement: resolve(__dirname, "./src"),
+			},
+			{
+				find: "vue-i18n",
+				replacement: "vue-i18n/dist/vue-i18n.cjs.js",
+			},
+		],
 	},
 	server: {
 		https: false, // 运行服务是否以https方式
@@ -22,8 +31,8 @@ export default defineConfig({
 		open: false,
 		proxy: {
 			"/dev-api": {
-				// target: "http://localhost:4100/", // 代理的目标地址-本地
-				target: "https://api.quick.ainiteam.com/", // 代理的目标地址-线上
+				target: "http://localhost:3103/", // 代理的目标地址-本地
+				// target: "https://api.quick.ainiteam.com/", // 代理的目标地址-线上
 				changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3102 代理服务会把origin修改为目标地址
 				secure: true, // 是否https接
 				ws: false, // 是否代理websockets

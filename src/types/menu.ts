@@ -1,10 +1,10 @@
-export interface Menu {
+export interface IMenu {
 	id?: string;
 	menuId: string;
 	menuName: string;
 	path: string;
 	viewPath?: string;
-	menuType: number;
+	menuType?: number;
 	icon?: string;
 	sort?: number;
 	pId: string;
@@ -13,14 +13,14 @@ export interface Menu {
 	enabled?: boolean;
 	status?: boolean;
 }
-export interface MenuTree extends Menu {
-	children: MenuTree[];
+export interface IMenuTree extends IMenu {
+	children: IMenuTree[];
 }
-export interface Menubar extends Menu {
-	children: Menubar[];
+export interface IMenubar extends IMenu {
+	children: IMenubar[];
 }
-export interface MenuPermissionButton {
-	// export interface MenuPermissionButton extends PermissionButton {
+export interface IMenuPermissionButton {
+	// export interface IMenuPermissionButton extends PermissionButton {
 	import?: boolean;
 	export?: boolean;
 	add?: boolean;

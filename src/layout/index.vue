@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 import { useAppStore } from "@/store/modules/app";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
-import { Tab } from "@/types/tab";
+import { ITab } from "@/types/tab";
 import config from "@/config/index";
 import AiniTop from "./components/AiniTop/index.vue";
 import AiniSidebar from "./components/AiniSidebar/index.vue";
@@ -28,7 +28,7 @@ const isCollapse = computed(() => appStore.getCollapse);
 const cache = ref(config.tabCache);
 const tabStore = useTabStore();
 const editableTabsValue = ref("home");
-const editableTabs = ref<Array<Tab>>([]);
+const editableTabs = ref<Array<ITab>>([]);
 const activeTab = computed(() => tabStore.getActiveTab);
 const tabList = computed(() => tabStore.getTabList);
 // const handleTabsEdit = (targetName: string, action: "remove" | "add"): void => {

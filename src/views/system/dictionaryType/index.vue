@@ -4,8 +4,8 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
 import {
-	DictionaryType,
-	DictionaryTypePermissionButton,
+	IDictionaryType,
+	IDictionaryTypePermissionButton,
 } from "@/types/dictionaryType";
 import { useUserStore } from "@/store/modules/user";
 import {
@@ -20,9 +20,9 @@ import {
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<DictionaryType>>([]);
-const permissionBtn = computed<DictionaryTypePermissionButton>(() => {
-	return userStore.getPermissionBtns as DictionaryTypePermissionButton;
+const dataList = reactive<Array<IDictionaryType>>([]);
+const permissionBtn = computed<IDictionaryTypePermissionButton>(() => {
+	return userStore.getPermissionBtns as IDictionaryTypePermissionButton;
 });
 /**
  * 工具栏
@@ -37,7 +37,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: DictionaryType, done: any) => {
+const handleDelete = (item: IDictionaryType, done: any) => {
 	ElMessageBox.confirm(
 		`你真的删除【${item.dicTypeName}】的字典分类吗？`,
 		"警告",
@@ -103,7 +103,7 @@ const dialogTitle = reactive({
 	edit: "修改字典分类",
 	detail: "字典分类详情",
 });
-const formModel = reactive<DictionaryType>({
+const formModel = reactive<IDictionaryType>({
 	id: "",
 	dicTypeId: "",
 	dicTypeName: "",
@@ -139,7 +139,7 @@ const formItems = reactive<Array<FormItem>>([
 		],
 	},
 ]);
-const handleFormSubmit = (form: DictionaryType, done: any) => {
+const handleFormSubmit = (form: IDictionaryType, done: any) => {
 	const row = { ...form };
 	if (row.id) {
 		updateDictionaryType(row).then(() => {

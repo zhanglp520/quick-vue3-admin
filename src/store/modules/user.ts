@@ -1,20 +1,20 @@
 import { defineStore } from "pinia";
 import { listToTree } from "@/utils/index";
-import { User } from "@/types/user";
-import { QuickResponseData } from "@/utils/request";
-import { Menu, Menubar } from "@/types/menu";
+import { IUser } from "@/types/user";
+import { IQuickResponseData } from "@/utils/request";
+import { IMenu, IMenubar } from "@/types/menu";
 import { getUserByUserName } from "@/api/system/user";
 import { getPermission } from "@/api/auth";
 import { useTabStore } from "@/store/modules/tab";
 
-interface UserState {
-	user: User;
-	permissionMenuList: Array<Menu>;
-	menuList: Array<Menubar>;
-	permissionBtns: Array<Menu>;
+interface IUserState {
+	user: IUser;
+	permissionMenuList: Array<IMenu>;
+	menuList: Array<IMenubar>;
+	permissionBtns: Array<IMenu>;
 }
 export const useUserStore = defineStore("userStore", {
-	state: (): UserState => {
+	state: (): IUserState => {
 		return {
 			user: {
 				id: "",
@@ -51,18 +51,18 @@ export const useUserStore = defineStore("userStore", {
 			}
 			return null;
 		},
-		getMenuList(): Array<Menubar> {
+		getMenuList(): Array<IMenubar> {
 			return this.menuList;
 		},
-		getPermissionMenuList(): Array<Menu> {
+		getPermissionMenuList(): Array<IMenu> {
 			return this.permissionMenuList;
 		},
-		userInfo(): User {
+		userInfo(): IUser {
 			return this.user;
 		},
 	},
 	actions: {
-		getPermission(id: string): Promise<QuickResponseData<Array<Menu>>> {
+		getPermission(id: string): Promise<IQuickResponseData<Array<IMenu>>> {
 			return new Promise((resolve) => {
 				const userId = id;
 				getPermission(userId).then((res: any) => {
@@ -80,7 +80,7 @@ export const useUserStore = defineStore("userStore", {
 				});
 			});
 		},
-		getUserInfo(userName: string): Promise<User> {
+		getUserInfo(userName: string): Promise<IUser> {
 			return new Promise((resolve) => {
 				getUserByUserName(userName).then((res) => {
 					const { data: user } = res;

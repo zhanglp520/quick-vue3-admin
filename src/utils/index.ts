@@ -1,9 +1,10 @@
-import { SelectTree, Tree } from "@ainiteam/quick-vue3-ui";
 import {
+	SelectTree,
+	Tree,
 	Options,
 	SelectTreeOptions,
 	TreeOptions,
-} from "@ainiteam/quick-vue3-ui/dist/types/options";
+} from "@ainiteam/quick-vue3-ui";
 /*
  *@Description: 常用其他工具库
  *@Author: 土豆哥

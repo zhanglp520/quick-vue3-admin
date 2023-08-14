@@ -1,7 +1,7 @@
 /**导入第三方库 */
 import { createApp } from "vue";
 import * as echarts from "echarts";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import {
 	GcSpreadSheets,
 	GcWorksheet,
@@ -53,20 +53,20 @@ console.log("ElementPlus", ElementPlus);
 console.log("quickUI", quickUI);
 
 /**通信模块 */
-const client = io("http://localhost:3000");
+// const client = io("http://localhost:3000");
 
-//连接成功
-client.on("connect", () => {
-	console.log("socket connect success");
-	const content = {
-		username: "admin",
-		password: "123456",
-	};
-	console.log("开始登录", content);
-	client.emit("events", content);
-});
+// //连接成功
+// client.on("connect", () => {
+// 	console.log("socket connect success");
+// 	const content = {
+// 		username: "admin",
+// 		password: "123456",
+// 	};
+// 	console.log("开始登录", content);
+// 	client.emit("events", content);
+// });
 
-//接受消息
-client.on("message", (data) => {
-	console.log("message", data);
-});
+// //接受消息
+// client.on("message", (data) => {
+// 	console.log("message", data);
+// });

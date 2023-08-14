@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import { Tab } from "@/types/tab";
+import { ITab } from "@/types/tab";
 
-interface TabState {
-  activeTab: Tab
-  tabList: Array<Tab>
+interface ITabState {
+	activeTab: ITab;
+	tabList: Array<ITab>;
 }
 export const useTabStore = defineStore("tabStore", {
-	state: (): TabState => {
+	state: (): ITabState => {
 		return {
 			activeTab: {
 				id: "home",
@@ -23,18 +23,18 @@ export const useTabStore = defineStore("tabStore", {
 		};
 	},
 	getters: {
-		getActiveTab(): Tab {
+		getActiveTab(): ITab {
 			return this.activeTab;
 		},
-		getTabList(): Array<Tab> {
+		getTabList(): Array<ITab> {
 			return this.tabList;
 		},
 	},
 	actions: {
-		setActiveTab(tab: Tab) {
+		setActiveTab(tab: ITab) {
 			this.activeTab = tab;
 		},
-		addTab(tab: Tab) {
+		addTab(tab: ITab) {
 			const index = this.tabList.findIndex((x) => x.id === tab.id);
 			if (index === -1) {
 				this.tabList.push(tab);

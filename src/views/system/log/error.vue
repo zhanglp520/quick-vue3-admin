@@ -8,7 +8,7 @@ import {
 	Page,
 } from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
-import { Log, SearchLog, LogPermissionButton } from "@/types/log";
+import { ILog, ISearchLog, ILogPermissionButton } from "@/types/log";
 import { useUserStore } from "@/store/modules/user";
 import { getLogPageList } from "@/api/system/log";
 
@@ -17,9 +17,9 @@ import { getLogPageList } from "@/api/system/log";
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<Log>>([]);
-const permissionBtn = computed<LogPermissionButton>(() => {
-	return userStore.getPermissionBtns as LogPermissionButton;
+const dataList = reactive<Array<ILog>>([]);
+const permissionBtn = computed<ILogPermissionButton>(() => {
+	return userStore.getPermissionBtns as ILogPermissionButton;
 });
 /**
  * 分页
@@ -33,7 +33,7 @@ const page = reactive<Page>({
 /**
  * 搜索
  */
-const searchForm = reactive<SearchLog>({
+const searchForm = reactive<ISearchLog>({
 	startTime: "",
 	endTime: "",
 	logTime: "",
@@ -59,8 +59,8 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDetail = (item: Log, done: any) => {
-	const form: Log = { ...item };
+const handleDetail = (item: ILog, done: any) => {
+	const form: ILog = { ...item };
 	if (form.request) {
 		form.request = JSON.stringify(form.request, null, 4);
 		done(form);
@@ -145,7 +145,7 @@ const load = (params: any) => {
 const dialogTitle = reactive({
 	detail: "日志详情",
 });
-const formModel = reactive<Log>({
+const formModel = reactive<ILog>({
 	id: "",
 	type: 0,
 	ip: "",

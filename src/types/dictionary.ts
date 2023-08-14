@@ -1,11 +1,11 @@
-export interface Dictionary {
+export interface IDictionary {
 	id?: string;
 	dicTypeId: string;
 	dicId: string;
 	dicName: string;
 }
-export interface DictionaryPermissionButton {
-	// export interface DictionaryPermissionButton extends PermissionButton {
+export interface IDictionaryPermissionButton {
+	// export interface IDictionaryPermissionButton extends PermissionButton {
 	import?: boolean;
 	export?: boolean;
 	add?: boolean;

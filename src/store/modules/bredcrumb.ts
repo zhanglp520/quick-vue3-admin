@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 
-interface AppState {
-  language: string
-  isCollapse: boolean
+interface IAppState {
+	language: string;
+	isCollapse: boolean;
 }
 
 export const useAppStore = defineStore("appState", {
-	state: (): AppState => {
+	state: (): IAppState => {
 		return {
 			language: "zh",
 			isCollapse: false,

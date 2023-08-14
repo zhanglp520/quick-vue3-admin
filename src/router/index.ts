@@ -8,10 +8,11 @@ import { addRoutes } from "./dynamicRouter";
 
 export const router = createRouter({
 	history: createWebHashHistory(import.meta.env.BASE_URL),
-	routes: [...staticRouter]
+	routes: [...staticRouter],
 });
 router.beforeEach((to, from, next) => {
 	NProgress.start();
+	console.log("router-beforeEach-from", from);
 	const loginStore = useAuthStore(pinia);
 	if (loginStore.getAccessToken) {
 		if (!to.name) {

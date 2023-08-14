@@ -17,8 +17,8 @@ import { useTabStore } from "@/store/modules/tab";
 import QuickBreadcrumb from "@/components/QuickBreadcrumb/index.vue";
 // import AiniTheme from "../AiniTheme/index.vue";
 import MyInput from "../MyInput/index.vue";
-import { Menu } from "@/types/menu";
-import { Tab } from "@/types/tab";
+import { IMenu } from "@/types/menu";
+import { ITab } from "@/types/tab";
 
 const router = useRouter();
 const appStore = useAppStore();
@@ -50,7 +50,7 @@ const loginOut = () => {
 	});
 };
 const personalInfo = () => {
-	const tab: Tab = {
+	const tab: ITab = {
 		id: "PersonalInfo",
 		name: "个人资料",
 		path: "/personalInfo",
@@ -67,7 +67,7 @@ const personalInfo = () => {
 	router.push("/personalInfo");
 };
 const changePassword = () => {
-	const tab: Tab = {
+	const tab: ITab = {
 		id: "ChangePassword",
 		name: "修改密码",
 		path: "/changePassword",
@@ -85,23 +85,23 @@ const changePassword = () => {
 };
 const handleCommand = (cmd: string) => {
 	switch (cmd) {
-	case "loginOut":
-		loginOut();
-		break;
-	case "personalInfo":
-		personalInfo();
-		break;
-	case "changePassword":
-		changePassword();
-		break;
-	default:
-		break;
+		case "loginOut":
+			loginOut();
+			break;
+		case "personalInfo":
+			personalInfo();
+			break;
+		case "changePassword":
+			changePassword();
+			break;
+		default:
+			break;
 	}
 };
 const formatBredcrumbData = (currentMenuId: any) => {
 	bredcrumbData.value = [];
-	const menu: Menu | undefined = permissionMenuList.value.find(
-		(x: Menu) => x.id.toString() === currentMenuId
+	const menu: IMenu | undefined = permissionMenuList.value.find(
+		(x: IMenu) => x.id.toString() === currentMenuId
 	);
 	if (!menu) {
 		return;
@@ -111,12 +111,12 @@ const formatBredcrumbData = (currentMenuId: any) => {
 		return;
 	}
 	bredcrumbData.value.push(menu.menuName);
-	const parentMenu: Menu | undefined = permissionMenuList.value.find(
+	const parentMenu: IMenu | undefined = permissionMenuList.value.find(
 		(x) => x.id === pId
 	);
 	if (parentMenu) {
 		bredcrumbData.value.push(parentMenu.menuName);
-		const parentMenu1: Menu | undefined = permissionMenuList.value.find(
+		const parentMenu1: IMenu | undefined = permissionMenuList.value.find(
 			(x) => x.id === parentMenu.pId
 		);
 		if (parentMenu1) {

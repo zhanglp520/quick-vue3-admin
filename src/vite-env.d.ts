@@ -42,6 +42,9 @@ declare module "element-plus/dist/locale/zh-cn.mjs" {
 declare module "element-plus/dist/locale/en.mjs" {
 	export default en;
 }
+declare module "nprogress" {
+	export default nprogress;
+}
 declare module "uuid" {
 	export { v4 };
 }

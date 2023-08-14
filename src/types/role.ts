@@ -1,10 +1,10 @@
-export interface Role {
+export interface IRole {
 	id?: string;
 	roleId: string;
 	roleName: string;
 }
-export interface RolePermissionButton {
-	// export interface RolePermissionButton extends PermissionButton {
+export interface IRolePermissionButton {
+	// export interface IRolePermissionButton extends PermissionButton {
 	import?: boolean;
 	export?: boolean;
 	add?: boolean;

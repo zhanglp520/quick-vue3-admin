@@ -7,7 +7,7 @@ import { loginApi, refreshTokenApi } from "@/api/auth/";
  *@Author: 土豆哥
  *@Date: 2022-12-02 01:28:26
  */
-export interface QuickResponseData<T = any> {
+export interface IQuickResponseData<T = any> {
 	status: number;
 	msg: string;
 	data: T;
@@ -107,7 +107,7 @@ quickRequest.interceptors.response.use(
 		if (res.config.responseType === ("arraybuffer" || "blob")) {
 			return resultData;
 		}
-		const { data } = resultData as QuickResponseData<any>;
+		const { data } = resultData as IQuickResponseData<any>;
 		if (!data) {
 			return Promise.resolve();
 		}
@@ -144,7 +144,7 @@ quickRequest.interceptors.response.use(
 			}
 		} else if (status === 400) {
 			const { data: resultData } = response;
-			const { msg } = resultData as QuickResponseData<any>;
+			const { msg } = resultData as IQuickResponseData<any>;
 			ElMessage.error(msg);
 		} else {
 			if (!errFlag) {

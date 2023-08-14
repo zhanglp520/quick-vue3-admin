@@ -11,7 +11,7 @@ import {
 	LeftTree,
 } from "@ainiteam/quick-vue3-ui";
 import { dicFormat, treeFormat, validatePermission } from "@/utils";
-import { Dictionary, DictionaryPermissionButton } from "@/types/dictionary";
+import { IDictionary, IDictionaryPermissionButton } from "@/types/dictionary";
 import { useUserStore } from "@/store/modules/user";
 import { getDictionaryTypeList } from "@/api/system/dictionaryType";
 import {
@@ -28,19 +28,19 @@ const userStore = useUserStore();
 const loading = ref(false);
 const dicTypeList = reactive<Array<Options>>([]);
 const treeDataList = reactive<Array<Tree>>([]);
-const dataList = reactive<Array<Dictionary>>([]);
+const dataList = reactive<Array<IDictionary>>([]);
 const currentTreeData = ref<Tree>({
 	id: "",
 	label: "",
 	children: [],
 });
-const permissionBtn = computed<DictionaryPermissionButton>(() => {
-	return userStore.getPermissionBtns as DictionaryPermissionButton;
+const permissionBtn = computed<IDictionaryPermissionButton>(() => {
+	return userStore.getPermissionBtns as IDictionaryPermissionButton;
 });
 /**
  * 工具栏
  */
-const handleAdd = (item: Dictionary, done: any) => {
+const handleAdd = (item: IDictionary, done: any) => {
 	const form = { ...item };
 	form.dicTypeId = currentTreeData.value.id;
 	done(form);
@@ -55,7 +55,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: Dictionary, done: any) => {
+const handleDelete = (item: IDictionary, done: any) => {
 	ElMessageBox.confirm(`你真的删除【${item.dicName}】的字典吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -152,7 +152,7 @@ const dialogTitle = reactive({
 	edit: "修改字典",
 	detail: "字典详情",
 });
-const formModel = reactive<Dictionary>({
+const formModel = reactive<IDictionary>({
 	id: "",
 	dicTypeId: "",
 	dicId: "",
@@ -201,7 +201,7 @@ const formItems = reactive<Array<FormItem>>([
 		prop: "dicTypeId",
 	},
 ]);
-const handleFormSubmit = (form: Dictionary, done: any) => {
+const handleFormSubmit = (form: IDictionary, done: any) => {
 	const row = { ...form };
 	if (row.id) {
 		updateDictionary(row).then(() => {

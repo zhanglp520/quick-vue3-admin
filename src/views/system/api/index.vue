@@ -10,7 +10,7 @@ import {
 	Toolbar,
 } from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
-import { Api, SearchApi, ApiPermissionButton } from "@/types";
+import { IApi, ISearchApi, IApiPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
 	getApiPageList,
@@ -25,9 +25,9 @@ import {
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<Api>>([]);
-const permissionBtn = computed<ApiPermissionButton>(() => {
-	return userStore.getPermissionBtns as ApiPermissionButton;
+const dataList = reactive<Array<IApi>>([]);
+const permissionBtn = computed<IApiPermissionButton>(() => {
+	return userStore.getPermissionBtns as IApiPermissionButton;
 });
 
 /**
@@ -42,7 +42,7 @@ const page = reactive<Page>({
 /**
  * 搜索
  */
-const searchForm = reactive<SearchApi>({
+const searchForm = reactive<ISearchApi>({
 	keyword: "",
 });
 const searchFormItems = reactive<Array<FormItem>>([
@@ -98,7 +98,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: Api, done: any) => {
+const handleDelete = (item: IApi, done: any) => {
 	ElMessageBox.confirm(`你真的删除【${item.apiName}】的接口吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -188,7 +188,7 @@ const dialogTitle = reactive({
 	edit: "编辑接口",
 	detail: "接口详情",
 });
-const formModel = reactive<Api>({
+const formModel = reactive<IApi>({
 	id: "",
 	apiId: "",
 	apiName: "",
@@ -248,7 +248,7 @@ const formItems = reactive<Array<FormItem>>([
 		prop: "remark",
 	},
 ]);
-const handleFormSubmit = (form: Api, done: any) => {
+const handleFormSubmit = (form: IApi, done: any) => {
 	const row = { ...form };
 	if (row.id) {
 		updateApi(row).then(() => {

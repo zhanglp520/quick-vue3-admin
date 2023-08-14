@@ -2,8 +2,8 @@
 import { Ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import { useTabStore } from "@/store/modules/tab";
-import { Menubar } from "@/types/menu";
-import { Tab } from "@/types/tab";
+import { IMenubar } from "@/types/menu";
+import { ITab } from "@/types/tab";
 
 // eslint-disable-next-line no-undef
 defineOptions({
@@ -16,7 +16,7 @@ const tabStore = useTabStore();
  */
 const props = defineProps({
 	menuList: {
-		type: Array<Menubar>,
+		type: Array<IMenubar>,
 		default: () => {
 			return [];
 		},
@@ -26,21 +26,21 @@ const props = defineProps({
  * props toRefs
  */
 const { menuList } = toRefs(props) as {
-  menuList: Ref<Array<Menubar>>
+	menuList: Ref<Array<IMenubar>>;
 };
-const menuClick = (item:Menubar) => {
-	const { id, menuName, path, link, linkUrl } =item;
+const menuClick = (item: IMenubar) => {
+	const { id, menuName, path, link, linkUrl } = item;
 	if (link) {
 		window.open(linkUrl);
 	} else {
 		const routerPath = path;
-		const tab: Tab = {
-			id: id.toString(),
+		const tab: ITab = {
+			id,
 			name: menuName,
 			path: routerPath,
 		};
-		const tabList=tabStore.getTabList;
-		if(tabList.length>=15){
+		const tabList = tabStore.getTabList;
+		if (tabList.length >= 15) {
 			ElMessage({
 				type: "warning",
 				message: "选项卡最多15个，请关闭部分再试",
@@ -52,27 +52,27 @@ const menuClick = (item:Menubar) => {
 };
 </script>
 <template>
-  <template v-for="(item, index) in menuList" :key="index">
-    <template v-if="item.children && item.children.length > 0">
-      <el-sub-menu :index="item.id.toString()">
-        <template #title>
-          <el-icon>
-            <component :is="item.icon" />
-          </el-icon>
-          <span>{{ item.menuName }}</span>
-        </template>
-        <aini-menu-item :menu-list="item.children"></aini-menu-item>
-      </el-sub-menu>
-    </template>
-    <template v-else>
-      <el-menu-item :index="item.id.toString()" @click="menuClick(item)">
-        <template #title>
-          <el-icon>
-            <component :is="item.icon" />
-          </el-icon>
-          <span>{{ item.menuName }}</span>
-        </template>
-      </el-menu-item>
-    </template>
-  </template>
+	<template v-for="item in menuList" :key="item.id">
+		<template v-if="item.children && item.children.length > 0">
+			<el-sub-menu :index="item.id!">
+				<template #title>
+					<el-icon>
+						<component :is="item.icon" />
+					</el-icon>
+					<span>{{ item.menuName }}</span>
+				</template>
+				<aini-menu-item :menu-list="item.children"></aini-menu-item>
+			</el-sub-menu>
+		</template>
+		<template v-else>
+			<el-menu-item :index="item.id" @click="menuClick(item)">
+				<template #title>
+					<el-icon>
+						<component :is="item.icon" />
+					</el-icon>
+					<span>{{ item.menuName }}</span>
+				</template>
+			</el-menu-item>
+		</template>
+	</template>
 </template>

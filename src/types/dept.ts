@@ -1,14 +1,14 @@
-export interface Dept {
+export interface IDept {
 	id?: string;
 	deptId: string;
 	deptName: string;
 	pId: string;
 }
-export interface DeptTree extends Dept {
-	children: DeptTree[];
+export interface IDeptTree extends IDept {
+	children: IDeptTree[];
 }
-export interface DeptPermissionButton {
-	// export interface DeptPermissionButton extends PermissionButton {
+export interface IDeptPermissionButton {
+	// export interface IDeptPermissionButton extends PermissionButton {
 	import?: boolean;
 	export?: boolean;
 	add?: boolean;

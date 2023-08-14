@@ -1,4 +1,4 @@
-export interface Log {
+export interface ILog {
 	id?: string;
 	type: number;
 	ip: string;
@@ -9,13 +9,13 @@ export interface Log {
 	operateId: string;
 	createTime: string;
 }
-export interface SearchLog {
+export interface ISearchLog {
 	startTime?: string;
 	endTime?: string;
 	logTime: string;
 }
-export interface LogPermissionButton {
-	// export interface LogPermissionButton extends PermissionButton {
+export interface ILogPermissionButton {
+	// export interface ILogPermissionButton extends PermissionButton {
 	import?: boolean;
 	export?: boolean;
 	add?: boolean;

@@ -11,7 +11,7 @@ import {
 	LeftTree,
 } from "@ainiteam/quick-vue3-ui";
 import { selectTreeFormat, validatePermission } from "@/utils";
-import { Dept, DeptTree, DeptPermissionButton } from "@/types/dept";
+import { IDept, IDeptTree, IDeptPermissionButton } from "@/types/dept";
 import { useUserStore } from "@/store/modules/user";
 import {
 	getDeptList,
@@ -25,21 +25,21 @@ import {
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const deptDdataListTemp = reactive<Array<Dept>>([]);
+const deptDdataListTemp = reactive<Array<IDept>>([]);
 const dicTypeList = reactive<Array<Options>>([]);
-const dataList = reactive<Array<Dept>>([]);
+const dataList = reactive<Array<IDept>>([]);
 const currentTreeData = ref<Tree>({
 	id: "",
 	label: "",
 	children: [],
 });
-const permissionBtn = computed<DeptPermissionButton>(() => {
-	return userStore.getPermissionBtns as DeptPermissionButton;
+const permissionBtn = computed<IDeptPermissionButton>(() => {
+	return userStore.getPermissionBtns as IDeptPermissionButton;
 });
 /**
  * 工具栏
  */
-const handleAdd = (item: Dept, done: any) => {
+const handleAdd = (item: IDept, done: any) => {
 	const form = { ...item };
 	form.pId = currentTreeData.value.id;
 	done(form);
@@ -54,7 +54,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: Dept, done: any) => {
+const handleDelete = (item: IDept, done: any) => {
 	ElMessageBox.confirm(`你真的删除【${item.deptName}】的部门吗？`, "警告", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -95,20 +95,20 @@ const tableColumns = reactive<Array<Column>>([
 		prop: "deptName",
 	},
 ]);
-const deptTreeFormat = (data: Array<Dept>, pId = "0") => {
+const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
 	const arr: Array<Tree> = [];
 	const obj: Tree = {
 		id: "",
 		label: "",
 		children: [],
 	};
-	const parentData = data.find((x: Dept) => x.pId === pId);
+	const parentData = data.find((x: IDept) => x.pId === pId);
 	if (parentData) {
 		obj.id = parentData.id!;
 		obj.label = parentData.deptName;
 		const parentId = parentData.id;
-		const companyData = data.filter((x: Dept) => x.pId === parentId);
-		companyData.forEach((item: Dept) => {
+		const companyData = data.filter((x: IDept) => x.pId === parentId);
+		companyData.forEach((item: IDept) => {
 			if (companyData) {
 				const companyObj: Tree = {
 					id: item.id!,
@@ -116,7 +116,7 @@ const deptTreeFormat = (data: Array<Dept>, pId = "0") => {
 					children: [],
 				};
 				const companyPid = item.id;
-				const deptData = data.filter((x: Dept) => x.pId === companyPid);
+				const deptData = data.filter((x: IDept) => x.pId === companyPid);
 				deptData.forEach((deptItem) => {
 					companyObj.children.push({
 						id: deptItem.id!,
@@ -131,11 +131,11 @@ const deptTreeFormat = (data: Array<Dept>, pId = "0") => {
 	arr.push(obj);
 	return arr;
 };
-const listToTableTree = (data: Array<Dept>, pId = "0") => {
-	const arr: Array<DeptTree> = [];
-	const parentData = data.filter((x: Dept) => x.pId === pId);
-	parentData.forEach((item: Dept) => {
-		const obj: DeptTree = { ...item, children: [] };
+const listToTableTree = (data: Array<IDept>, pId = "0") => {
+	const arr: Array<IDeptTree> = [];
+	const parentData = data.filter((x: IDept) => x.pId === pId);
+	parentData.forEach((item: IDept) => {
+		const obj: IDeptTree = { ...item, children: [] };
 		obj.children = listToTableTree(data, item.id!);
 		arr.push(obj);
 	});
@@ -194,7 +194,7 @@ const dialogTitle = reactive({
 	edit: "修改部门",
 	detail: "部门详情",
 });
-const formModel = reactive<Dept>({
+const formModel = reactive<IDept>({
 	id: "",
 	deptId: "",
 	deptName: "",
@@ -243,7 +243,7 @@ const formItems = reactive<Array<FormItem>>([
 		prop: "pId",
 	},
 ]);
-const handleFormSubmit = (form: Dept, done: any) => {
+const handleFormSubmit = (form: IDept, done: any) => {
 	const row = { ...form };
 	if (row.id) {
 		updateDept(row).then(() => {

@@ -1,14 +1,14 @@
-export interface Token {
-  quickAccessToken?: string
-  quickRefreshToken?: string
-  expiresIn?: number
+export interface IToken {
+	quickAccessToken?: string;
+	quickRefreshToken?: string;
+	expiresIn?: number;
 }
-export interface LoginParams {
-  tenant: string
-  username: string
-  password: string
+export interface ILoginParams {
+	tenant: string;
+	username: string;
+	password: string;
 }
-export interface LoginData extends Token {
-  tenant: string
-  userName: string
+export interface ILoginData extends IToken {
+	tenant: string;
+	userName: string;
 }

@@ -1,18 +1,18 @@
 import { Router, RouteRecordRaw } from "vue-router";
-import { Menu } from "@/types/menu";
+import { IMenu } from "@/types/menu";
 import pinia from "@/store";
 import { useUserStore } from "@/store/modules/user";
 
 const modules = import.meta.glob("../views/**/*.vue");
 const layout = import.meta.glob("../layout/*.vue");
 
-const getComponent = (childElement: Menu) => {
+const getComponent = (childElement: IMenu) => {
 	let component = {};
 	if (childElement.viewPath) {
 		const viewPath = modules[`../views${childElement.viewPath}.vue`];
 		if (!viewPath) {
 			console.error(
-				`Menu view path configuration error or view does not exist ../views${childElement.viewPath}.vue`
+				`IMenu view path configuration error or view does not exist ../views${childElement.viewPath}.vue`
 			);
 		} else {
 			component = viewPath;
@@ -21,7 +21,7 @@ const getComponent = (childElement: Menu) => {
 		const path = modules[`../views${childElement.path}/index.vue`];
 		if (!path) {
 			console.error(
-				`Menu routing path configuration error or view does not exist ../views${childElement.path}/index.vue`
+				`IMenu routing path configuration error or view does not exist ../views${childElement.path}/index.vue`
 			);
 		} else {
 			component = path;
@@ -29,11 +29,11 @@ const getComponent = (childElement: Menu) => {
 	}
 	return component;
 };
-const formatRouter = (data: Menu[]) => {
+const formatRouter = (data: IMenu[]) => {
 	const arr: RouteRecordRaw[] = [];
-	const firstMenuArr: Menu[] = [];
-	const secondMenuArr: Menu[] = [];
-	data.forEach((element: Menu) => {
+	const firstMenuArr: IMenu[] = [];
+	const secondMenuArr: IMenu[] = [];
+	data.forEach((element: IMenu) => {
 		if (element.menuType === 0) {
 			firstMenuArr.push(element);
 		} else if (element.menuType === 1) {
@@ -82,7 +82,7 @@ const formatRouter = (data: Menu[]) => {
 		const childMenu = secondMenuArr.filter((x) => x.pId === element.id);
 		if (childMenu.length > 0) {
 			routerObj.redirect = childMenu[0].path;
-			childMenu.forEach((childElement: Menu) => {
+			childMenu.forEach((childElement: IMenu) => {
 				if (childElement.link) return;
 				// console.log('childElement', childElement.menuName)
 
