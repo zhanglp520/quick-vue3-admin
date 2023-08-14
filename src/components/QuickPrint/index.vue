@@ -1,0 +1,15 @@
+<script lang="ts" setup>
+// import { toRefs } from "vue";
+// import { ArrowRight } from "@element-plus/icons-vue";
+
+// const props = defineProps({
+// 	data: {
+// 		type: Array,
+// 		default: () => [],
+// 	},
+// });
+// const { data } = toRefs(props);
+</script>
+<template>
+	<div></div>
+</template>

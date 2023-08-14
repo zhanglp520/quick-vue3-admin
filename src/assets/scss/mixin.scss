@@ -1,0 +1,13 @@
+// flex布局
+@mixin layout($dir: column, $justify: center, $align: right) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+  }
+  @mixin userselect($val: none) {
+    -webkit-user-select: $val;
+    -moz-user-select: $val;
+    -ms-user-select: $val;
+    user-select: $val;
+  }

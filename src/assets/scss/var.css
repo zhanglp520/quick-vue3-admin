@@ -1,0 +1,25 @@
+.flex-box{
+    display: flex;
+    /* display: -webkit-flex; */  /* Safari */
+  }
+  .flex-inline-box{
+    display: inline-flex;
+  }
+
+  容器属性6个
+  flex-direction 水平方向
+  flex-wrap  换行
+  flex-flow 方向 换行（简写）
+
+  justify-content 水平对齐方式
+  align-items 垂直对齐方式
+  align-content 多行对齐方式
+
+  项目属性6
+
+  order  排序
+  flex-grow 放大比例
+  flex-shrink 缩小比例
+  flex-basis
+  flex 放大，缩小，剩余空间（简写）
+  align-self 覆盖align-items

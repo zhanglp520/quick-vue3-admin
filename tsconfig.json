@@ -5,6 +5,9 @@
 		"module": "ESNext",
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
 		"baseUrl": "./",
 		"paths": {
 			"@/*": ["src/*"]
@@ -12,7 +15,7 @@
 		"types": ["element-plus/global", "@ainiteam/quick-vue3-ui"],
 
 		/* Bundler mode */
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
@@ -23,7 +26,14 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		"strictBindCallApply": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictPropertyInitialization": true
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
 	"references": [{ "path": "./tsconfig.node.json" }]
