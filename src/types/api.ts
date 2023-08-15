@@ -1,5 +1,5 @@
 export interface IApi {
-    id: string;
+    id?: string;
     apiId: string;
     apiName: string;
     apiPath: string;
