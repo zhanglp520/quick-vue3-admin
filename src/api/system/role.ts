@@ -8,29 +8,29 @@ import { role as api } from "./index";
  *@Date: 2022-11-28 11:57:27
  */
 export const getRoleList = (): Promise<IQuickResponseData<Array<IRole>>> => {
-  return request<IQuickResponseData<Array<IRole>>>({
-    url: api,
-    method: "GET",
-  });
+    return request<IQuickResponseData<Array<IRole>>>({
+        url: api,
+        method: "GET",
+    });
 };
 export const addRole = (data: IRole) => {
-  return request({
-    url: api,
-    method: "POST",
-    data,
-  });
+    return request({
+        url: api,
+        method: "POST",
+        data,
+    });
 };
 export const updateRole = (data: IRole) => {
-  const { id } = data;
-  return request({
-    url: `${api}/${id}`,
-    method: "PUT",
-    data,
-  });
+    const { id } = data;
+    return request({
+        url: `${api}/${id}`,
+        method: "PUT",
+        data,
+    });
 };
 export const deleteRole = (id: string) => {
-  return request({
-    url: `${api}/${id}`,
-    method: "DELETE",
-  });
+    return request({
+        url: `${api}/${id}`,
+        method: "DELETE",
+    });
 };

@@ -2,7 +2,7 @@
 import { onMounted } from "vue";
 
 onMounted(() => {
-  console.log("onMounted-404");
+    console.log("onMounted-404");
 });
 </script>
 <template>

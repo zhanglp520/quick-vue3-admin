@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 defineProps({
-  modelValue: {
-    type: String,
-    default: "update:modelValue"
-  }
+    modelValue: {
+        type: String,
+        default: "update:modelValue",
+    },
 });
 const emit = defineEmits(["update:modelValue"]);
 const inputValue = (e: any) => {
-  const value = e.target.value;
-  emit("update:modelValue", value);
+    const value = e.target.value;
+    emit("update:modelValue", value);
 };
 </script>
 <template>
-  <input :value="modelValue" @input="inputValue" />
+    <input :value="modelValue" @input="inputValue" />
 </template>
 <style></style>

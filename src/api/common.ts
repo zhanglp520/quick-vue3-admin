@@ -7,10 +7,10 @@ import request, { IQuickResponseData } from "@/utils/request";
 import { defaultVersion } from "./index";
 
 export const downloadFileStream = (
-  filePath: string
+    filePath: string,
 ): Promise<IQuickResponseData<any>> => {
-  return request<IQuickResponseData<Array<any>>>({
-    url: `${defaultVersion}/downloads/downloadFileStream?filePath=${filePath}`,
-    method: "GET",
-  });
+    return request<IQuickResponseData<Array<any>>>({
+        url: `${defaultVersion}/downloads/downloadFileStream?filePath=${filePath}`,
+        method: "GET",
+    });
 };

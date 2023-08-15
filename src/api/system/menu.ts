@@ -7,29 +7,29 @@ import { menu as api } from "./index";
  *@Date: 2022-11-28 11:57:03
  */
 export const getMenuList = (): Promise<IQuickResponseData<Array<IMenu>>> => {
-  return request<IQuickResponseData<Array<IMenu>>>({
-    url: api,
-    method: "GET",
-  });
+    return request<IQuickResponseData<Array<IMenu>>>({
+        url: api,
+        method: "GET",
+    });
 };
 export const addMenu = (data: IMenu) => {
-  return request({
-    url: api,
-    method: "POST",
-    data,
-  });
+    return request({
+        url: api,
+        method: "POST",
+        data,
+    });
 };
 export const updateMenu = (data: IMenu) => {
-  const { id } = data;
-  return request({
-    url: `${api}/${id}`,
-    method: "PUT",
-    data,
-  });
+    const { id } = data;
+    return request({
+        url: `${api}/${id}`,
+        method: "PUT",
+        data,
+    });
 };
 export const deleteMenu = (id: string) => {
-  return request({
-    url: `${api}/${id}`,
-    method: "DELETE",
-  });
+    return request({
+        url: `${api}/${id}`,
+        method: "DELETE",
+    });
 };
