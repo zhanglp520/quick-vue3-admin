@@ -561,8 +561,8 @@ const handleFormSubmit = (form: IUser, done: any) => {
  * 导入
  */
 const dialogVisible = ref(false);
-const action = `${import.meta.env.VITE_APP_BASE_URL
-    }/api/v2/system/users/importUser`;
+const action =
+    `${import.meta.env.VITE_APP_BASE_URL}/api/v2/system/users/importUser`;
 const headers = reactive({
     authorization: `Bearer ${loginStore.getAccessToken}`,
 });
