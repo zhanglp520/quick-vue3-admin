@@ -1,22 +1,10 @@
-// quick团队格式化规范 eslint  + volar
+// quick团队vue3+ts代码规范  eslint + prettier + volar
 {
-    "editor.detectIndentation": false,
     "editor.tabSize": 4,
     "editor.formatOnSave": true,
-    "eslint.validate": [
-        "javascript",
-        "html",
-        "vue"
-    ],
     "editor.codeActionsOnSave": {
+        "source.fixAll": false,
         "source.fixAll.eslint": true
     },
-    "javascript.format.insertSpaceBeforeFunctionParenthesis": false, //true：普通函数名后面加空格
-    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false, //true：匿名函数后面加空格
-    "[vue]": {
-        "editor.defaultFormatter": "Vue.volar"
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

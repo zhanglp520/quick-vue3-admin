@@ -4,11 +4,11 @@ import { ILoginData, ILoginParams, IToken } from "@/types/auth";
 import { encryptForMd5 } from "@/utils/crypto";
 
 interface ILoginState {
-  quickAccessToken: string;
-  quickRefreshToken: string;
-  expiresIn: number;
-  tenant: string;
-  userName: string;
+    quickAccessToken: string;
+    quickRefreshToken: string;
+    expiresIn: number;
+    tenant: string;
+    userName: string;
 }
 export const useAuthStore = defineStore("loginStore", {
     state: (): ILoginState => {
@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("loginStore", {
             quickRefreshToken: "",
             expiresIn: 0,
             tenant: "",
-            userName: "",
+            userName: ""
         };
     },
     getters: {
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore("loginStore", {
         },
         getExpiresIn(): number | undefined {
             return this.expiresIn;
-        },
+        }
     },
     actions: {
         login(form: ILoginParams): Promise<ILoginData> {
@@ -38,12 +38,15 @@ export const useAuthStore = defineStore("loginStore", {
                 userLogin({
                     tenant,
                     username,
-                    password: encryptForMd5(password),
+                    password: encryptForMd5(password)
                 })
-                    .then(res => {
+                    .then((res) => {
                         const { data: loginData } = res;
-                        const { quickAccessToken, quickRefreshToken, expiresIn } =
-              loginData;
+                        const {
+                            quickAccessToken,
+                            quickRefreshToken,
+                            expiresIn
+                        } = loginData;
                         if (quickAccessToken) {
                             this.quickAccessToken = quickAccessToken;
                         }
@@ -57,7 +60,7 @@ export const useAuthStore = defineStore("loginStore", {
                         this.userName = username;
                         resolve(this.$state);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         reject(err);
                     });
             });
@@ -65,10 +68,13 @@ export const useAuthStore = defineStore("loginStore", {
         refreshToken(token: IToken) {
             return new Promise((resolve, reject) => {
                 refreshToken(token)
-                    .then(res => {
+                    .then((res) => {
                         const { data: loginData } = res;
-                        const { quickAccessToken, quickRefreshToken, expiresIn } =
-              loginData;
+                        const {
+                            quickAccessToken,
+                            quickRefreshToken,
+                            expiresIn
+                        } = loginData;
                         if (quickAccessToken) {
                             this.quickAccessToken = quickAccessToken;
                         }
@@ -80,13 +86,13 @@ export const useAuthStore = defineStore("loginStore", {
                         }
                         resolve(this.$state);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         reject(err);
                     });
             });
-        },
+        }
     },
     persist: {
-        enabled: true,
-    },
+        enabled: true
+    }
 });

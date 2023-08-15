@@ -3,20 +3,13 @@
         "target": "ES2020",
         "useDefineForClassFields": true,
         "module": "ESNext",
-        "lib": [
-            "ES2020",
-            "DOM",
-            "DOM.Iterable"
-        ],
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
         "suppressImplicitAnyIndexErrors": true,
         "ignoreDeprecations": "5.0",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "types": [
-            "element-plus/global",
-            "@ainiteam/quick-vue3-ui"
-        ],
+        "types": ["element-plus/global", "@ainiteam/quick-vue3-ui"],
         /* Bundler mode */
         "moduleResolution": "Node",
         "allowImportingTsExtensions": true,
@@ -39,17 +32,10 @@
         //配置别名
         "baseUrl": "./",
         "paths": {
-            "@/*": [
-                "src/*"
-            ]
+            "@/*": ["src/*"]
         }
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue"
-    ],
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
     "references": [
         {
             "path": "./tsconfig.node.json"

@@ -16,14 +16,14 @@ export const encryptForAes = (data: string, key = "", iv = "") => {
     return encrypt(data, key || defaultKey, {
         mode: ECB,
         padding: pkcs7,
-        iv: iv ? parse(iv) : parse(defaultIV),
+        iv: iv ? parse(iv) : parse(defaultIV)
     }).toString();
 };
 export const decryptForAes = (cipherText: string, key = "", iv = "") => {
     return decrypt(cipherText, key || defaultKey, {
         mode: ECB,
         padding: pkcs7,
-        iv: iv ? parse(iv) : parse(defaultIV),
+        iv: iv ? parse(iv) : parse(defaultIV)
     }).toString(UTF8);
 };
 export const encryptForMd5 = (password: string) => {

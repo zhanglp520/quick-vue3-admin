@@ -27,7 +27,7 @@ export const exportExcel = (dataList: any, fileName: string, columns: any) => {
     if (columns) {
         dataList.forEach((element: any) => {
             const item: any = {};
-            Object.keys(element).forEach(key => {
+            Object.keys(element).forEach((key) => {
                 const obj = columns.filter((x: any) => x.value === key);
                 if (obj && obj[0]) {
                     const test = obj[0];

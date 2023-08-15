@@ -7,21 +7,21 @@ import { dictionary as api } from "./index";
  *@Date: 2022-11-28 11:55:37
  */
 export const getDictionaryList = (
-    typeId: string,
+    typeId: string
 ): Promise<IQuickResponseData<Array<IDictionary>>> => {
     return request<IQuickResponseData<Array<IDictionary>>>({
         url: api,
         method: "GET",
         params: {
-            typeId,
-        },
+            typeId
+        }
     });
 };
 export const addDictionary = (data: IDictionary) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateDictionary = (data: IDictionary) => {
@@ -29,12 +29,12 @@ export const updateDictionary = (data: IDictionary) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteDictionary = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

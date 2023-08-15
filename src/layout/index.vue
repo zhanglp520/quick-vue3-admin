@@ -37,7 +37,7 @@ const tabList = computed(() => tabStore.getTabList);
 // 	}
 // };
 const handleClick = (activeName: string) => {
-    const index = tabList.value.findIndex(x => x.id === activeName);
+    const index = tabList.value.findIndex((x) => x.id === activeName);
     if (index !== -1) {
         tabStore.setActiveTab(tabList.value[index]);
         menuStore.setActiveMenuId(activeName);
@@ -52,7 +52,7 @@ const closeAll = () => {
     menuStore.clear();
     editableTabsValue.value = "home";
 };
-watch(activeTab, val => {
+watch(activeTab, (val) => {
     if (val) {
         const { id, path } = val;
         if (id) {
@@ -63,7 +63,7 @@ watch(activeTab, val => {
         }
     }
 });
-watch(tabList, val => {
+watch(tabList, (val) => {
     editableTabs.value = val;
 });
 </script>
@@ -76,23 +76,55 @@ watch(tabList, val => {
             </el-aside>
             <el-container>
                 <el-header>
-                    <el-card shadow="never" :body-style="{ padding: 0 }">
+                    <el-card
+                        shadow="never"
+                        :body-style="{ padding: 0 }"
+                    >
                         <aini-top></aini-top>
                     </el-card>
                 </el-header>
                 <el-main class="content">
-                    <el-card shadow="always" :body-style="{ padding: 10, position: 'relative' }">
-                        <el-tooltip class="box-item" effect="light" content="关闭全部" placement="left">
-                            <el-button style="position: absolute; top: 30px; right: 22px; z-index: 1" :icon="Close"
-                                size="small" @click="closeAll"></el-button>
+                    <el-card
+                        shadow="always"
+                        :body-style="{ padding: 10, position: 'relative' }"
+                    >
+                        <el-tooltip
+                            class="box-item"
+                            effect="light"
+                            content="关闭全部"
+                            placement="left"
+                        >
+                            <el-button
+                                style="
+                                    position: absolute;
+                                    top: 30px;
+                                    right: 22px;
+                                    z-index: 1;
+                                "
+                                :icon="Close"
+                                size="small"
+                                @click="closeAll"
+                            ></el-button>
                         </el-tooltip>
                         <!-- @edit="handleTabsEdit"
 							@tab-change="handleClick" -->
-                        <el-tabs v-model="editableTabsValue" type="card" closable>
-                            <el-tab-pane v-for="item in tabList" :key="item.id" :label="item.name" :name="item.id">
+                        <el-tabs
+                            v-model="editableTabsValue"
+                            type="card"
+                            closable
+                        >
+                            <el-tab-pane
+                                v-for="item in tabList"
+                                :key="item.id"
+                                :label="item.name"
+                                :name="item.id"
+                            >
                             </el-tab-pane>
                         </el-tabs>
-                        <router-view v-if="cache" v-slot="{ Component }">
+                        <router-view
+                            v-if="cache"
+                            v-slot="{ Component }"
+                        >
                             <keep-alive>
                                 <component :is="Component" />
                             </keep-alive>

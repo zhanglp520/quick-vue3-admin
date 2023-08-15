@@ -8,10 +8,10 @@ import { loginApi, refreshTokenApi } from "@/api/auth/";
  *@Date: 2022-12-02 01:28:26
  */
 export interface IQuickResponseData<T = any> {
-  status: number;
-  msg: string;
-  data: T;
-  total: number;
+    status: number;
+    msg: string;
+    data: T;
+    total: number;
 }
 let errFlag = false;
 let isRefreshing = false;
@@ -21,8 +21,8 @@ const quickRequest: AxiosInstance = axios.create({
     baseURL,
     timeout: 1000 * 30,
     headers: {
-        "Content-Type": "application/json;charset=utf-8",
-    },
+        "Content-Type": "application/json;charset=utf-8"
+    }
 });
 
 const isTokenExpire = () => {
@@ -40,7 +40,7 @@ const saveRequest = (callback: any) => {
     requestList.push(callback);
 };
 const handleRequest = (token: string) => {
-    requestList.forEach(callback => {
+    requestList.forEach((callback) => {
         callback(token);
     });
     requestList.length = 0;
@@ -49,7 +49,7 @@ const handleRequest = (token: string) => {
 // 请求拦截器
 quickRequest.interceptors.request.use(
     (config: any) => {
-    // 登录请求
+        // 登录请求
         if (config.url === loginApi) {
             return config;
         }
@@ -72,7 +72,7 @@ quickRequest.interceptors.request.use(
                         isRefreshing = false;
                     });
             }
-            const retry = new Promise(resolve => {
+            const retry = new Promise((resolve) => {
                 saveRequest((token: string) => {
                     const cfg = config;
                     if (cfg.headers) {
@@ -92,15 +92,15 @@ quickRequest.interceptors.request.use(
         console.info("request", cfg);
         return cfg;
     },
-    error => {
+    (error) => {
         console.error(error);
         return Promise.reject(error);
-    },
+    }
 );
 
 // 响应拦截器
 quickRequest.interceptors.response.use(
-    res => {
+    (res) => {
         console.info("response", res);
         const { data: resultData } = res;
         // 导出文件
@@ -115,14 +115,14 @@ quickRequest.interceptors.response.use(
         if (payload) {
             return Promise.resolve({
                 data: payload,
-                total,
+                total
             });
         }
         return Promise.resolve({
-            data,
+            data
         });
     },
-    error => {
+    (error) => {
         const { response } = error;
         const { status } = response;
         if (status === 401) {
@@ -130,7 +130,7 @@ quickRequest.interceptors.response.use(
                 ElMessageBox.confirm("登录过期，请重新登录", "警告", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
-                    type: "warning",
+                    type: "warning"
                 })
                     .then(() => {
                         errFlag = true;
@@ -154,7 +154,7 @@ quickRequest.interceptors.response.use(
             console.error("error", error);
         }
         return Promise.reject(error);
-    },
+    }
 );
 
 const request = <T>(config: AxiosRequestConfig): Promise<T> => {

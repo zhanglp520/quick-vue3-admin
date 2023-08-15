@@ -2,8 +2,8 @@
 defineProps({
     modelValue: {
         type: String,
-        default: "update:modelValue",
-    },
+        default: "update:modelValue"
+    }
 });
 const emit = defineEmits(["update:modelValue"]);
 const inputValue = (e: any) => {
@@ -12,6 +12,9 @@ const inputValue = (e: any) => {
 };
 </script>
 <template>
-    <input :value="modelValue" @input="inputValue" />
+    <input
+        :value="modelValue"
+        @input="inputValue"
+    />
 </template>
 <style></style>

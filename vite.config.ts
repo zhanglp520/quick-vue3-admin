@@ -9,20 +9,27 @@ export default defineConfig({
     plugins: [
         vue(),
         eslintPlugin({
-            include: ["src/**/*.ts", "src/**/*.js", "src/**/*.vue", "src/*.ts", "src/*.js", "src/*.vue"]
-        }),
+            include: [
+                "src/**/*.ts",
+                "src/**/*.js",
+                "src/**/*.vue",
+                "src/*.ts",
+                "src/*.js",
+                "src/*.vue"
+            ]
+        })
     ],
     resolve: {
         alias: [
             {
                 find: "@",
-                replacement: resolve(__dirname, "src"),
+                replacement: resolve(__dirname, "src")
             },
             {
                 find: "vue-i18n",
-                replacement: "vue-i18n/dist/vue-i18n.cjs.js",
-            },
-        ],
+                replacement: "vue-i18n/dist/vue-i18n.cjs.js"
+            }
+        ]
     },
     server: {
         https: false, // 运行服务是否以https方式
@@ -36,9 +43,9 @@ export default defineConfig({
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3102 代理服务会把origin修改为目标地址
                 secure: true, // 是否https接
                 ws: false, // 是否代理websockets
-                rewrite: (path) => path.replace(/^\/dev-api/, ""), // 路径重写
-            },
-        },
+                rewrite: (path) => path.replace(/^\/dev-api/, "") // 路径重写
+            }
+        }
     },
     preview: {
         https: false, // 运行服务是否以https方式
@@ -52,8 +59,8 @@ export default defineConfig({
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3000 代理服务会把origin修改为目标地址
                 secure: false, // 是否https接口
                 ws: false, // 是否代理websockets
-                rewrite: (path) => path.replace(/^\/prod-api/, ""), // 路径重写
-            },
-        },
-    },
+                rewrite: (path) => path.replace(/^\/prod-api/, "") // 路径重写
+            }
+        }
+    }
 });

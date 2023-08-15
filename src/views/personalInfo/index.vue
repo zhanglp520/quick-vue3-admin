@@ -20,7 +20,7 @@ const form = reactive<IUser>({
     userName: "",
     phone: "",
     email: "",
-    address: "",
+    address: ""
 });
 /**
  * 上传
@@ -52,10 +52,12 @@ const formItems = reactive<Array<FormItem>>([
         placeholder: "头像",
         type: "avatar",
         // actionUrl: '/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15',
-        actionUrl: `${import.meta.env.VITE_APP_BASE_URL}/api/v2/uploads/uploadFile`,
+        actionUrl: `${
+            import.meta.env.VITE_APP_BASE_URL
+        }/api/v2/uploads/uploadFile`,
         headers: {
-            authorization: `Bearer ${loginStore.getAccessToken}`,
-        },
+            authorization: `Bearer ${loginStore.getAccessToken}`
+        }
         // success: handleAvatarSuccess,
         // beforeUpload: beforeAvatarUpload,
     },
@@ -63,34 +65,34 @@ const formItems = reactive<Array<FormItem>>([
         label: "姓名",
         labelWidth: "80px",
         vModel: "fullName",
-        placeholder: "姓名",
+        placeholder: "姓名"
     },
     {
         label: "用户名",
         labelWidth: "80px",
         vModel: "userName",
-        placeholder: "用户名",
+        placeholder: "用户名"
     },
     {
         label: "手机号",
         labelWidth: "80px",
         vModel: "phone",
         type: "phone",
-        placeholder: "手机号",
+        placeholder: "手机号"
     },
     {
         label: "邮箱",
         labelWidth: "80px",
         vModel: "email",
         type: "email",
-        placeholder: "邮箱",
+        placeholder: "邮箱"
     },
     {
         label: "地址",
         labelWidth: "80px",
         vModel: "address",
-        placeholder: "地址",
-    },
+        placeholder: "地址"
+    }
 ]);
 /**
  * 函数
@@ -98,7 +100,7 @@ const formItems = reactive<Array<FormItem>>([
 const getInfo = () => {
     const { user } = userStore.$state;
     const { id, userName } = user;
-    userStore.getUserInfo(userName).then(res => {
+    userStore.getUserInfo(userName).then((res) => {
         const info = { ...res };
         const { userId, avatar, fullName, phone, email, address } = info;
         form.id = id;
@@ -115,13 +117,13 @@ const handleSubmit = () => {
     updateUser(form).then(() => {
         ElMessage({
             type: "success",
-            message: "修改个人资料成功.",
+            message: "修改个人资料成功."
         });
         getInfo();
     });
 };
 const handleClear = () => {
-    Object.keys(form).forEach(key => {
+    Object.keys(form).forEach((key) => {
         form[key] = "";
     });
 };
@@ -132,10 +134,19 @@ onMounted(() => {
 
 <template>
     <div class="personalInfo">
-        <quick-form :model="form" :form-items="formItems" :show-action="true" :action-slot="true">
+        <quick-form
+            :model="form"
+            :form-items="formItems"
+            :show-action="true"
+            :action-slot="true"
+        >
             <template #action>
                 <el-form-item>
-                    <el-button type="primary" @click="handleSubmit">提交</el-button>
+                    <el-button
+                        type="primary"
+                        @click="handleSubmit"
+                        >提交</el-button
+                    >
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="handleClear">清空</el-button>

@@ -6,12 +6,12 @@ import {
     Actionbar,
     Toolbar,
     FormItem,
-    Options,
+    Options
 } from "@ainiteam/quick-vue3-ui";
 import {
     selectTreeFormat,
     listToTree,
-    validatePermission,
+    validatePermission
 } from "@/utils/index";
 import { IMenu, IMenuPermissionButton } from "@/types/menu";
 import "@/assets/iconfont/quickIconFont.js";
@@ -21,7 +21,7 @@ import {
     getMenuList,
     addMenu,
     updateMenu,
-    deleteMenu,
+    deleteMenu
 } from "@/api/system/menu";
 
 /**
@@ -42,7 +42,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
+    hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
 /**
  * 操作栏
@@ -51,12 +51,12 @@ const handleDelete = (item: IMenu, done: any) => {
     ElMessageBox.confirm(`你真的删除【${item.menuName}】的菜单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         deleteMenu(item.id!).then(() => {
             ElMessage({
                 type: "success",
-                message: "菜单删除成功",
+                message: "菜单删除成功"
             });
             done();
         });
@@ -66,7 +66,7 @@ const tableActionbar = reactive<Actionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail),
+    hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
 /**
  * 表格
@@ -74,28 +74,28 @@ const tableActionbar = reactive<Actionbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         label: "菜单编号",
         prop: "menuId",
-        width: "200",
+        width: "200"
     },
     {
         label: "菜单名称",
         prop: "menuName",
         width: "200",
-        fixed: true,
+        fixed: true
     },
     {
         label: "路由",
         prop: "path",
-        width: "200",
+        width: "200"
     },
     {
         label: "视图",
         prop: "viewPath",
-        width: "200",
+        width: "200"
     },
     {
         label: "菜单类型",
@@ -112,17 +112,17 @@ const tableColumns = reactive<Array<Column>>([
                 return "按钮";
             }
             return "";
-        },
+        }
     },
     {
         label: "菜单图标",
         prop: "icon",
-        width: "200",
+        width: "200"
     },
     {
         label: "菜单排序",
         prop: "sort",
-        width: "200",
+        width: "200"
     },
     {
         label: "是否外链",
@@ -130,7 +130,7 @@ const tableColumns = reactive<Array<Column>>([
         width: "200",
         format: (row: IMenu) => {
             return row.link === 1 ? "外链" : "非外链";
-        },
+        }
     },
     {
         label: "是否启用",
@@ -138,7 +138,7 @@ const tableColumns = reactive<Array<Column>>([
         width: "200",
         format: (row: IMenu) => {
             return !row.enabled ? "启用" : "禁用";
-        },
+        }
     },
     {
         label: "是否显示",
@@ -146,30 +146,30 @@ const tableColumns = reactive<Array<Column>>([
         width: "200",
         format: (row: IMenu) => {
             return row.status ? "显示" : "不显示";
-        },
-    },
+        }
+    }
 ]);
 /**
  * 加载数据
  */
 const load = () => {
     loading.value = true;
-    getMenuList().then(res => {
+    getMenuList().then((res) => {
         loading.value = false;
         const { data: menuList } = res;
         const menuTree = listToTree(menuList, 0, {
-            pId: "pId",
+            pId: "pId"
         });
         dataList.length = 0;
         dataList.push(...menuTree);
 
         const parentMenuList = menuList.filter((x: IMenu) => x.menuType !== 2);
         const parentTree = listToTree(parentMenuList, 0, {
-            pId: "pId",
+            pId: "pId"
         });
         const selectTreeData = selectTreeFormat(parentTree, {
             value: "id",
-            label: "menuName",
+            label: "menuName"
         });
         parentTreeList.length = 0;
         parentTreeList.push(...selectTreeData);
@@ -181,7 +181,7 @@ const load = () => {
 const dialogTitle = reactive({
     add: "创建菜单",
     edit: "修改菜单",
-    detail: "菜单详情",
+    detail: "菜单详情"
 });
 const formModel = reactive<IMenu>({
     id: "",
@@ -196,7 +196,7 @@ const formModel = reactive<IMenu>({
     link: 0,
     linkUrl: "",
     enabled: true,
-    status: true,
+    status: true
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -211,9 +211,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "菜单编号不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "菜单名称",
@@ -226,9 +226,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "菜单名称不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "菜单类型",
@@ -241,24 +241,24 @@ const formItems = reactive<Array<FormItem>>([
         options: [
             {
                 label: "目录",
-                value: 0,
+                value: 0
             },
             {
                 label: "菜单",
-                value: 1,
+                value: 1
             },
             {
                 label: "按钮",
-                value: 2,
-            },
+                value: 2
+            }
         ],
         rules: [
             {
                 required: true,
                 message: "菜单类型不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "菜单图标",
@@ -270,13 +270,13 @@ const formItems = reactive<Array<FormItem>>([
         iconOptions: [
             {
                 label: "quick官网",
-                data: quickIconFont,
-            },
+                data: quickIconFont
+            }
         ],
         width: "400px",
-        select: val => {
+        select: (val) => {
             formModel.icon = val;
-        },
+        }
     },
     {
         label: "路由",
@@ -284,7 +284,7 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "path",
         placeholder: "路由",
         width: "400px",
-        prop: "path",
+        prop: "path"
     },
     {
         label: "视图",
@@ -292,7 +292,7 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "viewPath",
         placeholder: "视图",
         width: "400px",
-        prop: "viewPath",
+        prop: "viewPath"
     },
     {
         label: "排序",
@@ -300,7 +300,7 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "sort",
         placeholder: "排序",
         prop: "sort",
-        width: "400px",
+        width: "400px"
     },
     {
         label: "父级菜单",
@@ -310,7 +310,7 @@ const formItems = reactive<Array<FormItem>>([
         type: "tree",
         options: parentTreeList,
         width: "400px",
-        prop: "pId",
+        prop: "pId"
     },
     {
         label: "是否启用",
@@ -319,7 +319,7 @@ const formItems = reactive<Array<FormItem>>([
         placeholder: "是否启用",
         prop: "enabled",
         type: "switch",
-        width: "400px",
+        width: "400px"
     },
     {
         label: "是否显示",
@@ -328,7 +328,7 @@ const formItems = reactive<Array<FormItem>>([
         placeholder: "是否显示",
         prop: "status",
         type: "switch",
-        width: "400px",
+        width: "400px"
     },
     {
         label: "外链",
@@ -337,7 +337,7 @@ const formItems = reactive<Array<FormItem>>([
         placeholder: "外链",
         prop: "link",
         type: "switch",
-        width: "400px",
+        width: "400px"
     },
     {
         label: "链接地址",
@@ -345,8 +345,8 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "linkUrl",
         placeholder: "链接地址",
         width: "400px",
-        prop: "linkUrl",
-    },
+        prop: "linkUrl"
+    }
 ]);
 const handleFormSubmit = (form: IMenu, done: any) => {
     const row = { ...form };
@@ -357,7 +357,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
         updateMenu(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "菜单修改成功",
+                message: "菜单修改成功"
             });
             done();
         });
@@ -366,7 +366,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "菜单创建成功",
+                message: "菜单创建成功"
             });
             done();
         });
@@ -374,8 +374,19 @@ const handleFormSubmit = (form: IMenu, done: any) => {
 };
 </script>
 <template>
-    <quick-crud :form-inline="true" :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems"
-        :table-data="dataList" :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        dialog-titles="dialogTitles" :loading="loading" @on-load="load" @on-form-submit="handleFormSubmit"
-        @on-delete="handleDelete"></quick-crud>
+    <quick-crud
+        :form-inline="true"
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        dialog-titles="dialogTitles"
+        :loading="loading"
+        @on-load="load"
+        @on-form-submit="handleFormSubmit"
+        @on-delete="handleDelete"
+    ></quick-crud>
 </template>

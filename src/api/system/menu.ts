@@ -9,14 +9,14 @@ import { menu as api } from "./index";
 export const getMenuList = (): Promise<IQuickResponseData<Array<IMenu>>> => {
     return request<IQuickResponseData<Array<IMenu>>>({
         url: api,
-        method: "GET",
+        method: "GET"
     });
 };
 export const addMenu = (data: IMenu) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateMenu = (data: IMenu) => {
@@ -24,12 +24,12 @@ export const updateMenu = (data: IMenu) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteMenu = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

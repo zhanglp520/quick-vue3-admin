@@ -12,7 +12,7 @@ const getComponent = (childElement: IMenu) => {
         const viewPath = modules[`../views${childElement.viewPath}.vue`];
         if (!viewPath) {
             console.error(
-                `IMenu view path configuration error or view does not exist ../views${childElement.viewPath}.vue`,
+                `IMenu view path configuration error or view does not exist ../views${childElement.viewPath}.vue`
             );
         } else {
             component = viewPath;
@@ -21,7 +21,7 @@ const getComponent = (childElement: IMenu) => {
         const path = modules[`../views${childElement.path}/index.vue`];
         if (!path) {
             console.error(
-                `IMenu routing path configuration error or view does not exist ../views${childElement.path}/index.vue`,
+                `IMenu routing path configuration error or view does not exist ../views${childElement.path}/index.vue`
             );
         } else {
             component = path;
@@ -41,10 +41,10 @@ const formatRouter = (data: IMenu[]) => {
         }
     });
     console.log("secondMenuArr", secondMenuArr);
-    const childMenus = secondMenuArr.filter(x => Number(x.pId) === 0);
+    const childMenus = secondMenuArr.filter((x) => Number(x.pId) === 0);
     console.log("childMenus", childMenus);
 
-    childMenus.forEach(element => {
+    childMenus.forEach((element) => {
         const component = getComponent(element);
         const routerObj: RouteRecordRaw = {
             name: element.menuId,
@@ -55,18 +55,18 @@ const formatRouter = (data: IMenu[]) => {
                 {
                     name: `${element.menuId}/index`,
                     path: `${element.path}/index`,
-                    component,
-                },
+                    component
+                }
             ],
             meta: {
                 title: element.menuName,
                 icon: element.icon,
-                link: element.link,
-            },
+                link: element.link
+            }
         };
         arr.push(routerObj);
     });
-    firstMenuArr.forEach(element => {
+    firstMenuArr.forEach((element) => {
         const routerObj: RouteRecordRaw = {
             name: element.menuId,
             path: element.path,
@@ -76,10 +76,10 @@ const formatRouter = (data: IMenu[]) => {
             meta: {
                 title: element.menuName,
                 icon: element.icon,
-                link: element.link,
-            },
+                link: element.link
+            }
         };
-        const childMenu = secondMenuArr.filter(x => x.pId === element.id);
+        const childMenu = secondMenuArr.filter((x) => x.pId === element.id);
         if (childMenu.length > 0) {
             routerObj.redirect = childMenu[0].path;
             childMenu.forEach((childElement: IMenu) => {
@@ -94,8 +94,8 @@ const formatRouter = (data: IMenu[]) => {
                     meta: {
                         title: childElement.menuName,
                         icon: childElement.icon,
-                        link: childElement.link,
-                    },
+                        link: childElement.link
+                    }
                 };
                 if (routerObj.children) {
                     routerObj.children.push(childRouterObj);
@@ -110,7 +110,7 @@ export const addRoutes = (router: Router) => {
     const userStore = useUserStore(pinia);
     const menuList = userStore.getPermissionMenuList;
     const routerData = formatRouter(menuList);
-    routerData.forEach(element => {
+    routerData.forEach((element) => {
         router.addRoute(element);
     });
     console.log("routerData", routerData);

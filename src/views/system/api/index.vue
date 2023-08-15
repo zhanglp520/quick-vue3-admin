@@ -7,17 +7,17 @@ import {
     FormItem,
     Page,
     Actionbar,
-    Toolbar,
+    Toolbar
 } from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
-import { IApi, ISearchApi, IApiPermissionButton } from "@/types";
+import { IApi, ISearchApi, IApiPermissionButton } from "@/types/api";
 import { useUserStore } from "@/store/modules/user";
 import {
     getApiPageList,
     addApi,
     updateApi,
     deleteApi,
-    batchDeleteApi,
+    batchDeleteApi
 } from "@/api/system/api";
 
 /**
@@ -37,20 +37,20 @@ const page = reactive<Page>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
-    total: 0,
+    total: 0
 });
 /**
  * 搜索
  */
 const searchForm = reactive<ISearchApi>({
-    keyword: "",
+    keyword: ""
 });
 const searchFormItems = reactive<Array<FormItem>>([
     {
         label: "",
         vModel: "keyword",
-        placeholder: "接口名称|菜单名称",
-    },
+        placeholder: "接口名称|菜单名称"
+    }
 ]);
 /**
  * 工具栏
@@ -60,12 +60,12 @@ const handleBatchDelete = (data: any, done: any) => {
     ElMessageBox.confirm("你真的删除选择的接口吗？", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         batchDeleteApi(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "接口删除成功",
+                message: "接口删除成功"
             });
             done();
         });
@@ -93,7 +93,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
+    hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
 /**
  * 操作栏
@@ -102,7 +102,7 @@ const handleDelete = (item: IApi, done: any) => {
     ElMessageBox.confirm(`你真的删除【${item.apiName}】的接口吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -110,7 +110,7 @@ const handleDelete = (item: IApi, done: any) => {
         deleteApi(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "接口删除成功",
+                message: "接口删除成功"
             });
             done();
         });
@@ -121,7 +121,7 @@ const tableActionbar = reactive<Actionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail),
+    hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
 /**
  * 表格
@@ -129,37 +129,37 @@ const tableActionbar = reactive<Actionbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         width: "60",
         type: "index",
-        label: "序号",
+        label: "序号"
     },
     {
         label: "接口编号",
         prop: "apiId",
-        width: "200",
+        width: "200"
     },
     {
         label: "接口名称",
         prop: "apiName",
-        width: "200",
+        width: "200"
     },
     {
         label: "接口地址",
         prop: "apiPath",
-        width: "300",
+        width: "300"
     },
     {
         label: "创建时间",
         prop: "createTime",
-        width: "200",
+        width: "200"
     },
     {
         label: "备注",
-        prop: "remark",
-    },
+        prop: "remark"
+    }
 ]);
 /**
  * 加载数据
@@ -167,7 +167,7 @@ const tableColumns = reactive<Array<Column>>([
 const load = (parmas: object) => {
     loading.value = true;
     getApiPageList(parmas)
-        .then(res => {
+        .then((res) => {
             loading.value = false;
             const { data: apiList, total } = res;
             if (apiList) {
@@ -186,14 +186,14 @@ const load = (parmas: object) => {
 const dialogTitle = reactive({
     add: "添加接口",
     edit: "编辑接口",
-    detail: "接口详情",
+    detail: "接口详情"
 });
 const formModel = reactive<IApi>({
     id: "",
     apiId: "",
     apiName: "",
     apiPath: "",
-    remark: "",
+    remark: ""
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -207,9 +207,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "接口编号不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "接口名称",
@@ -221,9 +221,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "接口名称不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "接口地址",
@@ -235,9 +235,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "接口地址不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "备注",
@@ -245,8 +245,8 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "remark",
         placeholder: "备注",
         type: "textarea",
-        prop: "remark",
-    },
+        prop: "remark"
+    }
 ]);
 const handleFormSubmit = (form: IApi, done: any) => {
     const row = { ...form };
@@ -254,7 +254,7 @@ const handleFormSubmit = (form: IApi, done: any) => {
         updateApi(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "接口修改成功",
+                message: "接口修改成功"
             });
             done();
         });
@@ -263,7 +263,7 @@ const handleFormSubmit = (form: IApi, done: any) => {
         addApi(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "接口创建成功",
+                message: "接口创建成功"
             });
             done();
         });
@@ -271,10 +271,24 @@ const handleFormSubmit = (form: IApi, done: any) => {
 };
 </script>
 <template>
-    <quick-crud :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems" :table-data="dataList"
-        :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        :search-form-items="searchFormItems" :search-form-model="searchForm" dialog-titles="dialogTitles" :page="page"
-        :loading="loading" @on-load="load" @on-form-submit="handleFormSubmit" @on-delete="handleDelete"
-        @on-batch-delete="handleBatchDelete" @on-print="handlePrint"></quick-crud>
+    <quick-crud
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        :search-form-items="searchFormItems"
+        :search-form-model="searchForm"
+        dialog-titles="dialogTitles"
+        :page="page"
+        :loading="loading"
+        @on-load="load"
+        @on-form-submit="handleFormSubmit"
+        @on-delete="handleDelete"
+        @on-batch-delete="handleBatchDelete"
+        @on-print="handlePrint"
+    ></quick-crud>
 </template>
 <style scoped></style>

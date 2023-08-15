@@ -10,14 +10,14 @@ const staticRouter = [
             {
                 path: "/home",
                 name: "home",
-                component: () => import("@/views/home/index.vue"),
-            },
-        ],
+                component: () => import("@/views/home/index.vue")
+            }
+        ]
     },
     {
         path: "/login",
         name: "Login",
-        component: () => import("../pages/login/index.vue"),
+        component: () => import("../pages/login/index.vue")
     },
     {
         path: "/personalInfo",
@@ -28,9 +28,9 @@ const staticRouter = [
             {
                 path: "/personalInfo/index",
                 name: "PersonalInfoIndex",
-                component: () => import("../views/personalInfo/index.vue"),
-            },
-        ],
+                component: () => import("../views/personalInfo/index.vue")
+            }
+        ]
     },
     {
         path: "/changePassword",
@@ -41,13 +41,13 @@ const staticRouter = [
             {
                 path: "/changePassword/index",
                 name: "ChangePasswordIndex",
-                component: () => import("../views/changePassword/index.vue"),
-            },
-        ],
+                component: () => import("../views/changePassword/index.vue")
+            }
+        ]
     },
     {
         path: "/:catchAll(.*)",
-        component: () => import("@/pages/404/index.vue"),
-    },
+        component: () => import("@/pages/404/index.vue")
+    }
 ];
 export default staticRouter;

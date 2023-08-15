@@ -16,7 +16,7 @@ const { user } = userStore.$state;
 const form = reactive<IChangePassword>({
     oldPassword: "",
     newPassword: "",
-    confirmPassword: "",
+    confirmPassword: ""
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -24,22 +24,22 @@ const formItems = reactive<Array<FormItem>>([
         labelWidth: "80px",
         vModel: "oldPassword",
         type: "password",
-        placeholder: "原密码",
+        placeholder: "原密码"
     },
     {
         label: "新密码",
         labelWidth: "80px",
         vModel: "newPassword",
         type: "password",
-        placeholder: "新密码",
+        placeholder: "新密码"
     },
     {
         label: "确认密码",
         labelWidth: "80px",
         vModel: "confirmPassword",
         type: "password",
-        placeholder: "确认密码",
-    },
+        placeholder: "确认密码"
+    }
 ]);
 /**
  * 函数
@@ -56,16 +56,16 @@ const handleSubmit = () => {
     }
     changePassword(id, {
         oldPassword: encryptForMd5(oldPassword),
-        newPassword: encryptForMd5(newPassword),
+        newPassword: encryptForMd5(newPassword)
     }).then(() => {
         ElMessage({
             type: "success",
-            message: "密码修改成功.",
+            message: "密码修改成功."
         });
     });
 };
 const handleClear = () => {
-    Object.keys(form).forEach(key => {
+    Object.keys(form).forEach((key) => {
         form[key] = "";
     });
 };
@@ -77,10 +77,19 @@ onMounted(() => {
 
 <template>
     <div class="change-password">
-        <quick-form :model="form" :form-items="formItems" :show-action="true" :action-slot="true">
+        <quick-form
+            :model="form"
+            :form-items="formItems"
+            :show-action="true"
+            :action-slot="true"
+        >
             <template #action>
                 <el-form-item>
-                    <el-button type="primary" @click="handleSubmit">提交</el-button>
+                    <el-button
+                        type="primary"
+                        @click="handleSubmit"
+                        >提交</el-button
+                    >
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="handleClear">清空</el-button>

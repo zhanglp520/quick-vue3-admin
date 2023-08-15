@@ -8,7 +8,7 @@ import {
     FormItem,
     Options,
     Tree,
-    LeftTree,
+    LeftTree
 } from "@ainiteam/quick-vue3-ui";
 import { dicFormat, treeFormat, validatePermission } from "@/utils";
 import { IDictionary, IDictionaryPermissionButton } from "@/types/dictionary";
@@ -18,7 +18,7 @@ import {
     getDictionaryList,
     addDictionary,
     updateDictionary,
-    deleteDictionary,
+    deleteDictionary
 } from "@/api/system/dictionary";
 
 /**
@@ -32,7 +32,7 @@ const dataList = reactive<Array<IDictionary>>([]);
 const currentTreeData = ref<Tree>({
     id: "",
     label: "",
-    children: [],
+    children: []
 });
 const permissionBtn = computed<IDictionaryPermissionButton>(() => {
     return userStore.getPermissionBtns as IDictionaryPermissionButton;
@@ -50,7 +50,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
+    hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
 /**
  * 操作栏
@@ -59,7 +59,7 @@ const handleDelete = (item: IDictionary, done: any) => {
     ElMessageBox.confirm(`你真的删除【${item.dicName}】的字典吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -67,7 +67,7 @@ const handleDelete = (item: IDictionary, done: any) => {
         deleteDictionary(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "字典删除成功",
+                message: "字典删除成功"
             });
             done();
         });
@@ -77,7 +77,7 @@ const tableActionbar = reactive<Actionbar>({
     width: 300,
     hiddenDetailButton: true,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
+    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete)
 });
 /**
  * 表格
@@ -85,17 +85,17 @@ const tableActionbar = reactive<Actionbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         label: "字典编号",
         prop: "dicId",
-        width: "200",
+        width: "200"
     },
     {
         label: "字典名称",
-        prop: "dicName",
-    },
+        prop: "dicName"
+    }
 ]);
 /**
  * 加载数据
@@ -103,7 +103,7 @@ const tableColumns = reactive<Array<Column>>([
 const load = () => {
     const { id } = currentTreeData.value;
     loading.value = true;
-    getDictionaryList(id).then(res => {
+    getDictionaryList(id).then((res) => {
         loading.value = false;
         const { data: dictionaryList } = res;
         dataList.length = 0;
@@ -114,15 +114,15 @@ const load = () => {
  * 左树
  */
 const leftTree = reactive<LeftTree>({
-    treeData: [],
+    treeData: []
 });
 const treeLoad = (done: any) => {
-    getDictionaryTypeList().then(res => {
+    getDictionaryTypeList().then((res) => {
         const { data: dictionaryTypeList } = res;
         const data = treeFormat(dictionaryTypeList, {
             id: "dicTypeId",
             label: "dicTypeName",
-            children: "children",
+            children: "children"
         });
         treeDataList.length = 0;
         treeDataList.push(...data);
@@ -130,7 +130,7 @@ const treeLoad = (done: any) => {
         leftTree.treeData.push(...treeDataList);
         const data1 = dicFormat(dictionaryTypeList, {
             value: "dicTypeId",
-            label: "dicTypeName",
+            label: "dicTypeName"
         });
         dicTypeList.length = 0;
         dicTypeList.push(...data1);
@@ -150,13 +150,13 @@ const handleTreeClick = (data: Tree, done: any) => {
 const dialogTitle = reactive({
     add: "创建字典",
     edit: "修改字典",
-    detail: "字典详情",
+    detail: "字典详情"
 });
 const formModel = reactive<IDictionary>({
     id: "",
     dicTypeId: "",
     dicId: "",
-    dicName: "",
+    dicName: ""
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -170,9 +170,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "字典编号不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "字典名称",
@@ -184,9 +184,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "字典名称不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "字典类型",
@@ -198,8 +198,8 @@ const formItems = reactive<Array<FormItem>>([
         editDisabled: true,
         detailDisabled: true,
         options: dicTypeList,
-        prop: "dicTypeId",
-    },
+        prop: "dicTypeId"
+    }
 ]);
 const handleFormSubmit = (form: IDictionary, done: any) => {
     const row = { ...form };
@@ -207,7 +207,7 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
         updateDictionary(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "字典修改成功",
+                message: "字典修改成功"
             });
             done();
         });
@@ -216,7 +216,7 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
         addDictionary(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "字典创建成功",
+                message: "字典创建成功"
             });
             done();
         });
@@ -224,9 +224,21 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
 };
 </script>
 <template>
-    <quick-crud :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems" :table-data="dataList"
-        :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        dialog-titles="dialogTitles" :left-tree="leftTree" :loading="loading" @on-tree-load="treeLoad"
-        @on-tree-click="handleTreeClick" @on-form-submit="handleFormSubmit" @on-delete="handleDelete"
-        @on-add="handleAdd"></quick-crud>
+    <quick-crud
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        dialog-titles="dialogTitles"
+        :left-tree="leftTree"
+        :loading="loading"
+        @on-tree-load="treeLoad"
+        @on-tree-click="handleTreeClick"
+        @on-form-submit="handleFormSubmit"
+        @on-delete="handleDelete"
+        @on-add="handleAdd"
+    ></quick-crud>
 </template>

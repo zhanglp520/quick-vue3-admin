@@ -2,14 +2,14 @@ import { defineStore } from "pinia";
 import { IMenuTree } from "@/types/menu";
 
 interface IMenuState {
-  activeMenuId: string;
-  permissionMenuTreeList: Array<IMenuTree>;
+    activeMenuId: string;
+    permissionMenuTreeList: Array<IMenuTree>;
 }
 export const useMenuStore = defineStore("menuStore", {
     state: (): IMenuState => {
         return {
             activeMenuId: "home",
-            permissionMenuTreeList: [],
+            permissionMenuTreeList: []
         };
     },
     getters: {
@@ -18,7 +18,7 @@ export const useMenuStore = defineStore("menuStore", {
         },
         getPermissionMenuTreeList(): Array<IMenuTree> {
             return this.permissionMenuTreeList;
-        },
+        }
     },
     actions: {
         setActiveMenuId(activeMenuId: string) {
@@ -26,9 +26,9 @@ export const useMenuStore = defineStore("menuStore", {
         },
         clear() {
             this.permissionMenuTreeList = [];
-        },
+        }
     },
     persist: {
-        enabled: true,
-    },
+        enabled: true
+    }
 });

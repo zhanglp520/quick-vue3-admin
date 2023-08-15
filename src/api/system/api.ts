@@ -10,33 +10,33 @@ import { api } from "./index";
  *@Date: 2022-11-28 11:57:43
  */
 export const getApiPageList = (
-    params: object,
+    params: object
 ): Promise<IQuickResponseData<Array<IApi>>> => {
     return request<IQuickResponseData<Array<IApi>>>({
         url: api,
         method: "GET",
-        params,
+        params
     });
 };
 export const getApiList = (): Promise<IQuickResponseData<Array<IApi>>> => {
     return request<IQuickResponseData<Array<IApi>>>({
         url: `${api}/getApiList`,
-        method: "GET",
+        method: "GET"
     });
 };
 export const getApiByApiName = (
-    upiName: string,
+    upiName: string
 ): Promise<IQuickResponseData<IApi>> => {
     return request<IQuickResponseData<IApi>>({
         url: `${api}/getApiByApiName/${upiName}`,
-        method: "GET",
+        method: "GET"
     });
 };
 export const addApi = (data: IApi) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateApi = (data: IApi) => {
@@ -44,19 +44,19 @@ export const updateApi = (data: IApi) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteApi = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };
 
 export const batchDeleteApi = (ids: string) => {
     return request({
         url: `${api}/batchRemove/${ids}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

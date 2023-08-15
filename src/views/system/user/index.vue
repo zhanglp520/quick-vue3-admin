@@ -8,7 +8,7 @@ import {
     FormItem,
     Page,
     Actionbar,
-    Toolbar,
+    Toolbar
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -27,7 +27,7 @@ import {
     batchDeleteUser,
     resetUserPassword,
     enableUser,
-    disableUser,
+    disableUser
 } from "@/api/system/user";
 
 /**
@@ -49,20 +49,20 @@ const page = reactive<Page>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
-    total: 0,
+    total: 0
 });
 /**
  * 搜索
  */
 const searchForm = reactive<ISearchUser>({
-    keyword: "",
+    keyword: ""
 });
 const searchFormItems = reactive<Array<FormItem>>([
     {
         label: "",
         vModel: "keyword",
-        placeholder: "用户名|手机号",
-    },
+        placeholder: "用户名|手机号"
+    }
 ]);
 /**
  * 工具栏
@@ -72,19 +72,19 @@ const handleBatchDelete = (data: any, done: any) => {
     ElMessageBox.confirm("你真的删除选择的用户吗？", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         batchDeleteUser(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功",
+                message: "用户删除成功"
             });
             done();
         });
     });
 };
 const handleExport = () => {
-    exportUser().then(res => {
+    exportUser().then((res) => {
         downloadExcel(res, "用户列表");
     });
 };
@@ -107,7 +107,9 @@ const changeFile = (event: any) => {
 const tableToolbar = reactive<Toolbar>({
     importButtonName: "导入（默认后端方式）",
     exportButtonName: "导出（默认后端方式）",
-    hiddenBatchDeleteButton: validatePermission(permissionBtn.value?.batchDelete),
+    hiddenBatchDeleteButton: validatePermission(
+        permissionBtn.value?.batchDelete
+    ),
     hiddenImportButton: validatePermission(permissionBtn.value?.import),
     hiddenExportButton: validatePermission(permissionBtn.value?.export),
     hiddenAddButton: validatePermission(permissionBtn.value?.add),
@@ -120,10 +122,10 @@ const tableToolbar = reactive<Toolbar>({
             type: "warning",
             hidden: validatePermission(permissionBtn.value?.download),
             click() {
-                window.location.href =
-                    `${import.meta.env.VITE_APP_BASE_URL
-                    }/api/v2/downloads?filePath=templates/用户模板.xlsx`;
-            },
+                window.location.href = `${
+                    import.meta.env.VITE_APP_BASE_URL
+                }/api/v2/downloads?filePath=templates/用户模板.xlsx`;
+            }
         },
         {
             name: "下载模板(流文件方式)",
@@ -131,10 +133,10 @@ const tableToolbar = reactive<Toolbar>({
             type: "success",
             hidden: validatePermission(permissionBtn.value?.download),
             click() {
-                downloadFileStream("templates/用户模板.xlsx").then(res => {
+                downloadFileStream("templates/用户模板.xlsx").then((res) => {
                     downloadExcel(res, "用户导入模板");
                 });
-            },
+            }
         },
         {
             name: "导入(前端方式)",
@@ -144,7 +146,7 @@ const tableToolbar = reactive<Toolbar>({
             click() {
                 const fileBtn = uploadRef.value as HTMLInputElement;
                 fileBtn.click();
-            },
+            }
         },
         {
             name: "导出(前端方式)",
@@ -156,37 +158,37 @@ const tableToolbar = reactive<Toolbar>({
                 const columns = [
                     {
                         label: "编号",
-                        value: "id",
+                        value: "id"
                     },
                     {
                         label: "用户编号",
-                        value: "userId",
+                        value: "userId"
                     },
                     {
                         label: "用户名",
-                        value: "userName",
+                        value: "userName"
                     },
                     {
                         label: "姓名",
-                        value: "fullName",
+                        value: "fullName"
                     },
                     {
                         label: "手机号",
-                        value: "phone",
+                        value: "phone"
                     },
                     {
                         label: "邮箱",
-                        value: "email",
+                        value: "email"
                     },
                     {
                         label: "地址",
-                        value: "address",
-                    },
+                        value: "address"
+                    }
                 ];
                 exportExcel(dataList, "用户列表", columns);
-            },
-        },
-    ],
+            }
+        }
+    ]
 });
 /**
  * 操作栏
@@ -195,7 +197,7 @@ const handleDelete = (item: IUser, done: any) => {
     ElMessageBox.confirm(`你真的删除【${item.userName}】的用户吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -203,25 +205,29 @@ const handleDelete = (item: IUser, done: any) => {
         deleteUser(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功",
+                message: "用户删除成功"
             });
             done();
         });
     });
 };
 const handleResetPassword = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的重置【${item.userName}】用户的密码吗？`, "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-    }).then(() => {
+    ElMessageBox.confirm(
+        `你真的重置【${item.userName}】用户的密码吗？`,
+        "警告",
+        {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+        }
+    ).then(() => {
         if (!item.id) {
             return;
         }
         resetUserPassword(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "置用户密码重成功",
+                message: "置用户密码重成功"
             });
             done();
         });
@@ -231,7 +237,7 @@ const handleEnable = (item: IUser, done: any) => {
     ElMessageBox.confirm(`你真的启用【${item.userName}】的用户吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -239,7 +245,7 @@ const handleEnable = (item: IUser, done: any) => {
         enableUser(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户启用成功",
+                message: "用户启用成功"
             });
             done();
         });
@@ -249,7 +255,7 @@ const handleDisable = (item: IUser, done: any) => {
     ElMessageBox.confirm(`你真的禁用【${item.userName}】的用户吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -257,7 +263,7 @@ const handleDisable = (item: IUser, done: any) => {
         disableUser(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户禁用成功",
+                message: "用户禁用成功"
             });
             done();
         });
@@ -274,7 +280,7 @@ const tableActionbar = reactive<Actionbar>({
             hidden: validatePermission(permissionBtn.value?.resetPassword),
             click(item: IUser, done: any) {
                 handleResetPassword(item, done);
-            },
+            }
         },
         {
             name: "启用",
@@ -284,7 +290,7 @@ const tableActionbar = reactive<Actionbar>({
             },
             render(row: IUser) {
                 return row.enabled === 0;
-            },
+            }
         },
         {
             name: "禁用",
@@ -294,9 +300,9 @@ const tableActionbar = reactive<Actionbar>({
             },
             render(row: IUser) {
                 return row.enabled !== 0;
-            },
-        },
-    ],
+            }
+        }
+    ]
 });
 /**
  * 表格
@@ -304,37 +310,37 @@ const tableActionbar = reactive<Actionbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         width: "60",
         type: "index",
-        label: "序号",
+        label: "序号"
     },
     {
         label: "用户编号",
         prop: "userId",
-        width: "100",
+        width: "100"
     },
     {
         label: "用户名",
         prop: "userName",
-        width: "100",
+        width: "100"
     },
     {
         label: "姓名",
         prop: "fullName",
-        width: "100",
+        width: "100"
     },
     {
         label: "手机号",
         prop: "phone",
-        width: "180",
+        width: "180"
     },
     {
         label: "邮箱",
         prop: "email",
-        width: "200",
+        width: "200"
     },
     {
         label: "是否启用",
@@ -342,22 +348,22 @@ const tableColumns = reactive<Array<Column>>([
         width: "200",
         format: (row: IUser) => {
             return row.enabled === 1 ? "启用" : "禁用";
-        },
+        }
     },
     {
         label: "创建时间",
         prop: "createTime",
-        width: "200",
+        width: "200"
     },
     {
         label: "地址",
         prop: "address",
-        width: "200",
+        width: "200"
     },
     {
         label: "备注",
-        prop: "remark",
-    },
+        prop: "remark"
+    }
 ]);
 /**
  * 加载数据
@@ -365,7 +371,7 @@ const tableColumns = reactive<Array<Column>>([
 const load = (parmas: object) => {
     loading.value = true;
     getUserPageList(parmas)
-        .then(res => {
+        .then((res) => {
             loading.value = false;
             const { data: userList, total } = res;
             if (userList) {
@@ -384,7 +390,7 @@ const load = (parmas: object) => {
 const dialogTitle = reactive({
     add: "添加用户",
     edit: "编辑用户",
-    detail: "用户详情",
+    detail: "用户详情"
 });
 const validateUserId = (value: string, callback: any) => {
     const reg = /^YH_\d+$/;
@@ -441,7 +447,7 @@ const formModel = reactive<IUser>({
     phone: "",
     email: "",
     address: "",
-    remark: "",
+    remark: ""
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -455,13 +461,13 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "用户编号不能为空",
-                trigger: "blur",
+                trigger: "blur"
             },
             {
                 validator: validateUserId,
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "用户名",
@@ -473,13 +479,13 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "用户名不能为空",
-                trigger: "blur",
+                trigger: "blur"
             },
             {
                 validator: validateUserName,
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "姓名",
@@ -490,9 +496,10 @@ const formItems = reactive<Array<FormItem>>([
         rules: [
             {
                 validator: validateFullName,
-                trigger: "blur",
-            },
-        ],
+
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "手机号",
@@ -503,9 +510,9 @@ const formItems = reactive<Array<FormItem>>([
         rules: [
             {
                 validator: validatePhone,
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "邮箱",
@@ -516,16 +523,16 @@ const formItems = reactive<Array<FormItem>>([
         rules: [
             {
                 validator: validateEmail,
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "地址",
         labelWidth: "80px",
         vModel: "address",
         placeholder: "地址",
-        prop: "address",
+        prop: "address"
     },
     {
         label: "备注",
@@ -533,8 +540,8 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "remark",
         placeholder: "备注",
         type: "textarea",
-        prop: "remark",
-    },
+        prop: "remark"
+    }
 ]);
 const handleFormSubmit = (form: IUser, done: any) => {
     const row = { ...form };
@@ -542,7 +549,7 @@ const handleFormSubmit = (form: IUser, done: any) => {
         updateUser(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户修改成功",
+                message: "用户修改成功"
             });
             done();
         });
@@ -551,7 +558,7 @@ const handleFormSubmit = (form: IUser, done: any) => {
         addUser(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户创建成功",
+                message: "用户创建成功"
             });
             done();
         });
@@ -561,15 +568,17 @@ const handleFormSubmit = (form: IUser, done: any) => {
  * 导入
  */
 const dialogVisible = ref(false);
-const action =
-    `${import.meta.env.VITE_APP_BASE_URL}/api/v2/system/users/importUser`;
+const action = `${
+    import.meta.env.VITE_APP_BASE_URL
+}/api/v2/system/users/importUser`;
 const headers = reactive({
-    authorization: `Bearer ${loginStore.getAccessToken}`,
+    authorization: `Bearer ${loginStore.getAccessToken}`
 });
 const handleImport = () => {
     // const handleImport = (done: any) => {
     dialogVisible.value = true;
 };
+
 const handleSuccess = () => {
     // const handleSuccess = (data: any) => {
     // const {
@@ -579,19 +588,19 @@ const handleSuccess = () => {
     // }=data
     ElMessage({
         type: "success",
-        message: "导入用户成功.",
+        message: "导入用户成功."
     });
     dialogVisible.value = false;
     load({
         keyword: "",
         current: 1,
-        size: 10,
+        size: 10
     });
 };
 const handleError = () => {
     ElMessage({
         type: "success",
-        message: "导入用户失败.",
+        message: "导入用户失败."
     });
     dialogVisible.value = false;
 };
@@ -600,14 +609,41 @@ const handleClose = () => {
 };
 </script>
 <template>
-    <quick-crud :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems" :table-data="dataList"
-        :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        :search-form-items="searchFormItems" :search-form-model="searchForm" dialog-titles="dialogTitles" :page="page"
-        :loading="loading" @on-load="load" @on-form-submit="handleFormSubmit" @on-delete="handleDelete"
-        @on-batch-delete="handleBatchDelete" @on-import="handleImport" @on-export="handleExport"
-        @on-print="handlePrint"></quick-crud>
-    <quick-upload :dialog-visible="dialogVisible" :action="action" :headers="headers" @on-success="handleSuccess"
-        @on-error="handleError" @on-close="handleClose"></quick-upload>
-    <input ref="uploadRef" style="display: none" type="file" accept=".xls,.xlsx" class="upload-file"
-        @change="changeFile($event)" />
+    <quick-crud
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        :search-form-items="searchFormItems"
+        :search-form-model="searchForm"
+        dialog-titles="dialogTitles"
+        :page="page"
+        :loading="loading"
+        @on-load="load"
+        @on-form-submit="handleFormSubmit"
+        @on-delete="handleDelete"
+        @on-batch-delete="handleBatchDelete"
+        @on-import="handleImport"
+        @on-export="handleExport"
+        @on-print="handlePrint"
+    ></quick-crud>
+    <quick-upload
+        :dialog-visible="dialogVisible"
+        :action="action"
+        :headers="headers"
+        @on-success="handleSuccess"
+        @on-error="handleError"
+        @on-close="handleClose"
+    ></quick-upload>
+    <input
+        ref="uploadRef"
+        style="display: none"
+        type="file"
+        accept=".xls,.xlsx"
+        class="upload-file"
+        @change="changeFile($event)"
+    />
 </template>

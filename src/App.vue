@@ -27,81 +27,81 @@ const setColor = (setting: any) => {
     for (let i = 1; i < 10; i++) {
         el.style.setProperty(
             `--el-color-default-light-${i}`,
-            colourBlend(defaultColor, mixColor, i / 10),
+            colourBlend(defaultColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-default-dark-${i}`,
-            colourBlend(defaultColor, mixColor, i / 10),
+            colourBlend(defaultColor, mixColor, i / 10)
         );
 
         el.style.setProperty(
             `--el-color-primary-light-${i}`,
-            colourBlend(primaryColor, mixColor, i / 10),
+            colourBlend(primaryColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-primary-dark-${i}`,
-            colourBlend(primaryColor, mixColor, i / 10),
+            colourBlend(primaryColor, mixColor, i / 10)
         );
 
         el.style.setProperty(
             `--el-color-info-light-${i}`,
-            colourBlend(infoColor, mixColor, i / 10),
+            colourBlend(infoColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-info-dark-${i}`,
-            colourBlend(infoColor, mixColor, i / 10),
+            colourBlend(infoColor, mixColor, i / 10)
         );
 
         el.style.setProperty(
             `--el-color-success-light-${i}`,
-            colourBlend(successColor, mixColor, i / 10),
+            colourBlend(successColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-success-dark-${i}`,
-            colourBlend(successColor, mixColor, i / 10),
+            colourBlend(successColor, mixColor, i / 10)
         );
 
         el.style.setProperty(
             `--el-color-warning-light-${i}`,
-            colourBlend(warningColor, mixColor, i / 10),
+            colourBlend(warningColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-warning-dark-${i}`,
-            colourBlend(warningColor, mixColor, i / 10),
+            colourBlend(warningColor, mixColor, i / 10)
         );
 
         el.style.setProperty(
             `--el-color-danger-light-${i}`,
-            colourBlend(dangerColor, mixColor, i / 10),
+            colourBlend(dangerColor, mixColor, i / 10)
         );
         el.style.setProperty(
             `--el-color-danger-dark-${i}`,
-            colourBlend(dangerColor, mixColor, i / 10),
+            colourBlend(dangerColor, mixColor, i / 10)
         );
     }
     el.style.setProperty(
         "--el-color-default-dark-2",
-        colourBlend(defaultColor, mixColor, 0.2),
+        colourBlend(defaultColor, mixColor, 0.2)
     );
     el.style.setProperty(
         "--el-color-primary-dark-2",
-        colourBlend(primaryColor, mixColor, 0.2),
+        colourBlend(primaryColor, mixColor, 0.2)
     );
     el.style.setProperty(
         "--el-color-info-dark-2",
-        colourBlend(infoColor, mixColor, 0.2),
+        colourBlend(infoColor, mixColor, 0.2)
     );
     el.style.setProperty(
         "--el-color-success-dark-2",
-        colourBlend(successColor, mixColor, 0.2),
+        colourBlend(successColor, mixColor, 0.2)
     );
     el.style.setProperty(
         "--el-color-warning-dark-2",
-        colourBlend(warningColor, mixColor, 0.2),
+        colourBlend(warningColor, mixColor, 0.2)
     );
     el.style.setProperty(
         "--el-color-danger-dark-2",
-        colourBlend(dangerColor, mixColor, 0.2),
+        colourBlend(dangerColor, mixColor, 0.2)
     );
 };
 const colourBlend = (c1: string, c2: string, ratio: number) => {
@@ -134,7 +134,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <el-config-provider :locale="locale" :size="size" :z-index="zIndex">
+    <el-config-provider
+        :locale="locale"
+        :size="size"
+        :z-index="zIndex"
+    >
         <router-view />
     </el-config-provider>
 </template>

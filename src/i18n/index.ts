@@ -7,7 +7,7 @@ import enLocale from "./lang/en.json";
 
 const messages = {
     zh: zhLocale,
-    en: enLocale,
+    en: enLocale
 };
 const appStore = useAppStore(pinia);
 
@@ -17,7 +17,7 @@ const i18n = createI18n({
     messages,
     globalInjection: true, // 解决Uncaught (in promise) TypeError: _ctx.$t is not a function
     allowComposition: true, // 使用新特性 例如：useI18n
-    legacy: false, // 使用组合式api
+    legacy: false // 使用组合式api
 });
 
 export default i18n;

@@ -7,7 +7,7 @@ import {
     Fold,
     ChatDotRound,
     FullScreen,
-    Phone,
+    Phone
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { useAppStore } from "@/store/modules/app";
@@ -42,7 +42,7 @@ const loginOut = () => {
     ElMessageBox.confirm("你真的要退出系统吗?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         localStorage.clear();
         sessionStorage.clear();
@@ -53,13 +53,13 @@ const personalInfo = () => {
     const tab: ITab = {
         id: "PersonalInfo",
         name: "个人资料",
-        path: "/personalInfo",
+        path: "/personalInfo"
     };
     const tabList = tabStore.getTabList;
     if (tabList.length >= 15) {
         ElMessage({
             type: "warning",
-            message: "选项卡最多15个，请关闭部分再试",
+            message: "选项卡最多15个，请关闭部分再试"
         });
         return;
     }
@@ -70,13 +70,13 @@ const changePassword = () => {
     const tab: ITab = {
         id: "ChangePassword",
         name: "修改密码",
-        path: "/changePassword",
+        path: "/changePassword"
     };
     const tabList = tabStore.getTabList;
     if (tabList.length >= 15) {
         ElMessage({
             type: "warning",
-            message: "选项卡最多15个，请关闭部分再试",
+            message: "选项卡最多15个，请关闭部分再试"
         });
         return;
     }
@@ -84,24 +84,25 @@ const changePassword = () => {
     router.push("/changePassword");
 };
 const handleCommand = (cmd: string) => {
+    /* eslint-disable indent */
     switch (cmd) {
-    case "loginOut":
-        loginOut();
-        break;
-    case "personalInfo":
-        personalInfo();
-        break;
-    case "changePassword":
-        changePassword();
-        break;
-    default:
-        break;
+        case "loginOut":
+            loginOut();
+            break;
+        case "personalInfo":
+            personalInfo();
+            break;
+        case "changePassword":
+            changePassword();
+            break;
+        default:
+            break;
     }
 };
 const formatBredcrumbData = (currentMenuId: any) => {
     bredcrumbData.value = [];
     const menu: IMenu | undefined = permissionMenuList.value.find(
-        (x: IMenu) => x.id === currentMenuId,
+        (x: IMenu) => x.id === currentMenuId
     );
     if (!menu) {
         return;
@@ -112,12 +113,12 @@ const formatBredcrumbData = (currentMenuId: any) => {
     }
     bredcrumbData.value.push(menu.menuName);
     const parentMenu: IMenu | undefined = permissionMenuList.value.find(
-        x => x.id === pId,
+        (x) => x.id === pId
     );
     if (parentMenu) {
         bredcrumbData.value.push(parentMenu.menuName);
         const parentMenu1: IMenu | undefined = permissionMenuList.value.find(
-            x => x.id === parentMenu.pId,
+            (x) => x.id === parentMenu.pId
         );
         if (parentMenu1) {
             bredcrumbData.value.push(parentMenu1.menuName);
@@ -140,7 +141,10 @@ onMounted(() => {
 <template>
     <div class="aini-top">
         <div class="left">
-            <span class="test" @click="collapse">
+            <span
+                class="test"
+                @click="collapse"
+            >
                 <el-icon>
                     <Fold />
                 </el-icon>
@@ -174,7 +178,11 @@ onMounted(() => {
                 <el-dropdown @command="handleCommand">
                     <span class="el-dropdown-link">
                         <template v-if="userInfo.avatar">
-                            <el-avatar :size="30" :src="userInfo.avatar"> </el-avatar>
+                            <el-avatar
+                                :size="30"
+                                :src="userInfo.avatar"
+                            >
+                            </el-avatar>
                         </template>
                         <template v-else>
                             <el-avatar :size="30">
@@ -184,13 +192,22 @@ onMounted(() => {
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item :icon="Setting" command="personalInfo">
+                            <el-dropdown-item
+                                :icon="Setting"
+                                command="personalInfo"
+                            >
                                 个人资料
                             </el-dropdown-item>
-                            <el-dropdown-item :icon="Setting" command="changePassword">
+                            <el-dropdown-item
+                                :icon="Setting"
+                                command="changePassword"
+                            >
                                 修改密码
                             </el-dropdown-item>
-                            <el-dropdown-item :icon="Setting" command="loginOut">
+                            <el-dropdown-item
+                                :icon="Setting"
+                                command="loginOut"
+                            >
                                 退出
                             </el-dropdown-item>
                         </el-dropdown-menu>
@@ -242,4 +259,5 @@ onMounted(() => {
         align-items: center;
         height: 100%;
     }
-}</style>
+}
+</style>

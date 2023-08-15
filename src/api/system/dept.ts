@@ -7,24 +7,24 @@ import { dept as api } from "./index";
  *@Date: 2022-11-28 11:55:10
  */
 export const getDeptListByPId = (
-    pId: number,
+    pId: number
 ): Promise<IQuickResponseData<Array<IDept>>> => {
     return request<IQuickResponseData<Array<IDept>>>({
         url: `${api}/getListByPId/${pId}`,
-        method: "GET",
+        method: "GET"
     });
 };
 export const getDeptList = (): Promise<IQuickResponseData<Array<IDept>>> => {
     return request<IQuickResponseData<Array<IDept>>>({
         url: api,
-        method: "GET",
+        method: "GET"
     });
 };
 export const addDept = (data: IDept) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateDept = (data: IDept) => {
@@ -32,12 +32,12 @@ export const updateDept = (data: IDept) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteDept = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

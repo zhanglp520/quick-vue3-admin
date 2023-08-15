@@ -7,7 +7,7 @@ import { IMenuTree } from "@/types/menu";
 import {
     getMenuPermission,
     getApiPermission,
-    rolePermission,
+    rolePermission
 } from "@/api/auth";
 import { ElTree } from "element-plus";
 import { IRole } from "@/types/role";
@@ -20,8 +20,8 @@ const props = defineProps({
         type: Object,
         default: () => {
             return {};
-        },
-    },
+        }
+    }
 });
 
 const { role } = props as {
@@ -39,7 +39,7 @@ const menuTreeList = reactive<Array<IMenuTree>>([]);
 const menuProps = reactive({
     id: "menuId",
     label: "menuName",
-    children: "children",
+    children: "children"
 });
 
 /**
@@ -51,7 +51,7 @@ const apiTreeList = reactive<Array<IApi>>([]);
 const apiProps = reactive({
     id: "id",
     label: "apiName",
-    children: "children",
+    children: "children"
 });
 /**
  * TODO:授权数据
@@ -61,10 +61,10 @@ const apiProps = reactive({
  * 加载菜单数据
  */
 const menuLoad = () => {
-    getMenuList().then(res => {
+    getMenuList().then((res) => {
         const { data: menuList } = res;
         const menuTree = listToTree(menuList, 0, {
-            pId: "pId",
+            pId: "pId"
         });
         menuTreeList.length = 0;
         menuTreeList.push(...menuTree);
@@ -72,7 +72,7 @@ const menuLoad = () => {
     });
 };
 const getMenuPermission1 = (id: string) => {
-    getMenuPermission(id).then(res => {
+    getMenuPermission(id).then((res) => {
         const { data: keys } = res;
         menuTreeData.length = 0;
         menuTreeData.push(...menuTreeList);
@@ -87,7 +87,7 @@ const getMenuPermission1 = (id: string) => {
  * 加载接口数据
  */
 const apiLoad = () => {
-    getApiList().then(res => {
+    getApiList().then((res) => {
         const { data: apiList } = res;
         apiTreeList.push(...apiList);
         getApiPermission1(role.id!.toString());
@@ -95,7 +95,7 @@ const apiLoad = () => {
 };
 
 const getApiPermission1 = (id: string) => {
-    getApiPermission(id).then(res => {
+    getApiPermission(id).then((res) => {
         const { data: keys } = res;
         apiTreeData.length = 0;
         apiTreeData.push(...apiTreeList);
@@ -131,7 +131,7 @@ const save = (callback: any) => {
     const data = {
         roleId: "",
         menuIds,
-        apiIds,
+        apiIds
     };
     rolePermission(data).then(() => {
         callback();
@@ -140,11 +140,11 @@ const save = (callback: any) => {
 defineExpose({
     prev,
     next,
-    save,
+    save
 });
 watch(
     () => active.value,
-    val => {
+    (val) => {
         console.log("newVal", val);
         if (val === 1) {
             menuLoad();
@@ -152,23 +152,41 @@ watch(
             apiLoad();
         }
         emits("active", val);
-    },
+    }
 );
 onMounted(() => {
     menuLoad();
 });
 </script>
 <template>
-    <el-steps :active="active" finish-status="success" simple>
+    <el-steps
+        :active="active"
+        finish-status="success"
+        simple
+    >
         <el-step title="菜单权限"></el-step>
         <el-step title="接口权限"></el-step>
         <el-step title="数据权限"></el-step>
     </el-steps>
     <template v-if="active === 1">
-        <el-tree ref="menuTreeRef" :data="menuTreeData" :props="menuProps" show-checkbox node-key="id" highlight-current />
+        <el-tree
+            ref="menuTreeRef"
+            :data="menuTreeData"
+            :props="menuProps"
+            show-checkbox
+            node-key="id"
+            highlight-current
+        />
     </template>
     <template v-if="active === 2">
-        <el-tree ref="apiTreeRef" :data="apiTreeData" :props="apiProps" show-checkbox node-key="id" highlight-current />
+        <el-tree
+            ref="apiTreeRef"
+            :data="apiTreeData"
+            :props="apiProps"
+            show-checkbox
+            node-key="id"
+            highlight-current
+        />
     </template>
     <template v-if="active === 3"> 待开发 </template>
 </template>

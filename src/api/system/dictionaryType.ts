@@ -16,7 +16,7 @@ export const getDictionaryTypeList = (): Promise<
 > => {
     return request<IQuickResponseData<Array<IDictionaryType>>>({
         url: api,
-        method: "GET",
+        method: "GET"
     });
 };
 
@@ -24,7 +24,7 @@ export const addDictionaryType = (data: IDictionaryType) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateDictionaryType = (data: IDictionaryType) => {
@@ -32,12 +32,12 @@ export const updateDictionaryType = (data: IDictionaryType) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteDictionaryType = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

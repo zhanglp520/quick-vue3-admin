@@ -8,7 +8,7 @@ import {
     FormItem,
     Options,
     Tree,
-    LeftTree,
+    LeftTree
 } from "@ainiteam/quick-vue3-ui";
 import { selectTreeFormat, validatePermission } from "@/utils";
 import { IDept, IDeptTree, IDeptPermissionButton } from "@/types/dept";
@@ -17,7 +17,7 @@ import {
     getDeptList,
     addDept,
     updateDept,
-    deleteDept,
+    deleteDept
 } from "@/api/system/dept";
 
 /**
@@ -31,7 +31,7 @@ const dataList = reactive<Array<IDept>>([]);
 const currentTreeData = ref<Tree>({
     id: "",
     label: "",
-    children: [],
+    children: []
 });
 const permissionBtn = computed<IDeptPermissionButton>(() => {
     return userStore.getPermissionBtns as IDeptPermissionButton;
@@ -49,7 +49,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
+    hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
 /**
  * 操作栏
@@ -58,7 +58,7 @@ const handleDelete = (item: IDept, done: any) => {
     ElMessageBox.confirm(`你真的删除【${item.deptName}】的部门吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
     }).then(() => {
         if (!item.id) {
             return;
@@ -66,7 +66,7 @@ const handleDelete = (item: IDept, done: any) => {
         deleteDept(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "部门删除成功",
+                message: "部门删除成功"
             });
             done();
         });
@@ -75,7 +75,7 @@ const handleDelete = (item: IDept, done: any) => {
 const tableActionbar = reactive<Actionbar>({
     width: 300,
     hiddenDetailButton: true,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
+    hiddenEditButton: validatePermission(permissionBtn.value?.edit)
 });
 /**
  * 表格
@@ -83,24 +83,24 @@ const tableActionbar = reactive<Actionbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         label: "部门编号",
         prop: "deptId",
-        width: "200",
+        width: "200"
     },
     {
         label: "部门名称",
-        prop: "deptName",
-    },
+        prop: "deptName"
+    }
 ]);
 const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
     const arr: Array<Tree> = [];
     const obj: Tree = {
         id: "",
         label: "",
-        children: [],
+        children: []
     };
     const parentData = data.find((x: IDept) => x.pId === pId);
     if (parentData) {
@@ -113,15 +113,17 @@ const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
                 const companyObj: Tree = {
                     id: item.id!,
                     label: item.deptName,
-                    children: [],
+                    children: []
                 };
                 const companyPid = item.id;
-                const deptData = data.filter((x: IDept) => x.pId === companyPid);
-                deptData.forEach(deptItem => {
+                const deptData = data.filter(
+                    (x: IDept) => x.pId === companyPid
+                );
+                deptData.forEach((deptItem) => {
                     companyObj.children.push({
                         id: deptItem.id!,
                         label: deptItem.deptName,
-                        children: [],
+                        children: []
                     });
                 });
                 obj.children.push(companyObj);
@@ -160,10 +162,10 @@ const load = () => {
 
 const leftTree = reactive<LeftTree>({
     treeData: [],
-    treeSpan: 6,
+    treeSpan: 6
 });
 const treeLoad = (done: any) => {
-    getDeptList().then(res => {
+    getDeptList().then((res) => {
         const { data: deptList } = res;
         deptDdataListTemp.length = 0;
         deptDdataListTemp.push(...deptList);
@@ -171,7 +173,7 @@ const treeLoad = (done: any) => {
         leftTree.treeData.length = 0;
         leftTree.treeData.push(...data);
         const selectTreeData = selectTreeFormat(data, {
-            value: "id",
+            value: "id"
         });
         dicTypeList.length = 0;
         dicTypeList.push(...selectTreeData);
@@ -192,13 +194,13 @@ const handleTreeClick = (data: Tree, done: any) => {
 const dialogTitle = reactive({
     add: "创建部门",
     edit: "修改部门",
-    detail: "部门详情",
+    detail: "部门详情"
 });
 const formModel = reactive<IDept>({
     id: "",
     deptId: "",
     deptName: "",
-    pId: "0",
+    pId: "0"
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -212,9 +214,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "部门编号不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "部门名称",
@@ -226,9 +228,9 @@ const formItems = reactive<Array<FormItem>>([
             {
                 required: true,
                 message: "部门名称不能为空",
-                trigger: "blur",
-            },
-        ],
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "父级部门",
@@ -240,8 +242,8 @@ const formItems = reactive<Array<FormItem>>([
         editDisabled: true,
         detailDisabled: true,
         options: dicTypeList,
-        prop: "pId",
-    },
+        prop: "pId"
+    }
 ]);
 const handleFormSubmit = (form: IDept, done: any) => {
     const row = { ...form };
@@ -249,7 +251,7 @@ const handleFormSubmit = (form: IDept, done: any) => {
         updateDept(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "部门修改成功",
+                message: "部门修改成功"
             });
             done();
         });
@@ -258,7 +260,7 @@ const handleFormSubmit = (form: IDept, done: any) => {
         addDept(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "部门创建成功",
+                message: "部门创建成功"
             });
             done();
         });
@@ -266,9 +268,22 @@ const handleFormSubmit = (form: IDept, done: any) => {
 };
 </script>
 <template>
-    <quick-crud :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems" :table-data="dataList"
-        :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        dialog-titles="dialogTitles" :left-tree="leftTree" :left-tree-refresh="true" :loading="loading"
-        @on-tree-load="treeLoad" @on-tree-click="handleTreeClick" @on-form-submit="handleFormSubmit"
-        @on-delete="handleDelete" @on-add="handleAdd"></quick-crud>
+    <quick-crud
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        dialog-titles="dialogTitles"
+        :left-tree="leftTree"
+        :left-tree-refresh="true"
+        :loading="loading"
+        @on-tree-load="treeLoad"
+        @on-tree-click="handleTreeClick"
+        @on-form-submit="handleFormSubmit"
+        @on-delete="handleDelete"
+        @on-add="handleAdd"
+    ></quick-crud>
 </template>

@@ -10,14 +10,14 @@ import { role as api } from "./index";
 export const getRoleList = (): Promise<IQuickResponseData<Array<IRole>>> => {
     return request<IQuickResponseData<Array<IRole>>>({
         url: api,
-        method: "GET",
+        method: "GET"
     });
 };
 export const addRole = (data: IRole) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateRole = (data: IRole) => {
@@ -25,12 +25,12 @@ export const updateRole = (data: IRole) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteRole = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };

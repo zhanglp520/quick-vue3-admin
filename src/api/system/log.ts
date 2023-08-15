@@ -7,11 +7,11 @@ import { log as api } from "./index";
  *@Date: 2022-11-28 11:56:42
  */
 export const getLogPageList = (
-    params: any,
+    params: any
 ): Promise<IQuickResponseData<Array<ILog>>> => {
     return request<IQuickResponseData<Array<ILog>>>({
         url: api,
         method: "GET",
-        params,
+        params
     });
 };

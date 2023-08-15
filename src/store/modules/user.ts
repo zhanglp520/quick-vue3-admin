@@ -8,10 +8,10 @@ import { getPermission } from "@/api/auth";
 import { useTabStore } from "@/store/modules/tab";
 
 interface IUserState {
-  user: IUser;
-  permissionMenuList: Array<IMenu>;
-  menuList: Array<IMenubar>;
-  permissionBtns: Array<IMenu>;
+    user: IUser;
+    permissionMenuList: Array<IMenu>;
+    menuList: Array<IMenubar>;
+    permissionBtns: Array<IMenu>;
 }
 export const useUserStore = defineStore("userStore", {
     state: (): IUserState => {
@@ -25,11 +25,11 @@ export const useUserStore = defineStore("userStore", {
                 avatar: "",
                 email: "",
                 address: "",
-                createTime: "",
+                createTime: ""
             },
             permissionMenuList: [],
             menuList: [],
-            permissionBtns: [],
+            permissionBtns: []
         };
     },
     getters: {
@@ -37,14 +37,14 @@ export const useUserStore = defineStore("userStore", {
             const tabStore = useTabStore();
             const activeTab = tabStore.getActiveTab;
             const menuPermission = this.permissionMenuList.filter(
-                x => x.id?.toString() === activeTab.id,
+                (x) => x.id?.toString() === activeTab.id
             );
             if (menuPermission && menuPermission[0]) {
                 const btns = this.permissionMenuList.filter(
-                    x => x.pId === menuPermission[0].id,
+                    (x) => x.pId === menuPermission[0].id
                 );
                 const permission = {};
-                btns.forEach(element => {
+                btns.forEach((element) => {
                     permission[element.menuId] = true;
                 });
                 return permission as T;
@@ -59,20 +59,22 @@ export const useUserStore = defineStore("userStore", {
         },
         userInfo(): IUser {
             return this.user;
-        },
+        }
     },
     actions: {
         getPermission(id: string): Promise<IQuickResponseData<Array<IMenu>>> {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 const userId = id;
                 getPermission(userId).then((res: any) => {
                     const { data: userPermissionMenuList } = res;
                     this.permissionMenuList = userPermissionMenuList;
-                    const dt = JSON.parse(JSON.stringify(userPermissionMenuList));
+                    const dt = JSON.parse(
+                        JSON.stringify(userPermissionMenuList)
+                    );
                     // const userMenuList = menuFormat(dt)
                     const dtNew = dt.filter((x: any) => x.menuType !== 2);
                     const userMenuList = listToTree(dtNew, 0, {
-                        pId: "pId",
+                        pId: "pId"
                     });
                     const m = JSON.parse(JSON.stringify(userMenuList));
                     this.menuList = m;
@@ -81,37 +83,37 @@ export const useUserStore = defineStore("userStore", {
             });
         },
         getUserInfo(userName: string): Promise<IUser> {
-            return new Promise(resolve => {
-                getUserByUserName(userName).then(res => {
+            return new Promise((resolve) => {
+                getUserByUserName(userName).then((res) => {
                     const { data: user } = res;
                     this.user = user;
                     resolve(user);
                 });
             });
-        },
+        }
     },
     persist: {
-        enabled: true,
-    // encryptionKey: 'myTest',
-    // strategies: [
-    //   {
-    //     key: 'login',
-    //     storage: sessionStorage,
-    //     // paths: ['token', 'refreshToken'],
-    //   },
-    // ],
-    // enabled: true, // 默认会以模块id为key，存储当前模块所有的状态；路由跳转会刷新掉store，尽量放在路由刷新后存储。
-    // strategies: [
-    //   {
-    //     key: 'token', // 默认userStore
-    //     // storage: sessionStorage, // sessionStorage|localStorage//默认sessionStorage
-    //     // paths: ['token'],
-    //   },
-    //   {
-    //     key: 'userInfo',
-    //     storage: localStorage,
-    //     paths: ['tenant', 'userName'],
-    //   },
-    // ],
-    },
+        enabled: true
+        // encryptionKey: 'myTest',
+        // strategies: [
+        //   {
+        //     key: 'login',
+        //     storage: sessionStorage,
+        //     // paths: ['token', 'refreshToken'],
+        //   },
+        // ],
+        // enabled: true, // 默认会以模块id为key，存储当前模块所有的状态；路由跳转会刷新掉store，尽量放在路由刷新后存储。
+        // strategies: [
+        //   {
+        //     key: 'token', // 默认userStore
+        //     // storage: sessionStorage, // sessionStorage|localStorage//默认sessionStorage
+        //     // paths: ['token'],
+        //   },
+        //   {
+        //     key: 'userInfo',
+        //     storage: localStorage,
+        //     paths: ['tenant', 'userName'],
+        //   },
+        // ],
+    }
 });

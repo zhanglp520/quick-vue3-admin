@@ -18,28 +18,46 @@ const kaiyuan = () => {
                         </div>
                     </template>
                     <div class="description">
-                        quick-admin 是一款免费开源快速搭建中后台系统框架,本框架基于
+                        quick-admin
+                        是一款免费开源快速搭建中后台系统框架,本框架基于
                         vite4、vue3、element-plus、pinia
                         等最新主流技术并封装了通用的组件方便开发者提高工作效率,后期也会通过版本升级的方式来维护并更新，使开发者拥有一款长期并且稳定的脚手架。本团队还提供了基于
                         quick 框架开发的各类业务项目，如有相关需求联系管理员。
                         <br />
                         <p>
-                            开源地址：<el-link type="primary" href="https://gitee.com/zhanglp520/quick-admin/">
-                                https://gitee.com/zhanglp520/quick-admin</el-link>
+                            开源地址：<el-link
+                                type="primary"
+                                href="https://gitee.com/zhanglp520/quick-admin/"
+                            >
+                                https://gitee.com/zhanglp520/quick-admin</el-link
+                            >
                             <br />
-                            演示地址：<el-link type="primary" href="http://quick.ainiteam.com/">
-                                http://quick.ainiteam.com/</el-link>
+                            演示地址：<el-link
+                                type="primary"
+                                href="http://quick.ainiteam.com/"
+                            >
+                                http://quick.ainiteam.com/</el-link
+                            >
                             <br />
                             账号密码：admin/123456
                             <br />
-                            如果对你有帮助，帮忙点个star吧！ 也可以fork项目并对项目做出贡献！
+                            如果对你有帮助，帮忙点个star吧！
+                            也可以fork项目并对项目做出贡献！
                             <br />
                             如果想加入项目，请联系管理员！
                         </p>
                     </div>
                     <div class="action">
-                        <el-button type="primary" @click="yanshi">演示版本</el-button>
-                        <el-button type="warning" @click="kaiyuan">开源版本</el-button>
+                        <el-button
+                            type="primary"
+                            @click="yanshi"
+                            >演示版本</el-button
+                        >
+                        <el-button
+                            type="warning"
+                            @click="kaiyuan"
+                            >开源版本</el-button
+                        >
                     </div>
                 </el-card>
             </el-col>
@@ -53,7 +71,8 @@ const kaiyuan = () => {
                         </div>
                     </template>
                     <p>
-                        1.使用 vite4、vue3、element-plus、pinia 和 typescript 等前言技术<br />
+                        1.使用 vite4、vue3、element-plus、pinia 和 typescript
+                        等前言技术<br />
                         2.封装了通用的组件<br />
                         3.提供了系统管理常用功能模块 <br />
                         4. 提供权限管理模块 <br />
@@ -107,17 +126,36 @@ const kaiyuan = () => {
                         </div>
                     </template>
                     <p>
-                        1.开发文档：<el-link type="primary" href=" https://doc.ainiteam.com/">
-                            https://doc.ainiteam.com/</el-link><br />
-                        2.接口文档：<el-link type="primary"
-                            href="https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7">
-                            https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7</el-link><br />
-                        4.码云地址：<el-link type="primary" href="https://gitee.com/zhanglp520/quick-admin/">
-                            https://gitee.com/zhanglp520/quick-admin/</el-link><br />
-                        5.github地址：<el-link type="primary" href="https://github.com/zhanglp520/quick-admin/">
-                            https://github.com/zhanglp520/quick-admin/</el-link><br />
-                        6.gitlab地址：<el-link type="primary" href="http://110.42.130.88:8099/zhanglp520/quick-admin/">
-                            http://110.42.130.88:8099/zhanglp520/quick-admin/</el-link><br />
+                        1.开发文档：<el-link
+                            type="primary"
+                            href=" https://doc.ainiteam.com/"
+                        >
+                            https://doc.ainiteam.com/</el-link
+                        ><br />
+                        2.接口文档：<el-link
+                            type="primary"
+                            href="https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7"
+                        >
+                            https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7</el-link
+                        ><br />
+                        4.码云地址：<el-link
+                            type="primary"
+                            href="https://gitee.com/zhanglp520/quick-admin/"
+                        >
+                            https://gitee.com/zhanglp520/quick-admin/</el-link
+                        ><br />
+                        5.github地址：<el-link
+                            type="primary"
+                            href="https://github.com/zhanglp520/quick-admin/"
+                        >
+                            https://github.com/zhanglp520/quick-admin/</el-link
+                        ><br />
+                        6.gitlab地址：<el-link
+                            type="primary"
+                            href="http://110.42.130.88:8099/zhanglp520/quick-admin/"
+                        >
+                            http://110.42.130.88:8099/zhanglp520/quick-admin/</el-link
+                        ><br />
                         7.gitee中发起 Issue<br />
                         8.qq群帮助：558795174<br />
                     </p>

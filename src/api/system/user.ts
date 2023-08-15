@@ -12,37 +12,37 @@ export const exportUser = (): Promise<IQuickResponseData<any>> => {
     return request<IQuickResponseData<Array<IUser>>>({
         url: `${api}/exportUser`,
         method: "GET",
-        responseType: "arraybuffer",
+        responseType: "arraybuffer"
     });
 };
 export const getUserPageList = (
-    params: object,
+    params: object
 ): Promise<IQuickResponseData<Array<IUser>>> => {
     return request<IQuickResponseData<Array<IUser>>>({
         url: api,
         method: "GET",
-        params,
+        params
     });
 };
 export const getUserList = (): Promise<IQuickResponseData<Array<IUser>>> => {
     return request<IQuickResponseData<Array<IUser>>>({
         url: `${api}/getUserList`,
-        method: "GET",
+        method: "GET"
     });
 };
 export const getUserByUserName = (
-    userName: string,
+    userName: string
 ): Promise<IQuickResponseData<IUser>> => {
     return request<IQuickResponseData<IUser>>({
         url: `${api}/getUserByUserName/${userName}`,
-        method: "GET",
+        method: "GET"
     });
 };
 export const addUser = (data: IUser) => {
     return request({
         url: api,
         method: "POST",
-        data,
+        data
     });
 };
 export const updateUser = (data: IUser) => {
@@ -50,13 +50,13 @@ export const updateUser = (data: IUser) => {
     return request({
         url: `${api}/${id}`,
         method: "PUT",
-        data,
+        data
     });
 };
 export const deleteUser = (id: string) => {
     return request({
         url: `${api}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };
 export const changePassword = (id: string, data: IChangePassword) => {
@@ -66,32 +66,32 @@ export const changePassword = (id: string, data: IChangePassword) => {
         method: "PATCH",
         data: {
             oldPassword,
-            newPassword,
-        },
+            newPassword
+        }
     });
 };
 
 export const batchDeleteUser = (ids: string) => {
     return request({
         url: `${api}/batchRemove/${ids}`,
-        method: "DELETE",
+        method: "DELETE"
     });
 };
 export const resetUserPassword = (id: string) => {
     return request({
         url: `${api}/resetPassword/${id}`,
-        method: "PATCH",
+        method: "PATCH"
     });
 };
 export const enableUser = (id: string) => {
     return request({
         url: `${api}/enabled/${id}`,
-        method: "PATCH",
+        method: "PATCH"
     });
 };
 export const disableUser = (id: string) => {
     return request({
         url: `${api}/disable/${id}`,
-        method: "PATCH",
+        method: "PATCH"
     });
 };

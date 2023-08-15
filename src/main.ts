@@ -5,7 +5,7 @@ import * as echarts from "echarts";
 import {
     GcSpreadSheets,
     GcWorksheet,
-    GcColumn,
+    GcColumn
 } from "@grapecity/spread-sheets-vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
@@ -31,17 +31,16 @@ const app = createApp(App);
 app.component("GcSpreadSheets", GcSpreadSheets);
 app.component("GcWorksheet", GcWorksheet);
 app.component("GcColumn", GcColumn);
-Object.keys(Elicons).forEach(key => {
+Object.keys(Elicons).forEach((key) => {
     app.component(key, Elicons[key]);
 });
 app.config.globalProperties.$echarts = echarts;
 const appStore = useAppStore(pinia);
 
 /**加载插件 */
-app
-    .use(ElementPlus, {
-        locale: appStore.getLanguage === "zh" ? zhCn : en,
-    })
+app.use(ElementPlus, {
+    locale: appStore.getLanguage === "zh" ? zhCn : en
+})
     .use(quickUI)
     .use(pinia)
     .use(router)

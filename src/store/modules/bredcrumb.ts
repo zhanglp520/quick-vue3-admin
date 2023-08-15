@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 
 interface IAppState {
-  language: string;
-  isCollapse: boolean;
+    language: string;
+    isCollapse: boolean;
 }
 
 export const useAppStore = defineStore("appState", {
     state: (): IAppState => {
         return {
             language: "zh",
-            isCollapse: false,
+            isCollapse: false
         };
     },
     getters: {
@@ -18,7 +18,7 @@ export const useAppStore = defineStore("appState", {
         },
         getCollapse(): boolean {
             return this.isCollapse;
-        },
+        }
     },
     actions: {
         setLanguage(language: string) {
@@ -26,7 +26,7 @@ export const useAppStore = defineStore("appState", {
         },
         setCollapse(isCollapse: boolean) {
             this.isCollapse = isCollapse;
-        },
+        }
     },
     persist: {
         enabled: true,
@@ -34,8 +34,8 @@ export const useAppStore = defineStore("appState", {
             {
                 key: "test",
                 storage: localStorage,
-                paths: ["language"],
-            },
-        ],
-    },
+                paths: ["language"]
+            }
+        ]
+    }
 });

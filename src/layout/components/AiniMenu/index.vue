@@ -29,7 +29,7 @@ const menuClick = (menu: IMenubar) => {
     const tab: ITab = {
         id,
         name: menuName,
-        path,
+        path
     };
     tabStore.setActiveTab(tab);
 };
@@ -44,7 +44,7 @@ const homeMenuClick = () => {
         link: 0,
         path: "/home",
         viewPath: "",
-        children: [],
+        children: []
     };
     menuClick(menu);
 };
@@ -53,23 +53,27 @@ watch(activeMenuId, (val: string) => {
 });
 </script>
 <template>
-  <!-- :router="true" -->
-  <el-menu
-    active-text-color="#ffd04b"
-    background-color="#545c64"
-    class="el-menu-vertical-demo"
-    :default-active="defaultActive"
-    :collapse="isCollapse"
-    text-color="#fff"
-    @open="handleOpen"
-    @close="handleClose"
-  >
-    <el-menu-item index="/home" :router="true" @click="homeMenuClick">
-      <el-icon>
-        <component :is="'home-filled'" />
-      </el-icon>
-      <span>首页</span>
-    </el-menu-item>
-    <aini-menu-item :menu-list="menuList"></aini-menu-item>
-  </el-menu>
+    <!-- :router="true" -->
+    <el-menu
+        active-text-color="#ffd04b"
+        background-color="#545c64"
+        class="el-menu-vertical-demo"
+        :default-active="defaultActive"
+        :collapse="isCollapse"
+        text-color="#fff"
+        @open="handleOpen"
+        @close="handleClose"
+    >
+        <el-menu-item
+            index="/home"
+            :router="true"
+            @click="homeMenuClick"
+        >
+            <el-icon>
+                <component :is="'home-filled'" />
+            </el-icon>
+            <span>首页</span>
+        </el-menu-item>
+        <aini-menu-item :menu-list="menuList"></aini-menu-item>
+    </el-menu>
 </template>

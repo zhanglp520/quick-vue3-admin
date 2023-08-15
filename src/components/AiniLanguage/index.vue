@@ -13,16 +13,24 @@ export default defineComponent({
             appStore.setLanguage(lang);
         };
         return {
-            switchLanguage,
+            switchLanguage
         };
-    },
+    }
 });
 </script>
 
 <template>
     <div>
-        <el-button type="primary" @click="switchLanguage('zh')">中文</el-button>
-        <el-button type="primary" @click="switchLanguage('en')">英文</el-button>
+        <el-button
+            type="primary"
+            @click="switchLanguage('zh')"
+            >中文</el-button
+        >
+        <el-button
+            type="primary"
+            @click="switchLanguage('en')"
+            >英文</el-button
+        >
     </div>
 </template>
 

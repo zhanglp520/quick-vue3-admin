@@ -8,7 +8,7 @@ import { addRoutes } from "./dynamicRouter";
 
 export const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
-    routes: [...staticRouter],
+    routes: [...staticRouter]
 });
 router.beforeEach((to, from, next) => {
     NProgress.start();

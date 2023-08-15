@@ -3,7 +3,7 @@ import {
     Tree,
     Options,
     SelectTreeOptions,
-    TreeOptions,
+    TreeOptions
 } from "@ainiteam/quick-vue3-ui";
 /*
  *@Description: 常用其他工具库
@@ -14,14 +14,16 @@ export const dicFormat = (data: any, options: Options = {}) => {
     const arr: Options[] = [];
     const defaultOptions = {
         label: "label",
-        value: "value",
+        value: "value"
     };
-    const label = options && options.label ? options.label : defaultOptions.label;
-    const value = options && options.value ? options.value : defaultOptions.value;
+    const label =
+        options && options.label ? options.label : defaultOptions.label;
+    const value =
+        options && options.value ? options.value : defaultOptions.value;
     data.forEach((element: any) => {
         arr.push({
             label: element[label],
-            value: element[value],
+            value: element[value]
         });
     });
     return arr;
@@ -31,17 +33,21 @@ export const selectTreeFormat = (data: any, options: SelectTreeOptions) => {
     const defaultOptions = {
         value: "value",
         label: "label",
-        children: "children",
+        children: "children"
     };
-    const label = options && options.label ? options.label : defaultOptions.label;
-    const value = options && options.value ? options.value : defaultOptions.value;
+    const label =
+        options && options.label ? options.label : defaultOptions.label;
+    const value =
+        options && options.value ? options.value : defaultOptions.value;
     const children =
-    options && options.children ? options.children : defaultOptions.children;
+        options && options.children
+            ? options.children
+            : defaultOptions.children;
     data.forEach((element: SelectTree) => {
         const obj: SelectTree = {
             label: element[label],
             value: element[value],
-            children: [],
+            children: []
         };
         if (element[children] && element[children].length > 0) {
             obj.children = selectTreeFormat(element[children], options);
@@ -55,17 +61,20 @@ export const treeFormat = (data: any, options: TreeOptions) => {
     const defaultOptions = {
         id: "id",
         label: "label",
-        children: "children",
+        children: "children"
     };
-    const label = options && options.label ? options.label : defaultOptions.label;
+    const label =
+        options && options.label ? options.label : defaultOptions.label;
     const id = options && options.id ? options.id : defaultOptions.id;
     const children =
-    options && options.children ? options.children : defaultOptions.children;
+        options && options.children
+            ? options.children
+            : defaultOptions.children;
     data.forEach((element: Tree) => {
         const obj: Tree = {
             label: element[label],
             id: element[id],
-            children: [],
+            children: []
         };
         if (element[children] && element[children].length > 0) {
             obj.children = treeFormat(element[children], options);
@@ -149,7 +158,7 @@ export const toTuofeng = (str: string) => {
     if (!str) {
         return str;
     }
-    return str.replace(/"(\w)+":/g, all => {
+    return str.replace(/"(\w)+":/g, (all) => {
         if (all.indexOf("_") === -1) {
             return all;
         }
@@ -168,7 +177,7 @@ export const listToTree = (data: any, pId: any, options: any) => {
     const defaultOptions = {
         id: "id",
         pId: "pId",
-        sort: "sort",
+        sort: "sort"
     };
     const value = options && options.id ? options.id : defaultOptions.id;
     const parentId = options && options.pId ? options.pId : defaultOptions.pId;

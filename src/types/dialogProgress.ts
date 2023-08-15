@@ -1,5 +1,5 @@
 export interface IDialogProgress {
-  prev: () => void;
-  next: () => void;
-  save: (callback: any) => void;
+    prev: () => void;
+    next: () => void;
+    save: (callback: any) => void;
 }

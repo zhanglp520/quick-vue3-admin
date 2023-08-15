@@ -6,40 +6,22 @@
     },
     "extends": [
         "eslint:recommended",
+        "plugin:vue/vue3-essential",
         "plugin:@typescript-eslint/recommended",
-        "plugin:vue/vue3-essential"
+        "prettier",
+        "plugin:prettier/recommended"
     ],
+    "parser": "vue-eslint-parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "parser": "@typescript-eslint/parser",
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "vue"
-    ],
+    "plugins": ["@typescript-eslint", "vue", "prettier"],
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "vue/multi-word-component-names": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "no-alert": "error",
-        "no-console": "off",
-        "no-debugger": "warn",
-        "no-mixed-spaces-and-tabs": "error"
+        "prettier/prettier": "error",
+        "indent": ["error", 4],
+        "vue/multi-word-component-names": 0,
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }

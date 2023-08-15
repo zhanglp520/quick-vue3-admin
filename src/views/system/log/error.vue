@@ -5,7 +5,7 @@ import {
     Actionbar,
     Toolbar,
     FormItem,
-    Page,
+    Page
 } from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
 import { ILog, ISearchLog, ILogPermissionButton } from "@/types/log";
@@ -28,7 +28,7 @@ const page = reactive<Page>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
-    total: 0,
+    total: 0
 });
 /**
  * 搜索
@@ -36,15 +36,15 @@ const page = reactive<Page>({
 const searchForm = reactive<ISearchLog>({
     startTime: "",
     endTime: "",
-    logTime: "",
+    logTime: ""
 });
 const searchFormItems = reactive<Array<FormItem>>([
     {
         label: "日志时间",
         vModel: "logTime",
         placeholders: ["开始时间", "结束时间"],
-        type: "datetimerange",
-    },
+        type: "datetimerange"
+    }
 ]);
 /**
  * 工具栏
@@ -54,7 +54,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenExportButton: true,
     hiddenAddButton: true,
     hiddenPrintButton: true,
-    hiddenBatchDeleteButton: true,
+    hiddenBatchDeleteButton: true
 });
 /**
  * 操作栏
@@ -74,7 +74,7 @@ const tableActionbar = reactive<Actionbar>({
     width: 60,
     hiddenEditButton: true,
     hiddenDeleteButton: true,
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail),
+    hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
 /**
  * 表格
@@ -83,37 +83,37 @@ const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
         type: "selection",
-        align: "center",
+        align: "center"
     },
     {
         label: "日志时间",
         prop: "createTime",
-        width: "200",
+        width: "200"
     },
     {
         label: "IP",
         prop: "ip",
-        width: "120",
+        width: "120"
     },
     {
         label: "耗时（ms）",
         prop: "duration",
-        width: "150",
+        width: "150"
     },
     {
         label: "操作人",
         prop: "operateId",
-        width: "200",
+        width: "200"
     },
     {
         label: "请求类型",
         prop: "request.method",
-        width: "100",
+        width: "100"
     },
     {
         label: "请求接口",
-        prop: "request.url",
-    },
+        prop: "request.url"
+    }
 ]);
 /**
  * 加载数据
@@ -122,7 +122,12 @@ const load = (params: any) => {
     let obj = {};
     const { logTime } = params;
     if (logTime) {
-        obj = { ...params, type: 1, startTime: logTime[0], endTime: logTime[1] };
+        obj = {
+            ...params,
+            type: 1,
+            startTime: logTime[0],
+            endTime: logTime[1]
+        };
     } else {
         obj = { ...params, type: 1 };
     }
@@ -143,7 +148,7 @@ const load = (params: any) => {
  * 表单
  */
 const dialogTitle = reactive({
-    detail: "日志详情",
+    detail: "日志详情"
 });
 const formModel = reactive<ILog>({
     id: "",
@@ -154,62 +159,75 @@ const formModel = reactive<ILog>({
     execution: "",
     duration: 0,
     operateId: "",
-    createTime: "",
+    createTime: ""
 });
 const formItems = reactive<Array<FormItem>>([
     {
         label: "编号",
         labelWidth: "80px",
-        vModel: "id",
+        vModel: "id"
     },
     {
         label: "日志时间",
         labelWidth: "80px",
-        vModel: "createTime",
+        vModel: "createTime"
     },
     {
         label: "IP",
         labelWidth: "80px",
-        vModel: "ip",
+        vModel: "ip"
     },
     {
         label: "耗时",
         labelWidth: "80px",
-        vModel: "duration",
+        vModel: "duration"
     },
     {
         label: "操作人ID",
         labelWidth: "80px",
-        vModel: "operateId",
+        vModel: "operateId"
     },
     {
         label: "操作人",
         labelWidth: "80px",
-        vModel: "operator",
+        vModel: "operator"
     },
     {
         label: "请求参数",
         labelWidth: "80px",
         vModel: "request",
-        type: "textarea",
+        type: "textarea"
     },
     {
         label: "响应",
         labelWidth: "80px",
         vModel: "response",
-        type: "textarea",
+        type: "textarea"
     },
     {
         label: "异常信息",
         labelWidth: "80px",
         vModel: "exception",
-        type: "textarea",
-    },
+        type: "textarea"
+    }
 ]);
 </script>
 <template>
-    <quick-crud :dialog-title="dialogTitle" :form-model="formModel" :form-items="formItems" :table-data="dataList"
-        :table-columns="tableColumns" :table-actionbar="tableActionbar" :table-toolbar="tableToolbar"
-        :search-form-items="searchFormItems" :search-form-model="searchForm" dialog-titles="dialogTitles" :page="page"
-        :form-inline="true" :loading="loading" @on-load="load" @on-detail="handleDetail"></quick-crud>
+    <quick-crud
+        :dialog-title="dialogTitle"
+        :form-model="formModel"
+        :form-items="formItems"
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-actionbar="tableActionbar"
+        :table-toolbar="tableToolbar"
+        :search-form-items="searchFormItems"
+        :search-form-model="searchForm"
+        dialog-titles="dialogTitles"
+        :page="page"
+        :form-inline="true"
+        :loading="loading"
+        @on-load="load"
+        @on-detail="handleDetail"
+    ></quick-crud>
 </template>

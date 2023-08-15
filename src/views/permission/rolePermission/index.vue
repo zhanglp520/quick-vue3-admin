@@ -18,7 +18,7 @@ const menuTreeRef = ref<InstanceType<typeof ElTree>>();
 const menuProps = reactive({
     id: "menuId",
     label: "menuName",
-    children: "children",
+    children: "children"
 });
 const menuTreeData = reactive<Array<IMenuTree>>([]);
 const menuTreeList = reactive<Array<IMenuTree>>([]);
@@ -26,13 +26,13 @@ const roleTreeRef = ref<InstanceType<typeof ElTree>>();
 const roleProps = reactive({
     id: "id",
     label: "label",
-    children: "children",
+    children: "children"
 });
 const roleTreeData = reactive<Array<Tree>>([]);
 const currentTreeData = ref<Tree>({
     id: "",
     label: "",
-    children: [],
+    children: []
 });
 const permissionBtn = computed<IRolePermissionButton>(() => {
     return userStore.getPermissionBtns as IRolePermissionButton;
@@ -46,14 +46,14 @@ const handleGrant = () => {
     if (!id) {
         ElMessage({
             type: "warning",
-            message: "请选择一个角色",
+            message: "请选择一个角色"
         });
         return;
     }
     ElMessageBox.confirm(`你真的要给【${label}】角色分配权限吗？`, {
         confirmButtonText: "OK",
         cancelButtonText: "Cancel",
-        type: "warning",
+        type: "warning"
     })
         .then(() => {
             if (!menuTreeRef.value) {
@@ -63,18 +63,18 @@ const handleGrant = () => {
             const menuIds = menuIdArr.join(",");
             assignPermission({
                 roleId: id,
-                menuIds,
+                menuIds
             }).then(() => {
                 ElMessage({
                     type: "success",
-                    message: "分配权限成功",
+                    message: "分配权限成功"
                 });
             });
         })
         .catch(() => {
             ElMessage({
                 type: "info",
-                message: "您已取消分配权限",
+                message: "您已取消分配权限"
             });
         });
 };
@@ -91,18 +91,18 @@ const tableToolbar = reactive<Toolbar>({
             hidden: validatePermission(permissionBtn.value?.assignPermission),
             click() {
                 handleGrant();
-            },
-        },
-    ],
+            }
+        }
+    ]
 });
 /**
  * 加载数据
  */
 const menuLoad = () => {
-    getMenuList().then(res => {
+    getMenuList().then((res) => {
         const { data: menuList } = res;
         const menuTree = listToTree(menuList, 0, {
-            pId: "pId",
+            pId: "pId"
         });
         menuTreeList.length = 0;
         menuTreeList.push(...menuTree);
@@ -111,7 +111,7 @@ const menuLoad = () => {
 const handleNodeClick = (data: any) => {
     currentTreeData.value = data;
     const { id } = currentTreeData.value;
-    getMenuPermission(id).then(res => {
+    getMenuPermission(id).then((res) => {
         const { data: keys } = res;
         menuTreeData.length = 0;
         menuTreeData.push(...menuTreeList);
@@ -123,12 +123,12 @@ const handleNodeClick = (data: any) => {
     });
 };
 const roleTreeLoad = () => {
-    getRoleList().then(res => {
+    getRoleList().then((res) => {
         const { data: roleList } = res;
         const roleTree = treeFormat(roleList, {
             id: "id",
             label: "roleName",
-            children: "children",
+            children: "children"
         });
         roleTreeData.length = 0;
         roleTreeData.push(...roleTree);
@@ -150,17 +150,35 @@ onMounted(() => {
         <el-row :gutter="20">
             <el-col :span="4">
                 <el-card shadow="never">
-                    <el-tree ref="roleTreeRef" :data="roleTreeData" :props="roleProps" node-key="id"
-                        :highlight-current="true" @node-click="handleNodeClick" />
+                    <el-tree
+                        ref="roleTreeRef"
+                        :data="roleTreeData"
+                        :props="roleProps"
+                        node-key="id"
+                        :highlight-current="true"
+                        @node-click="handleNodeClick"
+                    />
                 </el-card>
             </el-col>
             <el-col :span="20">
                 <el-card shadow="never">
-                    <quick-toolbar :table-toolbar="tableToolbar" :hidden-add-button="true"
-                        :hidden-batch-delete-button="true" :hidden-import-button="true" :hidden-export-button="true"
-                        :hidden-print-button="true" :hidden-refresh-button="true"></quick-toolbar>
-                    <el-tree ref="menuTreeRef" :data="menuTreeData" :props="menuProps" show-checkbox node-key="id"
-                        highlight-current />
+                    <quick-toolbar
+                        :table-toolbar="tableToolbar"
+                        :hidden-add-button="true"
+                        :hidden-batch-delete-button="true"
+                        :hidden-import-button="true"
+                        :hidden-export-button="true"
+                        :hidden-print-button="true"
+                        :hidden-refresh-button="true"
+                    ></quick-toolbar>
+                    <el-tree
+                        ref="menuTreeRef"
+                        :data="menuTreeData"
+                        :props="menuProps"
+                        show-checkbox
+                        node-key="id"
+                        highlight-current
+                    />
                 </el-card>
             </el-col>
         </el-row>

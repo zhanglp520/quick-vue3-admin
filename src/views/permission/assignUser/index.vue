@@ -21,7 +21,7 @@ const checkDataList = ref<Array<IUser>>([]);
 const currentTreeData = ref<Tree>({
     id: "",
     label: "",
-    children: [],
+    children: []
 });
 const permissionBtn = computed<IAssignUserButton>(() => {
     return userStore.getPermissionBtns as IAssignUserButton;
@@ -35,35 +35,35 @@ const handleAssign = () => {
     if (!id) {
         ElMessage({
             type: "warning",
-            message: "请选择一个角色",
+            message: "请选择一个角色"
         });
         return;
     }
     ElMessageBox.confirm(`你真的要给【${label}】角色分配用户吗？`, {
         confirmButtonText: "OK",
         cancelButtonText: "Cancel",
-        type: "warning",
+        type: "warning"
     })
         .then(() => {
             const userIds = checkDataList.value
-                .map(x => {
+                .map((x) => {
                     return x.id;
                 })
                 .join(",");
             assignUser({
                 roleId: id,
-                userIds,
+                userIds
             }).then(() => {
                 ElMessage({
                     type: "success",
-                    message: "分配用户成功",
+                    message: "分配用户成功"
                 });
             });
         })
         .catch(() => {
             ElMessage({
                 type: "info",
-                message: "您已取消分配用户",
+                message: "您已取消分配用户"
             });
         });
 };
@@ -82,9 +82,9 @@ const tableToolbar = reactive<Toolbar>({
             hidden: validatePermission(permissionBtn.value?.assignUser),
             click() {
                 handleAssign();
-            },
-        },
-    ],
+            }
+        }
+    ]
 });
 /**
  * 表格
@@ -92,37 +92,37 @@ const tableToolbar = reactive<Toolbar>({
 const tableColumns = reactive<Array<Column>>([
     {
         width: "50",
-        type: "selection",
+        type: "selection"
     },
     {
         label: "用户编号",
         prop: "userId",
-        width: "200",
+        width: "200"
     },
     {
         label: "用户名",
-        prop: "userName",
+        prop: "userName"
     },
     {
         label: "姓名",
-        prop: "fullName",
+        prop: "fullName"
     },
     {
         label: "手机号",
-        prop: "phone",
+        prop: "phone"
     },
     {
         label: "邮箱",
         prop: "email",
-        width: "200",
-    },
+        width: "200"
+    }
 ]);
 /**
  * 加载数据
  */
 const load = () => {
     loading.value = true;
-    getUserList().then(res => {
+    getUserList().then((res) => {
         loading.value = false;
         const { data: userDataList } = res;
         userList.length = 0;
@@ -137,7 +137,7 @@ const hanleTableRef = (instance: any) => {
     tabRef.value = instance.value;
 };
 const toggleRowSelection = (rows: Array<IUser>) => {
-    rows.forEach(row => {
+    rows.forEach((row) => {
         if (tabRef.value) {
             tabRef.value.toggleRowSelection(row, true);
         }
@@ -151,7 +151,7 @@ const clearSelection = () => {
 const getRows = (data: string[]) => {
     const arr: IUser[] = [];
     data.forEach((element: string) => {
-        const user = userList.find(x => x.id === element);
+        const user = userList.find((x) => x.id === element);
         if (user) {
             arr.push(user);
         }
@@ -164,14 +164,14 @@ const getRows = (data: string[]) => {
 const treeDataList = reactive<Array<Tree>>([]);
 const leftTree = reactive<LeftTree>({
     treeData: [],
-    treeSpan: 6,
+    treeSpan: 6
 });
 const treeLoad = (done: any) => {
-    getRoleList().then(res => {
+    getRoleList().then((res) => {
         const { data: roleList } = res;
         const data = treeFormat(roleList, {
             label: "roleName",
-            children: "children",
+            children: "children"
         });
         treeDataList.length = 0;
         treeDataList.push(...data);
@@ -186,7 +186,7 @@ const handleTreeClick = (data: Tree, done: any) => {
     currentTreeData.value = data;
     const { id } = currentTreeData.value;
     const roleId = id;
-    getUserPermission(roleId).then(res => {
+    getUserPermission(roleId).then((res) => {
         const { data: userPermissionList } = res;
         dataList.length = 0;
         dataList.push(...userList);
@@ -197,8 +197,17 @@ const handleTreeClick = (data: Tree, done: any) => {
 };
 </script>
 <template>
-    <quick-crud :table-data="dataList" :table-columns="tableColumns" :table-toolbar="tableToolbar"
-        dialog-titles="dialogTitles" :left-tree="leftTree" :loading="loading" @on-selection-change="handleSelectionChange"
-        @on-load="load" @on-tree-load="treeLoad" @on-tree-click="handleTreeClick"
-        @on-table-ref="hanleTableRef"></quick-crud>
+    <quick-crud
+        :table-data="dataList"
+        :table-columns="tableColumns"
+        :table-toolbar="tableToolbar"
+        dialog-titles="dialogTitles"
+        :left-tree="leftTree"
+        :loading="loading"
+        @on-selection-change="handleSelectionChange"
+        @on-load="load"
+        @on-tree-load="treeLoad"
+        @on-tree-click="handleTreeClick"
+        @on-table-ref="hanleTableRef"
+    ></quick-crud>
 </template>
