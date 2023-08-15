@@ -1,5 +1,5 @@
-import { Dept } from "@/types/dept";
-import request, { QuickResponseData } from "@/utils/request";
+import { IDept } from "@/types/dept";
+import request, { IQuickResponseData } from "@/utils/request";
 import { dept as api } from "./index";
 /*
  *@Description: 部门管理模块api
@@ -7,37 +7,37 @@ import { dept as api } from "./index";
  *@Date: 2022-11-28 11:55:10
  */
 export const getDeptListByPId = (
-	pId: number
-): Promise<QuickResponseData<Array<Dept>>> => {
-	return request<QuickResponseData<Array<Dept>>>({
-		url: `${api}/getListByPId/${pId}`,
-		method: "GET",
-	});
+  pId: number
+): Promise<IQuickResponseData<Array<IDept>>> => {
+  return request<IQuickResponseData<Array<IDept>>>({
+    url: `${api}/getListByPId/${pId}`,
+    method: "GET",
+  });
 };
-export const getDeptList = (): Promise<QuickResponseData<Array<Dept>>> => {
-	return request<QuickResponseData<Array<Dept>>>({
-		url: api,
-		method: "GET",
-	});
+export const getDeptList = (): Promise<IQuickResponseData<Array<IDept>>> => {
+  return request<IQuickResponseData<Array<IDept>>>({
+    url: api,
+    method: "GET",
+  });
 };
-export const addDept = (data: Dept) => {
-	return request({
-		url: api,
-		method: "POST",
-		data,
-	});
+export const addDept = (data: IDept) => {
+  return request({
+    url: api,
+    method: "POST",
+    data,
+  });
 };
-export const updateDept = (data: Dept) => {
-	const { id } = data;
-	return request({
-		url: `${api}/${id}`,
-		method: "PUT",
-		data,
-	});
+export const updateDept = (data: IDept) => {
+  const { id } = data;
+  return request({
+    url: `${api}/${id}`,
+    method: "PUT",
+    data,
+  });
 };
 export const deleteDept = (id: string) => {
-	return request({
-		url: `${api}/${id}`,
-		method: "DELETE",
-	});
+  return request({
+    url: `${api}/${id}`,
+    method: "DELETE",
+  });
 };

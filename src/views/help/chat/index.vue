@@ -6,13 +6,13 @@ import { onMounted } from "vue";
 let client: any = null;
 
 onMounted(() => {
-	client = io("http://localhost:3000");
-	// client.emit('events', (res: any) => {
-	//   console.log('res', res)
-	// })
-	// client.emit('events', (res: any) => {
-	//   console.log('res', res)
-	// })
+  client = io("http://localhost:3000");
+  // client.emit('events', (res: any) => {
+  //   console.log('res', res)
+  // })
+  // client.emit('events', (res: any) => {
+  //   console.log('res', res)
+  // })
 });
 // client.on('connect', () => {
 //   console.log('socket connect success')
@@ -24,7 +24,7 @@ onMounted(() => {
 //   client.emit('events', content)
 // })
 client.on("message", (data: any) => {
-	console.log("message", data);
+  console.log("message", data);
 });
 </script>
 <template>

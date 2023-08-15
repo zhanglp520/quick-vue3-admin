@@ -1,3 +1,3 @@
 export default {
-	tabCache: true,
+  tabCache: true,
 };

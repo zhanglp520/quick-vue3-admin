@@ -14,37 +14,37 @@ const loginStore = useAuthStore(pinia);
 const userStore = useUserStore(pinia);
 const loading = ref(false);
 const form = reactive<ILoginParams>({
-	tenant: "",
-	username: "",
-	password: "",
+  tenant: "",
+  username: "",
+  password: "",
 });
 /**
  * 函数
  */
 const handleLogin = async (): Promise<void> => {
-	loading.value = true;
-	try {
-		await loginStore.login(form);
-		const user = await userStore.getUserInfo(loginStore.userName);
-		const { id } = user;
-		await userStore.getPermission(id!.toString());
-		router.push("/");
-	} catch (error) {
-		console.log("login error", error);
-	} finally {
-		loading.value = false;
-	}
+  loading.value = true;
+  try {
+    await loginStore.login(form);
+    const user = await userStore.getUserInfo(loginStore.userName);
+    const { id } = user;
+    await userStore.getPermission(id!.toString());
+    router.push("/");
+  } catch (error) {
+    console.log("login error", error);
+  } finally {
+    loading.value = false;
+  }
 };
 const keyDown = (e: KeyboardEvent) => {
-	if (e.key === "Enter") {
-		handleLogin();
-	}
+  if (e.key === "Enter") {
+    handleLogin();
+  }
 };
 onMounted(() => {
-	window.addEventListener("keydown", keyDown);
+  window.addEventListener("keydown", keyDown);
 });
 onUnmounted(() => {
-	window.removeEventListener("keydown", keyDown, false);
+  window.removeEventListener("keydown", keyDown, false);
 });
 </script>
 <template>

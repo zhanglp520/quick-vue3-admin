@@ -19,37 +19,37 @@ const defaultActive = ref("home");
 const activeMenuId = computed(() => menuStore.getAciveMenuId);
 const menuList = computed(() => userStore.getMenuList);
 const handleOpen = (key: string, keyPath: string[]) => {
-	console.log(key, keyPath);
+  console.log(key, keyPath);
 };
 const handleClose = (key: string, keyPath: string[]) => {
-	console.log(key, keyPath);
+  console.log(key, keyPath);
 };
 const menuClick = (menu: IMenubar) => {
-	const { id, menuName, path } = menu;
-	const tab: ITab = {
-		id,
-		name: menuName,
-		path,
-	};
-	tabStore.setActiveTab(tab);
+  const { id, menuName, path } = menu;
+  const tab: ITab = {
+    id,
+    name: menuName,
+    path,
+  };
+  tabStore.setActiveTab(tab);
 };
 const homeMenuClick = () => {
-	const menu: IMenubar = {
-		id: "home",
-		menuId: "home",
-		menuName: "首页",
-		icon: "",
-		sort: 0,
-		pId: "0",
-		link: 0,
-		path: "/home",
-		viewPath: "",
-		children: [],
-	};
-	menuClick(menu);
+  const menu: IMenubar = {
+    id: "home",
+    menuId: "home",
+    menuName: "首页",
+    icon: "",
+    sort: 0,
+    pId: "0",
+    link: 0,
+    path: "/home",
+    viewPath: "",
+    children: [],
+  };
+  menuClick(menu);
 };
 watch(activeMenuId, (val: string) => {
-	defaultActive.value = val;
+  defaultActive.value = val;
 });
 </script>
 <template>

@@ -5,10 +5,11 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc && vite build",
+		"build": "vite build",
+		"build:tsc": "vue-tsc && vite build",
 		"preview": "vite preview",
-		"lint": "eslint --ext .ts,.js,.vue --ignore-path .eslintignore",
-		"lint-fix": "eslint --ext .ts,.js,.vue --ignore-path .eslintignore --fix src"
+		"lint": "eslint --ext .js,ts,.vue, src",
+		"lint:fix": "eslint --ext .js,ts,.vue, src --fix"
 	},
 	"dependencies": {
 		"vue": "^3.3.4"
@@ -48,5 +49,9 @@
 	"engines": {
 		"node": ">=16",
 		"pnpm": ">7"
-	}
+	},
+	"description": "quick-vue3-admin是一套快速搭建后台系统框架，基于vite4+element-plus进行二次封装，使用最新技术栈vite4,vue3,typescript,pinia等等。",
+	"repository": "https://github.com/zhanglp520/quick-vue3-admin.git",
+	"author": "15229380174 <zhanglp15229380174@163.com>",
+	"license": "MIT"
 }

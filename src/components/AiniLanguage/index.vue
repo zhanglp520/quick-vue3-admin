@@ -5,17 +5,17 @@ import pinia from "@/store";
 import { useAppStore } from "@/store/modules/app";
 
 export default defineComponent({
-	setup() {
-		const appStore = useAppStore(pinia);
-		const { locale } = useI18n();
-		const switchLanguage = (lang: string) => {
-			locale.value = lang;
-			appStore.setLanguage(lang);
-		};
-		return {
-			switchLanguage,
-		};
-	},
+  setup() {
+    const appStore = useAppStore(pinia);
+    const { locale } = useI18n();
+    const switchLanguage = (lang: string) => {
+      locale.value = lang;
+      appStore.setLanguage(lang);
+    };
+    return {
+      switchLanguage,
+    };
+  },
 });
 </script>
 

@@ -25,226 +25,226 @@ const isShow = ref(false);
 const language = ref("zh-cn");
 // const locale = computed(() => (language.value === "zh-cn" ? zhCn : en));
 const switchLang = (lang: string) => {
-	language.value = lang;
+  language.value = lang;
 };
 const langOptions = [
-	{
-		label: "英文",
-		value: "en",
-	},
-	{
-		label: "中文",
-		value: "zh-cn",
-	},
+  {
+    label: "英文",
+    value: "en",
+  },
+  {
+    label: "中文",
+    value: "zh-cn",
+  },
 ];
 const themeColorOptions = ref([
-	{
-		label: "quick",
-		value: {
-			default: "#fff",
-			primary: "#0000FF",
-			success: "#00FF00",
-			info: "#909399",
-			warning: "#FFFF00",
-			danger: "#FF0000",
-		},
-	},
-	{
-		label: "element",
-		value: {
-			default: "#fff",
-			primary: "#66b1ff",
-			success: "#67c23a",
-			info: "#909399",
-			warning: "#e6a23c",
-			danger: "#f56c6c",
-		},
-	},
-	{
-		label: "ant",
-		value: {
-			default: "#fff",
-			primary: "#1890ff",
-			success: "#52c41a",
-			info: "rgba(0, 0, 0, 0.25)",
-			warning: "#faad14",
-			danger: "#f5222d",
-		},
-	},
-	{
-		label: "layui",
-		value: {
-			default: "#fff",
-			primary: "#16baaa",
-			success: "#16b777",
-			info: "#31bdec",
-			warning: "#ffb800",
-			danger: "#ff5722",
-		},
-	},
+  {
+    label: "quick",
+    value: {
+      default: "#fff",
+      primary: "#0000FF",
+      success: "#00FF00",
+      info: "#909399",
+      warning: "#FFFF00",
+      danger: "#FF0000",
+    },
+  },
+  {
+    label: "element",
+    value: {
+      default: "#fff",
+      primary: "#66b1ff",
+      success: "#67c23a",
+      info: "#909399",
+      warning: "#e6a23c",
+      danger: "#f56c6c",
+    },
+  },
+  {
+    label: "ant",
+    value: {
+      default: "#fff",
+      primary: "#1890ff",
+      success: "#52c41a",
+      info: "rgba(0, 0, 0, 0.25)",
+      warning: "#faad14",
+      danger: "#f5222d",
+    },
+  },
+  {
+    label: "layui",
+    value: {
+      default: "#fff",
+      primary: "#16baaa",
+      success: "#16b777",
+      info: "#31bdec",
+      warning: "#ffb800",
+      danger: "#ff5722",
+    },
+  },
 ]);
 const themeOptions = ref([
-	{
-		label: "quick主题",
-		value: "quick",
-	},
-	{
-		label: "element主题",
-		value: "element",
-	},
-	{
-		label: "ant主题",
-		value: "ant",
-	},
-	{
-		label: "layui主题",
-		value: "layui",
-	},
-	{
-		label: "自定义主题",
-		value: "custom",
-	},
+  {
+    label: "quick主题",
+    value: "quick",
+  },
+  {
+    label: "element主题",
+    value: "element",
+  },
+  {
+    label: "ant主题",
+    value: "ant",
+  },
+  {
+    label: "layui主题",
+    value: "layui",
+  },
+  {
+    label: "自定义主题",
+    value: "custom",
+  },
 ]);
 const bgthemeOptions = ref([
-	{
-		label: "政务蓝",
-		value: "rgb(41,23,91)",
-	},
-	{
-		label: "中国红",
-		value: "rgb(255,0,0)",
-	},
+  {
+    label: "政务蓝",
+    value: "rgb(41,23,91)",
+  },
+  {
+    label: "中国红",
+    value: "rgb(255,0,0)",
+  },
 ]);
 const settingForm = reactive({
-	lang: "en",
-	zIndex: 1000, //>=3000时，官方bug
-	namespace: "el",
-	size: "default",
-	model: "light",
-	// button: {
-	//   autoInsertSpace: false
-	// },
-	// message: {
-	//   max: 10
-	// },
-	theme: "element",
-	color: {
-		default: "#fff",
-		primary: "#66b1ff",
-		success: "#67c23a",
-		info: "#909399",
-		warning: "#e6a23c",
-		danger: "#f56c6c",
-	},
-	bgColor: "rgb(41,23,91)",
+  lang: "en",
+  zIndex: 1000, //>=3000时，官方bug
+  namespace: "el",
+  size: "default",
+  model: "light",
+  // button: {
+  //   autoInsertSpace: false
+  // },
+  // message: {
+  //   max: 10
+  // },
+  theme: "element",
+  color: {
+    default: "#fff",
+    primary: "#66b1ff",
+    success: "#67c23a",
+    info: "#909399",
+    warning: "#e6a23c",
+    danger: "#f56c6c",
+  },
+  bgColor: "rgb(41,23,91)",
 });
 
 const confirmClick = () => {
-	ElMessageBox.confirm("是否保存配置？", "Warning", {
-		confirmButtonText: "确定",
-		cancelButtonText: "取消",
-		type: "warning",
-	})
-		.then(() => {
-			localStorage.setItem("setting", JSON.stringify(settingForm));
-			ElMessage({
-				type: "success",
-				message: "保存成功",
-			});
-			themeVisible.value = false;
-			emit("update:modelvalue", themeVisible.value);
-			//TODO:保存成功跳转登录页
-		})
-		.catch(() => {
-			ElMessage({
-				type: "info",
-				message: "已取消",
-			});
-		});
+  ElMessageBox.confirm("是否保存配置？", "Warning", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      localStorage.setItem("setting", JSON.stringify(settingForm));
+      ElMessage({
+        type: "success",
+        message: "保存成功",
+      });
+      themeVisible.value = false;
+      emit("update:modelvalue", themeVisible.value);
+      //TODO:保存成功跳转登录页
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "已取消",
+      });
+    });
 };
 const cancelClick = () => {
-	ElMessageBox.confirm(
-		"重置后，将会丢失你的所有配置，你真的要重置配置吗？",
-		"Warning",
-		{
-			confirmButtonText: "确定",
-			cancelButtonText: "取消",
-			type: "warning",
-		}
-	)
-		.then(() => {
-			localStorage.removeItem("setting");
-			ElMessage({
-				type: "success",
-				message: "重置成功",
-			});
-			themeVisible.value = false;
-			emit("update:modelvalue", themeVisible.value);
-			//TODO:重置成功跳转登录页
-		})
-		.catch(() => {
-			ElMessage({
-				type: "info",
-				message: "已取消",
-			});
-		});
+  ElMessageBox.confirm(
+    "重置后，将会丢失你的所有配置，你真的要重置配置吗？",
+    "Warning",
+    {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    }
+  )
+    .then(() => {
+      localStorage.removeItem("setting");
+      ElMessage({
+        type: "success",
+        message: "重置成功",
+      });
+      themeVisible.value = false;
+      emit("update:modelvalue", themeVisible.value);
+      //TODO:重置成功跳转登录页
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "已取消",
+      });
+    });
 };
 const saveTheme = () => {
-	const index = themeOptions.value.findIndex(
-		(x) => x.label === themeName.value
-	);
-	if (index !== -1) {
-		ElMessage.error("主题名已占用！");
-		return;
-	}
-	const id = uuid();
-	themeColorOptions.value.push({
-		label: id,
-		value: {
-			default: settingForm.color.default,
-			primary: settingForm.color.primary,
-			success: settingForm.color.success,
-			info: settingForm.color.info,
-			warning: settingForm.color.warning,
-			danger: settingForm.color.danger,
-		},
-	});
-	themeOptions.value.unshift({
-		label: themeName.value,
-		value: id,
-	});
-	ElMessage({
-		message: "主题保存成功",
-		type: "success",
-	});
+  const index = themeOptions.value.findIndex(
+    (x) => x.label === themeName.value
+  );
+  if (index !== -1) {
+    ElMessage.error("主题名已占用！");
+    return;
+  }
+  const id = uuid();
+  themeColorOptions.value.push({
+    label: id,
+    value: {
+      default: settingForm.color.default,
+      primary: settingForm.color.primary,
+      success: settingForm.color.success,
+      info: settingForm.color.info,
+      warning: settingForm.color.warning,
+      danger: settingForm.color.danger,
+    },
+  });
+  themeOptions.value.unshift({
+    label: themeName.value,
+    value: id,
+  });
+  ElMessage({
+    message: "主题保存成功",
+    type: "success",
+  });
 };
 watch(
-	() => settingForm.lang,
-	(val) => {
-		switchLang(val);
-	}
+  () => settingForm.lang,
+  (val) => {
+    switchLang(val);
+  }
 );
 watch(
-	() => settingForm.theme,
-	(val) => {
-		if (val === "custom") {
-			readonly.value = false;
-			isShow.value = true;
-		} else {
-			readonly.value = true;
-			isShow.value = false;
-			const arr = themeColorOptions.value.filter((x) => x.label === val);
-			if (arr && arr.length === 1) {
-				const color = arr[0];
-				settingForm.color.default = color.value.default;
-				settingForm.color.primary = color.value.primary;
-				settingForm.color.info = color.value.info;
-				settingForm.color.success = color.value.success;
-				settingForm.color.warning = color.value.warning;
-				settingForm.color.danger = color.value.danger;
-			}
-		}
-	}
+  () => settingForm.theme,
+  (val) => {
+    if (val === "custom") {
+      readonly.value = false;
+      isShow.value = true;
+    } else {
+      readonly.value = true;
+      isShow.value = false;
+      const arr = themeColorOptions.value.filter((x) => x.label === val);
+      if (arr && arr.length === 1) {
+        const color = arr[0];
+        settingForm.color.default = color.value.default;
+        settingForm.color.primary = color.value.primary;
+        settingForm.color.info = color.value.info;
+        settingForm.color.success = color.value.success;
+        settingForm.color.warning = color.value.warning;
+        settingForm.color.danger = color.value.danger;
+      }
+    }
+  }
 );
 // watch(
 //   () => settingForm.color,
@@ -258,25 +258,25 @@ watch(
 //   }
 // )
 onMounted(() => {
-	console.log("onMounted");
+  console.log("onMounted");
 
-	const settingStr = localStorage.getItem("setting");
-	if (!settingStr) {
-		localStorage.setItem("setting", JSON.stringify(settingForm));
-	} else {
-		const obj = JSON.parse(settingStr);
-		settingForm.lang = obj.lang;
-		settingForm.size = obj.size;
-		settingForm.model = obj.model;
-		settingForm.theme = obj.theme;
-		settingForm.color.default = obj.color.default;
-		settingForm.color.primary = obj.color.primary;
-		settingForm.color.info = obj.color.info;
-		settingForm.color.success = obj.color.success;
-		settingForm.color.warning = obj.color.warning;
-		settingForm.color.danger = obj.color.danger;
-		settingForm.bgColor = obj.bgColor;
-	}
+  const settingStr = localStorage.getItem("setting");
+  if (!settingStr) {
+    localStorage.setItem("setting", JSON.stringify(settingForm));
+  } else {
+    const obj = JSON.parse(settingStr);
+    settingForm.lang = obj.lang;
+    settingForm.size = obj.size;
+    settingForm.model = obj.model;
+    settingForm.theme = obj.theme;
+    settingForm.color.default = obj.color.default;
+    settingForm.color.primary = obj.color.primary;
+    settingForm.color.info = obj.color.info;
+    settingForm.color.success = obj.color.success;
+    settingForm.color.warning = obj.color.warning;
+    settingForm.color.danger = obj.color.danger;
+    settingForm.bgColor = obj.bgColor;
+  }
 });
 </script>
 <template>

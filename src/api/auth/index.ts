@@ -1,6 +1,6 @@
-import { LoginData, LoginParams, Token } from "@/types/auth";
-import { Menu } from "@/types/menu";
-import request, { QuickResponseData } from "@/utils/request";
+import { ILoginData, ILoginParams, IToken } from "@/types/auth";
+import { IMenu } from "@/types/menu";
+import request, { IQuickResponseData } from "@/utils/request";
 import { defaultVersion } from "../index";
 /*
  *@Description:权限管理api
@@ -12,83 +12,83 @@ const api = auth;
 export const loginApi = `${api}/login`;
 export const refreshTokenApi = `${api}/refreshToken`;
 export const userLogin = (
-	data: LoginParams
-): Promise<QuickResponseData<LoginData>> => {
-	console.log("data", data);
+  data: ILoginParams
+): Promise<IQuickResponseData<ILoginData>> => {
+  console.log("data", data);
 
-	return request<QuickResponseData<LoginData>>({
-		url: loginApi,
-		method: "POST",
-		data,
-	});
+  return request<IQuickResponseData<ILoginData>>({
+    url: loginApi,
+    method: "POST",
+    data,
+  });
 };
-export const userLogout = (data: LoginParams) => {
-	return request({
-		url: `${api}/logout`,
-		method: "POST",
-		data,
-	});
+export const userLogout = (data: ILoginParams) => {
+  return request({
+    url: `${api}/logout`,
+    method: "POST",
+    data,
+  });
 };
 export const refreshToken = (
-	data: Token
-): Promise<QuickResponseData<LoginData>> => {
-	return request<QuickResponseData<LoginData>>({
-		url: refreshTokenApi,
-		method: "POST",
-		data,
-	});
+  data: IToken
+): Promise<IQuickResponseData<ILoginData>> => {
+  return request<IQuickResponseData<ILoginData>>({
+    url: refreshTokenApi,
+    method: "POST",
+    data,
+  });
 };
 export const getPermission = (
-	userId: string
-): Promise<QuickResponseData<Array<Menu>>> => {
-	return request({
-		url: `${api}/getMenuListByUserId/${userId}`,
-		method: "GET",
-	});
+  userId: string
+): Promise<IQuickResponseData<Array<IMenu>>> => {
+  return request({
+    url: `${api}/getMenuListByUserId/${userId}`,
+    method: "GET",
+  });
 };
 export const getMenuPermission = (
-	roleId: string
-): Promise<QuickResponseData<Array<number>>> => {
-	return request<QuickResponseData<Array<number>>>({
-		url: `${api}/getMenuListByRoleId/${roleId}`,
-		method: "GET",
-	});
+  roleId: string
+): Promise<IQuickResponseData<Array<number>>> => {
+  return request<IQuickResponseData<Array<number>>>({
+    url: `${api}/getMenuListByRoleId/${roleId}`,
+    method: "GET",
+  });
 };
 export const getUserPermission = (
-	roleId: string
-): Promise<QuickResponseData<Array<string>>> => {
-	return request<QuickResponseData<Array<string>>>({
-		url: `${api}/getUserListByRoleId/${roleId}`,
-		method: "GET",
-	});
+  roleId: string
+): Promise<IQuickResponseData<Array<string>>> => {
+  return request<IQuickResponseData<Array<string>>>({
+    url: `${api}/getUserListByRoleId/${roleId}`,
+    method: "GET",
+  });
 };
 export const assignPermission = (data: any) => {
-	return request({
-		url: `${api}/assignPermission`,
-		method: "POST",
-		data,
-	});
+  return request({
+    url: `${api}/assignPermission`,
+    method: "POST",
+    data,
+  });
 };
 export const assignUser = (data: any) => {
-	return request({
-		url: `${api}/assignUser`,
-		method: "POST",
-		data,
-	});
+  return request({
+    url: `${api}/assignUser`,
+    method: "POST",
+    data,
+  });
 };
 
 export const getApiPermission = (
-	roleId: string
-): Promise<QuickResponseData<Array<string>>> => {
-	return request<QuickResponseData<Array<string>>>({
-		url: `${api}/getApiListByRoleId/${roleId}`,
-		method: "GET",
-	});
+  roleId: string
+): Promise<IQuickResponseData<Array<string>>> => {
+  return request<IQuickResponseData<Array<string>>>({
+    url: `${api}/getApiListByRoleId/${roleId}`,
+    method: "GET",
+  });
 };
 export const rolePermission = (data: any) => {
-	return request({
-		url: `${api}/assignPermission`,
-		method: "POST",
-		data,
-	});
+  return request({
+    url: `${api}/assignPermission`,
+    method: "POST",
+    data,
+  });
 };

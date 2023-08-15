@@ -7,7 +7,7 @@ import { ITab } from "@/types/tab";
 
 // eslint-disable-next-line no-undef
 defineOptions({
-	name: "AiniMenuItem",
+  name: "AiniMenuItem",
 });
 
 const tabStore = useTabStore();
@@ -15,12 +15,12 @@ const tabStore = useTabStore();
  * props
  */
 const props = defineProps({
-	menuList: {
-		type: Array<IMenubar>,
-		default: () => {
-			return [];
-		},
-	},
+  menuList: {
+    type: Array<IMenubar>,
+    default: () => {
+      return [];
+    },
+  },
 });
 /**
  * props toRefs
@@ -29,26 +29,26 @@ const { menuList } = toRefs(props) as {
 	menuList: Ref<Array<IMenubar>>;
 };
 const menuClick = (item: IMenubar) => {
-	const { id, menuName, path, link, linkUrl } = item;
-	if (link) {
-		window.open(linkUrl);
-	} else {
-		const routerPath = path;
-		const tab: ITab = {
-			id,
-			name: menuName,
-			path: routerPath,
-		};
-		const tabList = tabStore.getTabList;
-		if (tabList.length >= 15) {
-			ElMessage({
-				type: "warning",
-				message: "选项卡最多15个，请关闭部分再试",
-			});
-			return;
-		}
-		tabStore.addTab(tab);
-	}
+  const { id, menuName, path, link, linkUrl } = item;
+  if (link) {
+    window.open(linkUrl);
+  } else {
+    const routerPath = path;
+    const tab: ITab = {
+      id,
+      name: menuName,
+      path: routerPath,
+    };
+    const tabList = tabStore.getTabList;
+    if (tabList.length >= 15) {
+      ElMessage({
+        type: "warning",
+        message: "选项卡最多15个，请关闭部分再试",
+      });
+      return;
+    }
+    tabStore.addTab(tab);
+  }
 };
 </script>
 <template>

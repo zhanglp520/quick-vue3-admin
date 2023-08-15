@@ -13,25 +13,25 @@ import Base64 from "crypto-js/enc-base64";
 const defaultKey = "@quick_key";
 const defaultIV = "quick_iv@";
 export const encryptForAes = (data: string, key = "", iv = "") => {
-	return encrypt(data, key || defaultKey, {
-		mode: ECB,
-		padding: pkcs7,
-		iv: iv ? parse(iv) : parse(defaultIV),
-	}).toString();
+  return encrypt(data, key || defaultKey, {
+    mode: ECB,
+    padding: pkcs7,
+    iv: iv ? parse(iv) : parse(defaultIV),
+  }).toString();
 };
 export const decryptForAes = (cipherText: string, key = "", iv = "") => {
-	return decrypt(cipherText, key || defaultKey, {
-		mode: ECB,
-		padding: pkcs7,
-		iv: iv ? parse(iv) : parse(defaultIV),
-	}).toString(UTF8);
+  return decrypt(cipherText, key || defaultKey, {
+    mode: ECB,
+    padding: pkcs7,
+    iv: iv ? parse(iv) : parse(defaultIV),
+  }).toString(UTF8);
 };
 export const encryptForMd5 = (password: string) => {
-	return md5(password).toString();
+  return md5(password).toString();
 };
 export const encryptForBase64 = (data: string) => {
-	return UTF8.parse(data).toString(Base64);
+  return UTF8.parse(data).toString(Base64);
 };
 export const decodeForBase64 = (cipherText: string) => {
-	return Base64.parse(cipherText).toString(UTF8);
+  return Base64.parse(cipherText).toString(UTF8);
 };

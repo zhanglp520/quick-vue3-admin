@@ -11,25 +11,25 @@ const tabStore = useTabStore();
 const appStore = useAppStore();
 const isCollapse = computed(() => appStore.getCollapse);
 const goHome = () => {
-	const menu: IMenubar = {
-		id: "home",
-		menuId: "home",
-		menuName: "首页",
-		icon: "",
-		sort: 0,
-		pId: "0",
-		link: 0,
-		path: "/home",
-		viewPath: "",
-		children: [],
-	};
-	const { id, menuName, path } = menu;
-	const tab: ITab = {
-		id,
-		name: menuName,
-		path,
-	};
-	tabStore.setActiveTab(tab);
+  const menu: IMenubar = {
+    id: "home",
+    menuId: "home",
+    menuName: "首页",
+    icon: "",
+    sort: 0,
+    pId: "0",
+    link: 0,
+    path: "/home",
+    viewPath: "",
+    children: [],
+  };
+  const { id, menuName, path } = menu;
+  const tab: ITab = {
+    id,
+    name: menuName,
+    path,
+  };
+  tabStore.setActiveTab(tab);
 };
 </script>
 

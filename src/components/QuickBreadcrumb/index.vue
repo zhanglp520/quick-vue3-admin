@@ -3,10 +3,10 @@ import { toRefs } from "vue";
 import { ArrowRight } from "@element-plus/icons-vue";
 
 const props = defineProps({
-	data: {
-		type: Array,
-		default: () => [],
-	},
+  data: {
+    type: Array,
+    default: () => [],
+  },
 });
 const { data } = toRefs(props);
 </script>

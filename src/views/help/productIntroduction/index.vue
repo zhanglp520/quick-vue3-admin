@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const yanshi = () => {
-	window.open("https://quick.ainiteam.com/");
+  window.open("https://quick.ainiteam.com/");
 };
 const kaiyuan = () => {
-	window.open("https://gitee.com/zhanglp520/quick-admin/");
+  window.open("https://gitee.com/zhanglp520/quick-admin/");
 };
 </script>
 

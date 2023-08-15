@@ -1,6 +1,6 @@
 // import { Menu } from "@/types/menu";
-import { Api } from "@/types/api";
-import request, { QuickResponseData } from "@/utils/request";
+import { IApi } from "@/types/api";
+import request, { IQuickResponseData } from "@/utils/request";
 import { api } from "./index";
 // import { auth as authApi } from "../auth/index";
 
@@ -10,53 +10,53 @@ import { api } from "./index";
  *@Date: 2022-11-28 11:57:43
  */
 export const getApiPageList = (
-	params: object
-): Promise<QuickResponseData<Array<Api>>> => {
-	return request<QuickResponseData<Array<Api>>>({
-		url: api,
-		method: "GET",
-		params,
-	});
+  params: object
+): Promise<IQuickResponseData<Array<IApi>>> => {
+  return request<IQuickResponseData<Array<IApi>>>({
+    url: api,
+    method: "GET",
+    params,
+  });
 };
-export const getApiList = (): Promise<QuickResponseData<Array<Api>>> => {
-	return request<QuickResponseData<Array<Api>>>({
-		url: `${api}/getApiList`,
-		method: "GET",
-	});
+export const getApiList = (): Promise<IQuickResponseData<Array<IApi>>> => {
+  return request<IQuickResponseData<Array<IApi>>>({
+    url: `${api}/getApiList`,
+    method: "GET",
+  });
 };
 export const getApiByApiName = (
-	upiName: string
-): Promise<QuickResponseData<Api>> => {
-	return request<QuickResponseData<Api>>({
-		url: `${api}/getApiByApiName/${upiName}`,
-		method: "GET",
-	});
+  upiName: string
+): Promise<IQuickResponseData<IApi>> => {
+  return request<IQuickResponseData<IApi>>({
+    url: `${api}/getApiByApiName/${upiName}`,
+    method: "GET",
+  });
 };
-export const addApi = (data: Api) => {
-	return request({
-		url: api,
-		method: "POST",
-		data,
-	});
+export const addApi = (data: IApi) => {
+  return request({
+    url: api,
+    method: "POST",
+    data,
+  });
 };
-export const updateApi = (data: Api) => {
-	const { id } = data;
-	return request({
-		url: `${api}/${id}`,
-		method: "PUT",
-		data,
-	});
+export const updateApi = (data: IApi) => {
+  const { id } = data;
+  return request({
+    url: `${api}/${id}`,
+    method: "PUT",
+    data,
+  });
 };
 export const deleteApi = (id: string) => {
-	return request({
-		url: `${api}/${id}`,
-		method: "DELETE",
-	});
+  return request({
+    url: `${api}/${id}`,
+    method: "DELETE",
+  });
 };
 
 export const batchDeleteApi = (ids: string) => {
-	return request({
-		url: `${api}/batchRemove/${ids}`,
-		method: "DELETE",
-	});
+  return request({
+    url: `${api}/batchRemove/${ids}`,
+    method: "DELETE",
+  });
 };

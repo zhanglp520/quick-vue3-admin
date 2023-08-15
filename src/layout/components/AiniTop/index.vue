@@ -2,12 +2,12 @@
 import { ref, computed, onMounted, watch } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-	Setting,
-	Search,
-	Fold,
-	ChatDotRound,
-	FullScreen,
-	Phone,
+  Setting,
+  Search,
+  Fold,
+  ChatDotRound,
+  FullScreen,
+  Phone,
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { useAppStore } from "@/store/modules/app";
@@ -34,106 +34,106 @@ const bredcrumbData = ref<Array<string>>([]);
 const userInfo = computed(() => userStore.userInfo);
 const permissionMenuList = computed(() => userStore.getPermissionMenuList);
 const collapse = () => {
-	appStore.setCollapse(!isCollapse.value);
+  appStore.setCollapse(!isCollapse.value);
 };
 const activeMenuId = computed(() => menuStore.getAciveMenuId);
 
 const loginOut = () => {
-	ElMessageBox.confirm("你真的要退出系统吗?", "警告", {
-		confirmButtonText: "确定",
-		cancelButtonText: "取消",
-		type: "warning",
-	}).then(() => {
-		localStorage.clear();
-		sessionStorage.clear();
-		router.push("/login");
-	});
+  ElMessageBox.confirm("你真的要退出系统吗?", "警告", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+    router.push("/login");
+  });
 };
 const personalInfo = () => {
-	const tab: ITab = {
-		id: "PersonalInfo",
-		name: "个人资料",
-		path: "/personalInfo",
-	};
-	const tabList = tabStore.getTabList;
-	if (tabList.length >= 15) {
-		ElMessage({
-			type: "warning",
-			message: "选项卡最多15个，请关闭部分再试",
-		});
-		return;
-	}
-	tabStore.addTab(tab);
-	router.push("/personalInfo");
+  const tab: ITab = {
+    id: "PersonalInfo",
+    name: "个人资料",
+    path: "/personalInfo",
+  };
+  const tabList = tabStore.getTabList;
+  if (tabList.length >= 15) {
+    ElMessage({
+      type: "warning",
+      message: "选项卡最多15个，请关闭部分再试",
+    });
+    return;
+  }
+  tabStore.addTab(tab);
+  router.push("/personalInfo");
 };
 const changePassword = () => {
-	const tab: ITab = {
-		id: "ChangePassword",
-		name: "修改密码",
-		path: "/changePassword",
-	};
-	const tabList = tabStore.getTabList;
-	if (tabList.length >= 15) {
-		ElMessage({
-			type: "warning",
-			message: "选项卡最多15个，请关闭部分再试",
-		});
-		return;
-	}
-	tabStore.addTab(tab);
-	router.push("/changePassword");
+  const tab: ITab = {
+    id: "ChangePassword",
+    name: "修改密码",
+    path: "/changePassword",
+  };
+  const tabList = tabStore.getTabList;
+  if (tabList.length >= 15) {
+    ElMessage({
+      type: "warning",
+      message: "选项卡最多15个，请关闭部分再试",
+    });
+    return;
+  }
+  tabStore.addTab(tab);
+  router.push("/changePassword");
 };
 const handleCommand = (cmd: string) => {
-	switch (cmd) {
-		case "loginOut":
-			loginOut();
-			break;
-		case "personalInfo":
-			personalInfo();
-			break;
-		case "changePassword":
-			changePassword();
-			break;
-		default:
-			break;
-	}
+  switch (cmd) {
+  case "loginOut":
+    loginOut();
+    break;
+  case "personalInfo":
+    personalInfo();
+    break;
+  case "changePassword":
+    changePassword();
+    break;
+  default:
+    break;
+  }
 };
 const formatBredcrumbData = (currentMenuId: any) => {
-	bredcrumbData.value = [];
-	const menu: IMenu | undefined = permissionMenuList.value.find(
-		(x: IMenu) => x.id === currentMenuId
-	);
-	if (!menu) {
-		return;
-	}
-	const { pId, id } = menu;
-	if (id === "home") {
-		return;
-	}
-	bredcrumbData.value.push(menu.menuName);
-	const parentMenu: IMenu | undefined = permissionMenuList.value.find(
-		(x) => x.id === pId
-	);
-	if (parentMenu) {
-		bredcrumbData.value.push(parentMenu.menuName);
-		const parentMenu1: IMenu | undefined = permissionMenuList.value.find(
-			(x) => x.id === parentMenu.pId
-		);
-		if (parentMenu1) {
-			bredcrumbData.value.push(parentMenu1.menuName);
-		}
-	}
-	bredcrumbData.value.reverse();
+  bredcrumbData.value = [];
+  const menu: IMenu | undefined = permissionMenuList.value.find(
+    (x: IMenu) => x.id === currentMenuId
+  );
+  if (!menu) {
+    return;
+  }
+  const { pId, id } = menu;
+  if (id === "home") {
+    return;
+  }
+  bredcrumbData.value.push(menu.menuName);
+  const parentMenu: IMenu | undefined = permissionMenuList.value.find(
+    (x) => x.id === pId
+  );
+  if (parentMenu) {
+    bredcrumbData.value.push(parentMenu.menuName);
+    const parentMenu1: IMenu | undefined = permissionMenuList.value.find(
+      (x) => x.id === parentMenu.pId
+    );
+    if (parentMenu1) {
+      bredcrumbData.value.push(parentMenu1.menuName);
+    }
+  }
+  bredcrumbData.value.reverse();
 };
 const handleSetting = () => {
-	themeVisible.value = true;
-	testInput.value = "11111111";
+  themeVisible.value = true;
+  testInput.value = "11111111";
 };
 watch(activeMenuId, (val: string) => {
-	formatBredcrumbData(val);
+  formatBredcrumbData(val);
 });
 onMounted(() => {
-	formatBredcrumbData(activeMenuId.value);
+  formatBredcrumbData(activeMenuId.value);
 });
 </script>
 

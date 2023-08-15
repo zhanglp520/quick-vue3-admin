@@ -12,144 +12,144 @@ import { Tickets } from "@element-plus/icons-vue";
 // const weekCount = ref(0);
 // const monthCount = ref(0);
 const lineOptions = {
-	xAxis: {
-		type: "category",
-		data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-	},
-	yAxis: {
-		type: "value",
-	},
-	series: [
-		{
-			data: [150, 230, 224, 218, 135, 147, 260],
-			type: "line",
-		},
-	],
+  xAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: "line",
+    },
+  ],
 };
 const barOption = {
-	xAxis: {
-		type: "category",
-		data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-	},
-	yAxis: {
-		type: "value",
-	},
-	series: [
-		{
-			data: [120, 200, 150, 80, 70, 110, 130],
-			type: "bar",
-			showBackground: true,
-			itemStyle: {
-				color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-					{ offset: 0, color: "#83bff6" },
-					{ offset: 0.5, color: "#188df0" },
-					{ offset: 1, color: "#188df0" },
-				]),
-			},
-			emphasis: {
-				itemStyle: {
-					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-						{ offset: 0, color: "#2378f7" },
-						{ offset: 0.7, color: "#2378f7" },
-						{ offset: 1, color: "#83bff6" },
-					]),
-				},
-			},
-			// backgroundStyle: {
-			//   color: 'rgba(180, 180, 180, 0.2)',
-			// },
-		},
-	],
+  xAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130],
+      type: "bar",
+      showBackground: true,
+      itemStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: "#83bff6" },
+          { offset: 0.5, color: "#188df0" },
+          { offset: 1, color: "#188df0" },
+        ]),
+      },
+      emphasis: {
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: "#2378f7" },
+            { offset: 0.7, color: "#2378f7" },
+            { offset: 1, color: "#83bff6" },
+          ]),
+        },
+      },
+      // backgroundStyle: {
+      //   color: 'rgba(180, 180, 180, 0.2)',
+      // },
+    },
+  ],
 };
 const pieOption = {
-	title: {
-		text: "Referer of a Website",
-		subtext: "Fake Data",
-		left: "center",
-	},
-	tooltip: {
-		trigger: "item",
-	},
-	legend: {
-		orient: "vertical",
-		left: "left",
-	},
-	series: [
-		{
-			name: "Access From",
-			type: "pie",
-			radius: "50%",
-			data: [
-				{ value: 1048, name: "Search Engine" },
-				{ value: 735, name: "Direct" },
-				{ value: 580, name: "Email" },
-				{ value: 484, name: "Union Ads" },
-				{ value: 300, name: "Video Ads" },
-			],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 10,
-					shadowOffsetX: 0,
-					shadowColor: "rgba(0, 0, 0, 0.5)",
-				},
-			},
-		},
-	],
+  title: {
+    text: "Referer of a Website",
+    subtext: "Fake Data",
+    left: "center",
+  },
+  tooltip: {
+    trigger: "item",
+  },
+  legend: {
+    orient: "vertical",
+    left: "left",
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: "50%",
+      data: [
+        { value: 1048, name: "Search Engine" },
+        { value: 735, name: "Direct" },
+        { value: 580, name: "Email" },
+        { value: 484, name: "Union Ads" },
+        { value: 300, name: "Video Ads" },
+      ],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+        },
+      },
+    },
+  ],
 };
 const radarOption = {
-	title: {
-		text: "Basic Radar Chart",
-	},
-	legend: {
-		data: ["Allocated Budget", "Actual Spending"],
-	},
-	radar: {
-		// shape: 'circle',
-		indicator: [
-			{ name: "Sales", max: 6500 },
-			{ name: "Administration", max: 16000 },
-			{ name: "Information Technology", max: 30000 },
-			{ name: "Customer Support", max: 38000 },
-			{ name: "Development", max: 52000 },
-			{ name: "Marketing", max: 25000 },
-		],
-	},
-	series: [
-		{
-			name: "Budget vs spending",
-			type: "radar",
-			data: [
-				{
-					value: [4200, 3000, 20000, 35000, 50000, 18000],
-					name: "Allocated Budget",
-				},
-				{
-					value: [5000, 14000, 28000, 26000, 42000, 21000],
-					name: "Actual Spending",
-				},
-			],
-		},
-	],
+  title: {
+    text: "Basic Radar Chart",
+  },
+  legend: {
+    data: ["Allocated Budget", "Actual Spending"],
+  },
+  radar: {
+    // shape: 'circle',
+    indicator: [
+      { name: "Sales", max: 6500 },
+      { name: "Administration", max: 16000 },
+      { name: "Information Technology", max: 30000 },
+      { name: "Customer Support", max: 38000 },
+      { name: "Development", max: 52000 },
+      { name: "Marketing", max: 25000 },
+    ],
+  },
+  series: [
+    {
+      name: "Budget vs spending",
+      type: "radar",
+      data: [
+        {
+          value: [4200, 3000, 20000, 35000, 50000, 18000],
+          name: "Allocated Budget",
+        },
+        {
+          value: [5000, 14000, 28000, 26000, 42000, 21000],
+          name: "Actual Spending",
+        },
+      ],
+    },
+  ],
 };
 onMounted(() => {
-	const arr = ["myChart1", "myChart2", "myChart3", "myChart4"];
-	arr.forEach((element) => {
-		let options: any;
-		if (element === "myChart1") {
-			options = barOption;
-		} else if (element === "myChart2") {
-			options = radarOption;
-		} else if (element === "myChart3") {
-			options = pieOption;
-		} else if (element === "myChart4") {
-			options = lineOptions;
-		}
-		const dom = document.getElementById(element);
-		if (dom) {
-			const myChart = echarts.init(dom);
-			myChart.setOption(options);
-		}
-	});
+  const arr = ["myChart1", "myChart2", "myChart3", "myChart4"];
+  arr.forEach((element) => {
+    let options: any;
+    if (element === "myChart1") {
+      options = barOption;
+    } else if (element === "myChart2") {
+      options = radarOption;
+    } else if (element === "myChart3") {
+      options = pieOption;
+    } else if (element === "myChart4") {
+      options = lineOptions;
+    }
+    const dom = document.getElementById(element);
+    if (dom) {
+      const myChart = echarts.init(dom);
+      myChart.setOption(options);
+    }
+  });
 });
 </script>
 

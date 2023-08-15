@@ -3,9 +3,9 @@ import { createApp } from "vue";
 import * as echarts from "echarts";
 // import { io } from "socket.io-client";
 import {
-	GcSpreadSheets,
-	GcWorksheet,
-	GcColumn,
+  GcSpreadSheets,
+  GcWorksheet,
+  GcColumn,
 } from "@grapecity/spread-sheets-vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
@@ -32,20 +32,20 @@ app.component("GcSpreadSheets", GcSpreadSheets);
 app.component("GcWorksheet", GcWorksheet);
 app.component("GcColumn", GcColumn);
 Object.keys(Elicons).forEach((key) => {
-	app.component(key, Elicons[key]);
+  app.component(key, Elicons[key]);
 });
 app.config.globalProperties.$echarts = echarts;
 const appStore = useAppStore(pinia);
 
 /**加载插件 */
 app
-	.use(ElementPlus, {
-		locale: appStore.getLanguage === "zh" ? zhCn : en,
-	})
-	.use(quickUI)
-	.use(pinia)
-	.use(router)
-	.use(i18n);
+  .use(ElementPlus, {
+    locale: appStore.getLanguage === "zh" ? zhCn : en,
+  })
+  .use(quickUI)
+  .use(pinia)
+  .use(router)
+  .use(i18n);
 
 //渲染
 app.mount("#app");

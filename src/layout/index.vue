@@ -37,34 +37,34 @@ const tabList = computed(() => tabStore.getTabList);
 // 	}
 // };
 const handleClick = (activeName: string) => {
-	const index = tabList.value.findIndex((x) => x.id === activeName);
-	if (index !== -1) {
-		tabStore.setActiveTab(tabList.value[index]);
-		menuStore.setActiveMenuId(activeName);
-		editableTabsValue.value = activeName;
-	}
+  const index = tabList.value.findIndex((x) => x.id === activeName);
+  if (index !== -1) {
+    tabStore.setActiveTab(tabList.value[index]);
+    menuStore.setActiveMenuId(activeName);
+    editableTabsValue.value = activeName;
+  }
 };
 if (activeTab.value.id) {
-	handleClick(activeTab.value.id);
+  handleClick(activeTab.value.id);
 }
 const closeAll = () => {
-	tabStore.clear();
-	menuStore.clear();
-	editableTabsValue.value = "home";
+  tabStore.clear();
+  menuStore.clear();
+  editableTabsValue.value = "home";
 };
 watch(activeTab, (val) => {
-	if (val) {
-		const { id, path } = val;
-		if (id) {
-			editableTabsValue.value = id;
-		}
-		if (path) {
-			router.push(path);
-		}
-	}
+  if (val) {
+    const { id, path } = val;
+    if (id) {
+      editableTabsValue.value = id;
+    }
+    if (path) {
+      router.push(path);
+    }
+  }
 });
 watch(tabList, (val) => {
-	editableTabs.value = val;
+  editableTabs.value = val;
 });
 </script>
 
