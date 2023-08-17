@@ -1,29 +1,24 @@
 <script lang="ts" setup name="AiniTheme">
 import { onMounted, reactive, ref, Ref, toRefs, watch } from "vue";
+import { router } from "@/router";
 import { ElMessage, ElMessageBox } from "element-plus";
 // import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 // import en from "element-plus/dist/locale/en.mjs";
 import { v4 as uuid } from "uuid";
 
-const props = defineProps(["modelValue", "visible"]);
-const emit = defineEmits(["update:modelvalue"]);
+const props = defineProps(["modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 console.log("props", props);
-const { modelValue, visible } = toRefs(props) as {
+const { modelValue } = toRefs(props) as {
     modelValue: Ref<boolean>;
-    visible: Ref<boolean>;
 };
-console.log("visible", visible.value);
-
-console.log("modelValue", modelValue.value);
-const themeVisible = ref(modelValue.value);
-// const updateModel = (visible: boolean) => {
-// 	emit("update:modelvalue", visible);
-// };
+const drawerVisible = ref(false);
 const themeName = ref("");
 const readonly = ref(true);
 const isShow = ref(false);
 const language = ref("zh-cn");
 // const locale = computed(() => (language.value === "zh-cn" ? zhCn : en));
+drawerVisible.value = modelValue.value;
 const switchLang = (lang: string) => {
     language.value = lang;
 };
@@ -138,8 +133,10 @@ const settingForm = reactive({
     },
     bgColor: "rgb(41,23,91)"
 });
-
-const confirmClick = () => {
+const handleConfim = () => {
+    drawerVisible.value = false;
+};
+const handleClose = () => {
     ElMessageBox.confirm("是否保存配置？", "Warning", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -151,9 +148,8 @@ const confirmClick = () => {
                 type: "success",
                 message: "保存成功"
             });
-            themeVisible.value = false;
-            emit("update:modelvalue", themeVisible.value);
-            //TODO:保存成功跳转登录页
+            emit("update:modelValue", drawerVisible.value);
+            router.go(0);
         })
         .catch(() => {
             ElMessage({
@@ -178,9 +174,8 @@ const cancelClick = () => {
                 type: "success",
                 message: "重置成功"
             });
-            themeVisible.value = false;
-            emit("update:modelvalue", themeVisible.value);
-            //TODO:重置成功跳转登录页
+
+            router.go(0);
         })
         .catch(() => {
             ElMessage({
@@ -218,6 +213,12 @@ const saveTheme = () => {
         type: "success"
     });
 };
+watch(
+    () => modelValue.value,
+    (val) => {
+        drawerVisible.value = val;
+    }
+);
 watch(
     () => settingForm.lang,
     (val) => {
@@ -257,9 +258,7 @@ watch(
 //     }
 //   }
 // )
-onMounted(() => {
-    console.log("onMounted");
-
+const load = () => {
     const settingStr = localStorage.getItem("setting");
     if (!settingStr) {
         localStorage.setItem("setting", JSON.stringify(settingForm));
@@ -277,15 +276,20 @@ onMounted(() => {
         settingForm.color.danger = obj.color.danger;
         settingForm.bgColor = obj.bgColor;
     }
+};
+onMounted(() => {
+    console.log("onMounted");
+    load();
 });
 </script>
 <template>
     <el-drawer
         :append-to-body="true"
         :close-on-click-modal="false"
-        v-model="themeVisible"
+        v-model="drawerVisible"
         title="系统配置"
         direction="rtl"
+        @closed="handleClose"
     >
         <el-form
             :model="settingForm"
@@ -465,7 +469,7 @@ onMounted(() => {
                 <el-button @click="cancelClick">重置</el-button>
                 <el-button
                     type="primary"
-                    @click="confirmClick"
+                    @click="handleConfim"
                     >保存</el-button
                 >
             </div>

@@ -1,5 +1,5 @@
 export interface IDictionaryType {
-    id?: string;
+    id?: number;
     dicTypeId: string;
     dicTypeName: string;
 }

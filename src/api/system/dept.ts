@@ -35,7 +35,7 @@ export const updateDept = (data: IDept) => {
         data
     });
 };
-export const deleteDept = (id: string) => {
+export const deleteDept = (id: number) => {
     return request({
         url: `${api}/${id}`,
         method: "DELETE"

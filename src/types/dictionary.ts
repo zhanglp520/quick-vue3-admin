@@ -1,7 +1,7 @@
 export interface IDictionary {
-    id?: string;
+    id?: number;
     dicTypeId: string;
-    dicId: string;
+    dicId?: number;
     dicName: string;
 }
 export interface IDictionaryPermissionButton {

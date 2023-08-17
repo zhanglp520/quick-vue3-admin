@@ -1,7 +1,10 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { validatePermission } from "@/utils";
 import {
     IDictionaryType,
@@ -24,6 +27,7 @@ const dataList = reactive<Array<IDictionaryType>>([]);
 const permissionBtn = computed<IDictionaryTypePermissionButton>(() => {
     return userStore.getPermissionBtns as IDictionaryTypePermissionButton;
 });
+
 /**
  * 工具栏
  */
@@ -34,6 +38,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -65,6 +70,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete)
 });
+
 /**
  * 表格
  */

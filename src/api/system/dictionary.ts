@@ -32,7 +32,7 @@ export const updateDictionary = (data: IDictionary) => {
         data
     });
 };
-export const deleteDictionary = (id: string) => {
+export const deleteDictionary = (id: number) => {
     return request({
         url: `${api}/${id}`,
         method: "DELETE"

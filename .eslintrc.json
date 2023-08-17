@@ -22,6 +22,8 @@
         "prettier/prettier": "error",
         "indent": ["error", 4],
         "vue/multi-word-component-names": 0,
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-console": "off",
+        "no-debugger": "off"
     }
 }

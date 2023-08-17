@@ -1,5 +1,5 @@
 export interface ILog {
-    id?: string;
+    id?: number;
     type: number;
     ip: string;
     request: string;

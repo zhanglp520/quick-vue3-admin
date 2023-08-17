@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -10,6 +11,8 @@ import {
     Tree,
     LeftTree
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { dicFormat, treeFormat, validatePermission } from "@/utils";
 import { IDictionary, IDictionaryPermissionButton } from "@/types/dictionary";
 import { useUserStore } from "@/store/modules/user";
@@ -37,6 +40,7 @@ const currentTreeData = ref<Tree>({
 const permissionBtn = computed<IDictionaryPermissionButton>(() => {
     return userStore.getPermissionBtns as IDictionaryPermissionButton;
 });
+
 /**
  * 工具栏
  */
@@ -52,6 +56,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -79,6 +84,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete)
 });
+
 /**
  * 表格
  */
@@ -97,6 +103,7 @@ const tableColumns = reactive<Array<Column>>([
         prop: "dicName"
     }
 ]);
+
 /**
  * 加载数据
  */
@@ -110,6 +117,7 @@ const load = () => {
         dataList.push(...dictionaryList);
     });
 };
+
 /**
  * 左树
  */
@@ -144,6 +152,7 @@ const handleTreeClick = (data: Tree, done: any) => {
     load();
     done();
 };
+
 /**
  * 表单
  */
@@ -153,9 +162,9 @@ const dialogTitle = reactive({
     detail: "字典详情"
 });
 const formModel = reactive<IDictionary>({
-    id: "",
+    id: undefined,
     dicTypeId: "",
-    dicId: "",
+    dicId: undefined,
     dicName: ""
 });
 const formItems = reactive<Array<FormItem>>([

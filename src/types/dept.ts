@@ -1,8 +1,8 @@
 export interface IDept {
-    id?: string;
+    id?: number;
     deptId: string;
     deptName: string;
-    pId: string;
+    pId: number;
 }
 export interface IDeptTree extends IDept {
     children: IDeptTree[];

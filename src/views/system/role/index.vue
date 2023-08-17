@@ -1,7 +1,10 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { validatePermission } from "@/utils";
 import { IRole, IRolePermissionButton } from "@/types/role";
 import { useUserStore } from "@/store/modules/user";
@@ -32,6 +35,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -41,6 +45,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
     hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
+
 /**
  * 表格
  */
@@ -82,6 +87,7 @@ const handleDelete = (item: IRole, done: any) => {
         });
     });
 };
+
 /**
  * 加载数据
  */
@@ -94,6 +100,7 @@ const load = () => {
         dataList.push(...roleList);
     });
 };
+
 /**
  * 表单
  */
@@ -103,7 +110,7 @@ const dialogTitle = reactive({
     detail: "角色详情"
 });
 const formModel = reactive<IRole>({
-    id: "",
+    id: undefined,
     roleId: "",
     roleName: ""
 });
@@ -149,7 +156,6 @@ const handleFormSubmit = (form: IRole, done: any) => {
             done();
         });
     } else {
-        row.id = undefined;
         addRole(row).then(() => {
             ElMessage({
                 type: "success",

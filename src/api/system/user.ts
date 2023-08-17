@@ -1,8 +1,8 @@
-// import { Menu } from "@/types/menu";
 import { IChangePassword, IUser } from "@/types/user";
 import request, { IQuickResponseData } from "@/utils/request";
 import { user as api } from "./index";
-// import { auth as authApi } from "../auth/index";
+export { downloadFileStream } from "@/api/common";
+
 /*
  *@Description: 用户管理模块api
  *@Author: 土豆哥
@@ -53,13 +53,13 @@ export const updateUser = (data: IUser) => {
         data
     });
 };
-export const deleteUser = (id: string) => {
+export const deleteUser = (id: number) => {
     return request({
         url: `${api}/${id}`,
         method: "DELETE"
     });
 };
-export const changePassword = (id: string, data: IChangePassword) => {
+export const changePassword = (id: number, data: IChangePassword) => {
     const { oldPassword, newPassword } = data;
     return request({
         url: `${api}/changePassword/${id}`,
@@ -70,26 +70,25 @@ export const changePassword = (id: string, data: IChangePassword) => {
         }
     });
 };
-
 export const batchDeleteUser = (ids: string) => {
     return request({
         url: `${api}/batchRemove/${ids}`,
         method: "DELETE"
     });
 };
-export const resetUserPassword = (id: string) => {
+export const resetUserPassword = (id: number) => {
     return request({
         url: `${api}/resetPassword/${id}`,
         method: "PATCH"
     });
 };
-export const enableUser = (id: string) => {
+export const enableUser = (id: number) => {
     return request({
         url: `${api}/enabled/${id}`,
         method: "PATCH"
     });
 };
-export const disableUser = (id: string) => {
+export const disableUser = (id: number) => {
     return request({
         url: `${api}/disable/${id}`,
         method: "PATCH"

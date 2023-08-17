@@ -98,8 +98,8 @@ devDependencies:
     specifier: ^9.2.2
     version: registry.npmmirror.com/vue-i18n@9.2.2(vue@3.3.4)
   vue-router:
-    specifier: '4'
-    version: registry.npmmirror.com/vue-router@4.0.0(vue@3.3.4)
+    specifier: ^4.2.4
+    version: registry.npmmirror.com/vue-router@4.2.4(vue@3.3.4)
   vue-tsc:
     specifier: ^1.8.5
     version: registry.npmmirror.com/vue-tsc@1.8.5(typescript@5.0.2)
@@ -3057,14 +3057,15 @@ packages:
       vue: registry.npmmirror.com/vue@3.3.4
     dev: true
 
-  registry.npmmirror.com/vue-router@4.0.0(vue@3.3.4):
-    resolution: {integrity: sha512-RiAsDsSV73TBqppgpAKghb5exHHKsFuTii7hbhj9QHjWJNDE4lBDTr7bVALG9DH9vVcFI+7PUTBGYbytBFsWsQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-4.0.0.tgz}
-    id: registry.npmmirror.com/vue-router/4.0.0
+  registry.npmmirror.com/vue-router@4.2.4(vue@3.3.4):
+    resolution: {integrity: sha512-9PISkmaCO02OzPVOMq2w82ilty6+xJmQrarYZDkjZBfl4RvYAlt4PKnEX21oW4KTtWfa9OuO/b3qk1Od3AEdCQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-4.2.4.tgz}
+    id: registry.npmmirror.com/vue-router/4.2.4
     name: vue-router
-    version: 4.0.0
+    version: 4.2.4
     peerDependencies:
-      vue: ^3.0.0
+      vue: ^3.2.0
     dependencies:
+      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api@6.5.0
       vue: registry.npmmirror.com/vue@3.3.4
     dev: true
 

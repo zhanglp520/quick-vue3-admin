@@ -35,7 +35,7 @@ export const updateDictionaryType = (data: IDictionaryType) => {
         data
     });
 };
-export const deleteDictionaryType = (id: string) => {
+export const deleteDictionaryType = (id: number) => {
     return request({
         url: `${api}/${id}`,
         method: "DELETE"

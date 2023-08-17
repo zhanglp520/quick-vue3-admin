@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -8,6 +9,8 @@ import {
     FormItem,
     Options
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import {
     selectTreeFormat,
     listToTree,
@@ -34,6 +37,7 @@ const parentTreeList = reactive<Array<Options>>([]);
 const permissionBtn = computed<IMenuPermissionButton>(() => {
     return userStore.getPermissionBtns as IMenuPermissionButton;
 });
+
 /**
  * 工具栏
  */
@@ -44,6 +48,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -53,7 +58,7 @@ const handleDelete = (item: IMenu, done: any) => {
         cancelButtonText: "取消",
         type: "warning"
     }).then(() => {
-        deleteMenu(item.id!).then(() => {
+        deleteMenu(item.id).then(() => {
             ElMessage({
                 type: "success",
                 message: "菜单删除成功"
@@ -68,6 +73,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
     hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
+
 /**
  * 表格
  */
@@ -149,6 +155,7 @@ const tableColumns = reactive<Array<Column>>([
         }
     }
 ]);
+
 /**
  * 加载数据
  */
@@ -175,6 +182,7 @@ const load = () => {
         parentTreeList.push(...selectTreeData);
     });
 };
+
 /**
  * 表单
  */
@@ -184,7 +192,7 @@ const dialogTitle = reactive({
     detail: "菜单详情"
 });
 const formModel = reactive<IMenu>({
-    id: "",
+    id: undefined,
     menuId: "",
     menuName: "",
     path: "",
@@ -350,9 +358,6 @@ const formItems = reactive<Array<FormItem>>([
 ]);
 const handleFormSubmit = (form: IMenu, done: any) => {
     const row = { ...form };
-    if (!row.pId) {
-        row.pId = "0";
-    }
     if (row.id) {
         updateMenu(row).then(() => {
             ElMessage({
@@ -362,7 +367,6 @@ const handleFormSubmit = (form: IMenu, done: any) => {
             done();
         });
     } else {
-        row.id = undefined;
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",

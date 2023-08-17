@@ -47,7 +47,7 @@ export const updateApi = (data: IApi) => {
         data
     });
 };
-export const deleteApi = (id: string) => {
+export const deleteApi = (id: number) => {
     return request({
         url: `${api}/${id}`,
         method: "DELETE"

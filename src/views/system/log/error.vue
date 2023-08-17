@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import {
     Column,
@@ -7,6 +8,8 @@ import {
     FormItem,
     Page
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { validatePermission } from "@/utils";
 import { ILog, ISearchLog, ILogPermissionButton } from "@/types/log";
 import { useUserStore } from "@/store/modules/user";

@@ -1,5 +1,5 @@
 export interface IMenu {
-    id?: string;
+    id?: number;
     menuId: string;
     menuName: string;
     path: string;
@@ -7,7 +7,7 @@ export interface IMenu {
     menuType?: number;
     icon?: string;
     sort?: number;
-    pId: string;
+    pId: number;
     link?: number;
     linkUrl?: string;
     enabled?: boolean;

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -10,6 +11,8 @@ import {
     Tree,
     LeftTree
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { selectTreeFormat, validatePermission } from "@/utils";
 import { IDept, IDeptTree, IDeptPermissionButton } from "@/types/dept";
 import { useUserStore } from "@/store/modules/user";
@@ -36,12 +39,13 @@ const currentTreeData = ref<Tree>({
 const permissionBtn = computed<IDeptPermissionButton>(() => {
     return userStore.getPermissionBtns as IDeptPermissionButton;
 });
+
 /**
  * 工具栏
  */
 const handleAdd = (item: IDept, done: any) => {
     const form = { ...item };
-    form.pId = currentTreeData.value.id;
+    form.pId = Number(currentTreeData.value.id);
     done(form);
 };
 const tableToolbar = reactive<Toolbar>({
@@ -51,6 +55,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -77,6 +82,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenDetailButton: true,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit)
 });
+
 /**
  * 表格
  */
@@ -95,7 +101,7 @@ const tableColumns = reactive<Array<Column>>([
         prop: "deptName"
     }
 ]);
-const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
+const deptTreeFormat = (data: Array<IDept>, pId: number = 0) => {
     const arr: Array<Tree> = [];
     const obj: Tree = {
         id: "",
@@ -104,14 +110,14 @@ const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
     };
     const parentData = data.find((x: IDept) => x.pId === pId);
     if (parentData) {
-        obj.id = parentData.id!;
+        obj.id = parentData.id!.toString();
         obj.label = parentData.deptName;
         const parentId = parentData.id;
         const companyData = data.filter((x: IDept) => x.pId === parentId);
         companyData.forEach((item: IDept) => {
             if (companyData) {
                 const companyObj: Tree = {
-                    id: item.id!,
+                    id: item.id!.toString(),
                     label: item.deptName,
                     children: []
                 };
@@ -121,7 +127,7 @@ const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
                 );
                 deptData.forEach((deptItem) => {
                     companyObj.children.push({
-                        id: deptItem.id!,
+                        id: deptItem.id!.toString(),
                         label: deptItem.deptName,
                         children: []
                     });
@@ -133,7 +139,7 @@ const deptTreeFormat = (data: Array<IDept>, pId = "0") => {
     arr.push(obj);
     return arr;
 };
-const listToTableTree = (data: Array<IDept>, pId = "0") => {
+const listToTableTree = (data: Array<IDept>, pId: number = 0) => {
     const arr: Array<IDeptTree> = [];
     const parentData = data.filter((x: IDept) => x.pId === pId);
     parentData.forEach((item: IDept) => {
@@ -143,6 +149,7 @@ const listToTableTree = (data: Array<IDept>, pId = "0") => {
     });
     return arr;
 };
+
 /**
  * 加载数据
  */
@@ -150,7 +157,7 @@ const load = () => {
     const { id } = currentTreeData.value;
     const pId = id;
     loading.value = true;
-    const deptTree = listToTableTree(deptDdataListTemp, pId);
+    const deptTree = listToTableTree(deptDdataListTemp, Number(pId));
     loading.value = false;
     dataList.length = 0;
     dataList.push(...deptTree);
@@ -167,6 +174,7 @@ const leftTree = reactive<LeftTree>({
 const treeLoad = (done: any) => {
     getDeptList().then((res) => {
         const { data: deptList } = res;
+        console.log("deptList", deptList);
         deptDdataListTemp.length = 0;
         deptDdataListTemp.push(...deptList);
         const data = deptTreeFormat(deptList);
@@ -188,6 +196,7 @@ const handleTreeClick = (data: Tree, done: any) => {
     load();
     done();
 };
+
 /**
  * 表单
  */
@@ -197,10 +206,10 @@ const dialogTitle = reactive({
     detail: "部门详情"
 });
 const formModel = reactive<IDept>({
-    id: "",
+    id: undefined,
     deptId: "",
     deptName: "",
-    pId: "0"
+    pId: 0
 });
 const formItems = reactive<Array<FormItem>>([
     {

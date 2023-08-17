@@ -1,7 +1,7 @@
 // import { PermissionButton } from "@ainiteam/quick-vue3-ui";
 
 export interface IUser {
-    id?: string;
+    id?: number;
     userId: string;
     userName: string;
     password?: string;
@@ -21,7 +21,7 @@ export interface ISearchUser {
 export interface IChangePassword {
     oldPassword: string;
     newPassword: string;
-    confirmPassword?: string;
+    confirmPassword: string;
 }
 
 export interface IUserPermissionButton {

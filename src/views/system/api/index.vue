@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// import * as XLSX from "xlsx";
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -9,6 +9,8 @@ import {
     Actionbar,
     Toolbar
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { validatePermission } from "@/utils";
 import { IApi, ISearchApi, IApiPermissionButton } from "@/types/api";
 import { useUserStore } from "@/store/modules/user";
@@ -39,6 +41,7 @@ const page = reactive<Page>({
     sizes: [10, 20, 30, 40, 50],
     total: 0
 });
+
 /**
  * 搜索
  */
@@ -52,6 +55,7 @@ const searchFormItems = reactive<Array<FormItem>>([
         placeholder: "接口名称|菜单名称"
     }
 ]);
+
 /**
  * 工具栏
  */
@@ -74,27 +78,14 @@ const handleBatchDelete = (data: any, done: any) => {
 const handlePrint = () => {
     window.print();
 };
-// const changeFile = (event: any) => {
-// 	const file = event.target.files[0];
-// 	const reader = new FileReader();
-// 	reader.readAsArrayBuffer(file);
-// 	reader.onload = (e: any) => {
-// 		const data = e.target.result;
-// 		const workbook = XLSX.read(data, { type: "binary", cellDates: true });
-// 		const wsname = workbook.SheetNames[0];
-// 		const outdata = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
-// 		console.log(outdata, "outdata");
-// 	};
-// };
-
 const tableToolbar = reactive<Toolbar>({
-    // position: 'right',
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
     hiddenAddButton: validatePermission(permissionBtn.value?.add)
 });
+
 /**
  * 操作栏
  */
@@ -116,13 +107,13 @@ const handleDelete = (item: IApi, done: any) => {
         });
     });
 };
-
 const tableActionbar = reactive<Actionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
     hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
+
 /**
  * 表格
  */
@@ -161,6 +152,7 @@ const tableColumns = reactive<Array<Column>>([
         prop: "remark"
     }
 ]);
+
 /**
  * 加载数据
  */
@@ -180,6 +172,7 @@ const load = (parmas: object) => {
             loading.value = false;
         });
 };
+
 /**
  * 表单
  */
@@ -189,7 +182,7 @@ const dialogTitle = reactive({
     detail: "接口详情"
 });
 const formModel = reactive<IApi>({
-    id: "",
+    id: undefined,
     apiId: "",
     apiName: "",
     apiPath: "",

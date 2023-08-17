@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 /**导入第三方库 */
-import * as XLSX from "xlsx";
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -10,6 +9,7 @@ import {
     Actionbar,
     Toolbar
 } from "@ainiteam/quick-vue3-ui";
+import * as XLSX from "xlsx";
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
@@ -17,7 +17,6 @@ import { downloadExcel, exportExcel } from "@/utils/download";
 import { IUser, ISearchUser, IUserPermissionButton } from "@/types/user";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
-import { downloadFileStream } from "@/api/common";
 import {
     exportUser,
     getUserPageList,
@@ -27,7 +26,8 @@ import {
     batchDeleteUser,
     resetUserPassword,
     enableUser,
-    disableUser
+    disableUser,
+    downloadFileStream
 } from "@/api/system/user";
 
 /**
@@ -51,6 +51,7 @@ const page = reactive<Page>({
     sizes: [10, 20, 30, 40, 50],
     total: 0
 });
+
 /**
  * 搜索
  */
@@ -64,6 +65,7 @@ const searchFormItems = reactive<Array<FormItem>>([
         placeholder: "用户名|手机号"
     }
 ]);
+
 /**
  * 工具栏
  */
@@ -103,7 +105,6 @@ const changeFile = (event: any) => {
         console.log(outdata, "outdata");
     };
 };
-
 const tableToolbar = reactive<Toolbar>({
     importButtonName: "导入（默认后端方式）",
     exportButtonName: "导出（默认后端方式）",
@@ -190,6 +191,7 @@ const tableToolbar = reactive<Toolbar>({
         }
     ]
 });
+
 /**
  * 操作栏
  */
@@ -304,6 +306,7 @@ const tableActionbar = reactive<Actionbar>({
         }
     ]
 });
+
 /**
  * 表格
  */
@@ -365,6 +368,7 @@ const tableColumns = reactive<Array<Column>>([
         prop: "remark"
     }
 ]);
+
 /**
  * 加载数据
  */
@@ -384,6 +388,7 @@ const load = (parmas: object) => {
             loading.value = false;
         });
 };
+
 /**
  * 表单
  */
@@ -440,7 +445,7 @@ const validateEmail = (value: string, callback: any) => {
     }
 };
 const formModel = reactive<IUser>({
-    id: "",
+    id: undefined,
     userId: "",
     userName: "",
     fullName: "",
@@ -554,7 +559,6 @@ const handleFormSubmit = (form: IUser, done: any) => {
             done();
         });
     } else {
-        row.id = undefined;
         addUser(row).then(() => {
             ElMessage({
                 type: "success",
@@ -564,6 +568,7 @@ const handleFormSubmit = (form: IUser, done: any) => {
         });
     }
 };
+
 /**
  * 导入
  */
