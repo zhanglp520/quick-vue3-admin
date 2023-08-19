@@ -120,7 +120,7 @@ const dialogTitle = reactive({
     detail: "角色详情"
 });
 const formModel = reactive<IRole>({
-    id: "",
+    id: undefined,
     roleId: "",
     roleName: ""
 });

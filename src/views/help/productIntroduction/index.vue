@@ -3,7 +3,7 @@ const yanshi = () => {
     window.open("https://quick.ainiteam.com/");
 };
 const kaiyuan = () => {
-    window.open("https://gitee.com/zhanglp520/quick-admin/");
+    window.open("https://gitee.com/zhanglp520/quick-vue3-admin/");
 };
 </script>
 
@@ -18,7 +18,7 @@ const kaiyuan = () => {
                         </div>
                     </template>
                     <div class="description">
-                        quick-admin
+                        quick-vue3-admin
                         是一款免费开源快速搭建中后台系统框架,本框架基于
                         vite4、vue3、element-plus、pinia
                         等最新主流技术并封装了通用的组件方便开发者提高工作效率,后期也会通过版本升级的方式来维护并更新，使开发者拥有一款长期并且稳定的脚手架。本团队还提供了基于
@@ -27,9 +27,9 @@ const kaiyuan = () => {
                         <p>
                             开源地址：<el-link
                                 type="primary"
-                                href="https://gitee.com/zhanglp520/quick-admin/"
+                                href="https://gitee.com/zhanglp520/quick-vue3-admin/"
                             >
-                                https://gitee.com/zhanglp520/quick-admin</el-link
+                                https://gitee.com/zhanglp520/quick-vue3-admin</el-link
                             >
                             <br />
                             演示地址：<el-link
@@ -140,21 +140,21 @@ const kaiyuan = () => {
                         ><br />
                         4.码云地址：<el-link
                             type="primary"
-                            href="https://gitee.com/zhanglp520/quick-admin/"
+                            href="https://gitee.com/zhanglp520/quick-vue3-admin/"
                         >
-                            https://gitee.com/zhanglp520/quick-admin/</el-link
+                            https://gitee.com/zhanglp520/quick-vue3-admin/</el-link
                         ><br />
                         5.github地址：<el-link
                             type="primary"
-                            href="https://github.com/zhanglp520/quick-admin/"
+                            href="https://github.com/zhanglp520/quick-vue3-admin/"
                         >
-                            https://github.com/zhanglp520/quick-admin/</el-link
+                            https://github.com/zhanglp520/quick-vue3-admin/</el-link
                         ><br />
                         6.gitlab地址：<el-link
                             type="primary"
-                            href="http://110.42.130.88:8099/zhanglp520/quick-admin/"
+                            href="http://110.42.130.88:8099/zhanglp520/quick-vue3-admin/"
                         >
-                            http://110.42.130.88:8099/zhanglp520/quick-admin/</el-link
+                            http://110.42.130.88:8099/zhanglp520/quick-vue3-admin/</el-link
                         ><br />
                         7.gitee中发起 Issue<br />
                         8.qq群帮助：558795174<br />

@@ -26,7 +26,6 @@ import {
     updateMenu,
     deleteMenu
 } from "@/api/system/menu";
-import { number } from "echarts";
 
 /**
  * 属性

@@ -6,7 +6,7 @@ import { ITab } from "@/types/tab";
 import { IMenubar } from "@/types/menu";
 import AiniMenu from "@/layout/components/AiniMenu/index.vue";
 
-const title = ref("quick-admin");
+const title = ref("quick-vue3-admin");
 const tabStore = useTabStore();
 const appStore = useAppStore();
 const isCollapse = computed(() => appStore.getCollapse);
@@ -17,15 +17,16 @@ const goHome = () => {
         menuName: "首页",
         icon: "",
         sort: 0,
-        pId: "0",
+        pId: 0,
         link: 0,
         path: "/home",
         viewPath: "",
+        cache: false,
         children: []
     };
     const { id, menuName, path } = menu;
     const tab: ITab = {
-        id,
+        id: id?.toString(),
         name: menuName,
         path
     };

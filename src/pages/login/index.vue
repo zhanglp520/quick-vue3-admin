@@ -9,7 +9,7 @@ import { useUserStore } from "@/store/modules/user";
 /**
  * 属性
  */
-const title = ref("quick-admin");
+const title = ref("quick-vue3-admin");
 const loginStore = useAuthStore(pinia);
 const userStore = useUserStore(pinia);
 const loading = ref(false);

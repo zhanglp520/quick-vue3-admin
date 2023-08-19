@@ -151,7 +151,7 @@ const clearSelection = () => {
 const getRows = (data: string[]) => {
     const arr: IUser[] = [];
     data.forEach((element: string) => {
-        const user = userList.find((x) => x.id === element);
+        const user = userList.find((x) => x.id?.toString() === element);
         if (user) {
             arr.push(user);
         }

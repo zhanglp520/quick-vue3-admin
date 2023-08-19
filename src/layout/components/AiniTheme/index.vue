@@ -156,6 +156,7 @@ const handleClose = () => {
                 type: "info",
                 message: "已取消"
             });
+            router.go(0);
         });
 };
 const cancelClick = () => {
@@ -182,6 +183,7 @@ const cancelClick = () => {
                 type: "info",
                 message: "已取消"
             });
+            router.go(0);
         });
 };
 const saveTheme = () => {

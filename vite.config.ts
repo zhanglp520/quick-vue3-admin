@@ -1,13 +1,28 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import eslintPlugin from "vite-plugin-eslint";
+import { createHtmlPlugin } from "vite-plugin-html";
 import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     base: "./",
     plugins: [
+        vue({
+            template: {
+                compilerOptions: {
+                    isCustomElement: (tag) => tag.includes("quick-")
+                }
+            }
+        }),
         vue(),
+        createHtmlPlugin({
+            inject: {
+                data: {
+                    title: "quick-vue3-admin"
+                }
+            }
+        }),
         eslintPlugin({
             include: [
                 "src/**/*.ts",

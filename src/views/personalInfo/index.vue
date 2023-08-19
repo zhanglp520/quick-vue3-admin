@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, UploadProps } from "element-plus";
 import { FormItem } from "@ainiteam/quick-vue3-ui";
 import { IUser } from "@/types/user";
 import { useAuthStore } from "@/store/modules/auth";
@@ -13,7 +13,7 @@ import { updateUser } from "@/api/system/user";
 const loginStore = useAuthStore();
 const userStore = useUserStore();
 const form = reactive<IUser>({
-    id: "",
+    id: undefined,
     userId: "",
     avatar: "",
     fullName: "",
@@ -26,24 +26,21 @@ const form = reactive<IUser>({
  * 上传
  */
 // const imageUrl = ref('')
-// const handleAvatarSuccess: UploadProps["onSuccess"] = (
-// 	response
-// 	// uploadFile
-// ) => {
-// 	// imageUrl.value = URL.createObjectURL(uploadFile.raw!)
-// 	form.avatar = `${import.meta.env.VITE_UPLOAD_PATH}${response.data.path}`;
-// };
-// const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
-// 	if (rawFile.type !== "image/jpeg") {
-// 		ElMessage.error("Avatar picture must be JPG format!");
-// 		return false;
-// 	}
-// 	if (rawFile.size / 1024 / 1024 > 2) {
-// 		ElMessage.error("Avatar picture size can not exceed 2MB!");
-// 		return false;
-// 	}
-// 	return true;
-// };
+const handleAvatarSuccess: UploadProps["onSuccess"] = (response) => {
+    // imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+    form.avatar = `${import.meta.env.VITE_UPLOAD_PATH}${response.data.path}`;
+};
+const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
+    if (rawFile.type !== "image/jpeg") {
+        ElMessage.error("Avatar picture must be JPG format!");
+        return false;
+    }
+    if (rawFile.size / 1024 / 1024 > 2) {
+        ElMessage.error("Avatar picture size can not exceed 2MB!");
+        return false;
+    }
+    return true;
+};
 const formItems = reactive<Array<FormItem>>([
     {
         label: "头像",
@@ -57,9 +54,9 @@ const formItems = reactive<Array<FormItem>>([
         }/api/v2/uploads/uploadFile`,
         headers: {
             authorization: `Bearer ${loginStore.getAccessToken}`
-        }
-        // success: handleAvatarSuccess,
-        // beforeUpload: beforeAvatarUpload,
+        },
+        success: handleAvatarSuccess,
+        beforeUpload: beforeAvatarUpload
     },
     {
         label: "姓名",
