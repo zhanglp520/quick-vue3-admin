@@ -10,6 +10,7 @@ import { ITab } from "@/types/tab";
 import config from "@/config/index";
 import AiniTop from "./components/AiniTop/index.vue";
 import AiniSidebar from "./components/AiniSidebar/index.vue";
+import { TabPaneName } from "element-plus";
 
 const router = useRouter();
 const appStore = useAppStore();
@@ -31,17 +32,22 @@ const editableTabsValue = ref("home");
 const editableTabs = ref<Array<ITab>>([]);
 const activeTab = computed(() => tabStore.getActiveTab);
 const tabList = computed(() => tabStore.getTabList);
-// const handleTabsEdit = (targetName: string, action: "remove" | "add"): void => {
-// 	if (action === "remove") {
-// 		tabStore.deleteTab(targetName);
-// 	}
-// };
-const handleClick = (activeName: string) => {
+const handleTabsEdit = (
+    targetName: TabPaneName | undefined,
+    action: "remove" | "add"
+): void => {
+    if (action === "remove") {
+        if (targetName) {
+            tabStore.deleteTab(targetName.toString());
+        }
+    }
+};
+const handleClick = (activeName: TabPaneName) => {
     const index = tabList.value.findIndex((x) => x.id === activeName);
     if (index !== -1) {
         tabStore.setActiveTab(tabList.value[index]);
-        menuStore.setActiveMenuId(activeName);
-        editableTabsValue.value = activeName;
+        menuStore.setActiveMenuId(activeName.toString());
+        editableTabsValue.value = activeName.toString();
     }
 };
 if (activeTab.value.id) {
@@ -106,12 +112,12 @@ watch(tabList, (val) => {
                                 @click="closeAll"
                             ></el-button>
                         </el-tooltip>
-                        <!-- @edit="handleTabsEdit"
-							@tab-change="handleClick" -->
                         <el-tabs
                             v-model="editableTabsValue"
                             type="card"
                             closable
+                            @edit="handleTabsEdit"
+                            @tab-change="handleClick"
                         >
                             <el-tab-pane
                                 v-for="item in tabList"

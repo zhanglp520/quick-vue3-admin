@@ -26,6 +26,7 @@ import {
     updateMenu,
     deleteMenu
 } from "@/api/system/menu";
+import { number } from "echarts";
 
 /**
  * 属性
@@ -72,7 +73,7 @@ const handleDelete = (item: IMenu, done: any) => {
         cancelButtonText: "取消",
         type: "warning"
     }).then(() => {
-        deleteMenu(item.id!).then(() => {
+        deleteMenu(Number(item.id)).then(() => {
             ElMessage({
                 type: "success",
                 message: "菜单删除成功"
