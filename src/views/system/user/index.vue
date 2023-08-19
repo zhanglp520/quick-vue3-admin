@@ -451,6 +451,7 @@ const validateEmail = (rule: any, value: string, callback: any) => {
     }
 };
 const formModel = reactive<IUser>({
+    id: undefined,
     userId: "",
     userName: "",
     fullName: "",

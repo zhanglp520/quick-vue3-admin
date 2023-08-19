@@ -41,6 +41,20 @@ const permissionBtn = computed<IMenuPermissionButton>(() => {
 /**
  * 工具栏
  */
+const handleEdit = (item: IMenu, done: any) => {
+    const form = { ...item };
+    if (item.pId === 0) {
+        form.pId = undefined;
+    }
+    done(form);
+};
+const handleDetail = (item: IMenu, done: any) => {
+    const form = { ...item };
+    if (item.pId === 0) {
+        form.pId = undefined;
+    }
+    done(form);
+};
 const tableToolbar = reactive<Toolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
@@ -171,6 +185,7 @@ const tableColumns = reactive<Array<Column>>([
 const loadParentMenuData = (data: IMenu[]) => {
     const parentMenuList = data.filter((x: IMenu) => x.menuType !== 2);
     const parentTree = listToSelectTree(parentMenuList, 0, {
+        value: "id",
         label: "menuName"
     });
     parentTreeData.length = 0;
@@ -204,6 +219,7 @@ const dialogTitle = reactive({
     detail: "菜单详情"
 });
 const formModel = reactive<IMenu>({
+    id: undefined,
     menuId: "",
     menuName: "",
     path: "",
@@ -211,6 +227,7 @@ const formModel = reactive<IMenu>({
     menuType: 0,
     icon: "",
     sort: 0,
+    pId: undefined,
     link: 0,
     linkUrl: "",
     enabled: true,
@@ -375,6 +392,7 @@ const formItems = reactive<Array<FormItem>>([
 ]);
 const handleFormSubmit = (form: IMenu, done: any) => {
     const row = { ...form };
+    row.pId = form.pId ? form.pId : 0;
     if (row.id) {
         updateMenu(row).then(() => {
             ElMessage({
@@ -409,5 +427,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
         @on-load="loadData"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
+        @on-edit="handleEdit"
+        @on-detail="handleDetail"
     ></quick-crud>
 </template>

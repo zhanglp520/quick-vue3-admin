@@ -25,9 +25,8 @@ const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath);
 };
 const menuClick = (menu: IMenubar) => {
-    const { id, menuName, path } = menu;
+    const { menuName, path } = menu;
     const tab: ITab = {
-        id,
         name: menuName,
         path
     };
@@ -35,15 +34,15 @@ const menuClick = (menu: IMenubar) => {
 };
 const homeMenuClick = () => {
     const menu: IMenubar = {
-        id: "home",
         menuId: "home",
         menuName: "首页",
         icon: "",
         sort: 0,
-        pId: "0",
+        pId: 0,
         link: 0,
         path: "/home",
         viewPath: "",
+        cache: false,
         children: []
     };
     menuClick(menu);

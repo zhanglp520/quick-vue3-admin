@@ -7,7 +7,7 @@ import {
     Actionbar,
     Toolbar,
     FormItem,
-    Options
+    SelectTreeOptions
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -21,6 +21,7 @@ import {
     deleteRole,
     getDeptList
 } from "@/api/system/role";
+import { IDept } from "@/types/dept";
 
 /**
  * 属性
@@ -28,7 +29,8 @@ import {
 const userStore = useUserStore();
 const loading = ref(false);
 const tableDataList = reactive<Array<IRole>>([]);
-const deptTreeData = reactive<Array<Options>>([]);
+const deptTreeData = reactive<Array<SelectTreeOptions>>([]);
+const deptDataList = ref<Array<IDept>>();
 const permissionBtn = computed<IRolePermissionButton>(() => {
     return userStore.getPermissionBtns as IRolePermissionButton;
 });
@@ -79,7 +81,13 @@ const tableColumns = reactive<Array<Column>>([
     },
     {
         label: "所属部门",
-        prop: "deptId"
+        prop: "deptId",
+        format(row: IRole) {
+            const dept = deptDataList.value?.find(
+                (x: IDept) => x.id === row.deptId
+            );
+            return dept ? dept.deptName : "";
+        }
     }
 ]);
 const handleDelete = (item: IRole, done: any) => {
@@ -107,10 +115,12 @@ const handleDelete = (item: IRole, done: any) => {
 const loadDeptSelectData = () => {
     getDeptList().then((res) => {
         const { data: deptList } = res;
-        deptTreeData.length = 0;
+        deptDataList.value = deptList;
         const deptTree = listToSelectTree(deptList, 0, {
+            value: "id",
             label: "deptName"
         });
+        deptTreeData.length = 0;
         deptTreeData.push(...deptTree);
     });
 };
@@ -139,8 +149,10 @@ const dialogTitle = reactive({
     detail: "角色详情"
 });
 const formModel = reactive<IRole>({
+    id: undefined,
     roleId: "",
-    roleName: ""
+    roleName: "",
+    deptId: undefined
 });
 const formItems = reactive<Array<FormItem>>([
     {
@@ -191,6 +203,7 @@ const formItems = reactive<Array<FormItem>>([
 ]);
 const handleFormSubmit = (form: IRole, done: any) => {
     const row = { ...form };
+    row.deptId = form.deptId ? form.deptId : 0;
     if (row.id) {
         updateRole(row).then(() => {
             ElMessage({

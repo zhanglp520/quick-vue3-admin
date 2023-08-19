@@ -171,7 +171,9 @@ const dialogTitle = reactive({
     detail: "字典详情"
 });
 const formModel = reactive<IDictionary>({
-    dicTypeId: "",
+    id: undefined,
+    dicTypeId: undefined,
+    dicId: "",
     dicName: ""
 });
 const formItems = reactive<Array<FormItem>>([

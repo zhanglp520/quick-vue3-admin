@@ -92,6 +92,33 @@ export const treeFormat = (data: any, options?: TreeOptions) => {
 //列表转下拉框树
 export const listToSelectTree = (data: any, pId: any, options?: any) => {
     const defaultOptions = {
+        value: "value",
+        label: "label",
+        pId: "pId",
+        sort: "sort"
+    };
+    const value =
+        options && options.value ? options.value : defaultOptions.value;
+    const label =
+        options && options.label ? options.label : defaultOptions.label;
+    const parentId = options && options.pId ? options.pId : defaultOptions.pId;
+    const arr: any = [];
+    let children = [];
+    const nodeData = data.filter((x: any) => x[parentId] === pId);
+    nodeData.forEach((element: any) => {
+        children = listToSelectTree(data, element[value], options);
+        arr.push({
+            value: element[value],
+            label: element[label],
+            children
+        });
+    });
+    return arr;
+};
+
+//列表转树
+export const listToTree = (data: any, pId: any, options?: any) => {
+    const defaultOptions = {
         id: "id",
         label: "label",
         pId: "pId",
@@ -105,7 +132,7 @@ export const listToSelectTree = (data: any, pId: any, options?: any) => {
     let children = [];
     const nodeData = data.filter((x: any) => x[parentId] === pId);
     nodeData.forEach((element: any) => {
-        children = listToSelectTree(data, element[id], options);
+        children = listToTree(data, element[id], options);
         arr.push({
             id: element[id],
             label: element[label],

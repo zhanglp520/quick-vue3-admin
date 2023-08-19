@@ -29,13 +29,12 @@ const { menuList } = toRefs(props) as {
     menuList: Ref<Array<IMenubar>>;
 };
 const menuClick = (item: IMenubar) => {
-    const { id, menuName, path, link, linkUrl } = item;
+    const { menuName, path, link, linkUrl } = item;
     if (link) {
         window.open(linkUrl);
     } else {
         const routerPath = path;
         const tab: ITab = {
-            id,
             name: menuName,
             path: routerPath
         };
@@ -57,7 +56,7 @@ const menuClick = (item: IMenubar) => {
         :key="item.id"
     >
         <template v-if="item.children && item.children.length > 0">
-            <el-sub-menu :index="item.id!">
+            <el-sub-menu :index="item.path!">
                 <template #title>
                     <el-icon>
                         <component :is="item.icon" />
@@ -69,7 +68,7 @@ const menuClick = (item: IMenubar) => {
         </template>
         <template v-else>
             <el-menu-item
-                :index="item.id"
+                :index="item.path"
                 @click="menuClick(item)"
             >
                 <template #title>

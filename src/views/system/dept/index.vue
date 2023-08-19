@@ -13,7 +13,12 @@ import {
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
-import { validatePermission, listToSelectTree, listToTableTree } from "@/utils";
+import {
+    validatePermission,
+    listToSelectTree,
+    listToTableTree,
+    listToTree
+} from "@/utils";
 import { IDept, IDeptPermissionButton } from "@/types/dept";
 import { useUserStore } from "@/store/modules/user";
 import {
@@ -103,6 +108,19 @@ const tableColumns = reactive<Array<Column>>([
 ]);
 
 /**
+ * 加载父级部门树下拉框
+ */
+const loadSelectTreeData = () => {
+    const deptTree = listToSelectTree(deptDdataListTemp, 0, {
+        value: "id",
+        label: "deptName"
+    });
+    deptTreeData.length = 0;
+    deptTreeData.push(...deptTree);
+    console.log("deptTreeData", deptTreeData);
+};
+
+/**
  * 加载数据
  */
 const loadData = () => {
@@ -131,16 +149,15 @@ const treeLoad = (done: any) => {
         deptDdataListTemp.length = 0;
         deptDdataListTemp.push(...deptList);
 
-        const deptTree = listToSelectTree(deptList, 0, {
+        const deptTree = listToTree(deptList, 0, {
+            id: "id",
             label: "deptName"
         });
         console.log("deptTree", deptTree);
         leftTree.treeData.length = 0;
         leftTree.treeData.push(...deptTree);
         console.log("leftTree", leftTree.treeData);
-        deptTreeData.length = 0;
-        deptTreeData.push(...deptTree);
-        console.log("deptTreeData", deptTreeData);
+
         currentTreeData.value.id = deptTree && deptTree[0].id;
         done(currentTreeData.value.id);
     });
@@ -148,6 +165,7 @@ const treeLoad = (done: any) => {
 const handleTreeClick = (data: Tree, done: any) => {
     currentTreeData.value = data;
     loadData();
+    loadSelectTreeData();
     done();
 };
 
@@ -160,6 +178,7 @@ const dialogTitle = reactive({
     detail: "部门详情"
 });
 const formModel = reactive<IDept>({
+    id: undefined,
     deptId: "",
     deptName: "",
     pId: undefined
@@ -200,9 +219,8 @@ const formItems = reactive<Array<FormItem>>([
         vModel: "pId",
         placeholder: "请选择父级部门",
         type: "tree",
-        // addDisabled: true,
-        // editDisabled: true,
-        // detailDisabled: true,
+        addDisabled: true,
+        detailDisabled: true,
         options: deptTreeData,
         prop: "pId",
         rules: [

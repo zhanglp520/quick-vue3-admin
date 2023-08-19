@@ -113,6 +113,7 @@ const dialogTitle = reactive({
     detail: "字典分类详情"
 });
 const formModel = reactive<IDictionaryType>({
+    id: undefined,
     dicTypeId: "",
     dicTypeName: ""
 });

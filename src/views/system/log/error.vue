@@ -162,6 +162,7 @@ const dialogTitle = reactive({
     detail: "日志详情"
 });
 const formModel = reactive<ILog>({
+    id: undefined,
     type: 0,
     ip: "",
     request: "",

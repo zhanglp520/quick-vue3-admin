@@ -183,6 +183,7 @@ const dialogTitle = reactive({
     detail: "接口详情"
 });
 const formModel = reactive<IApi>({
+    id: undefined,
     apiId: "",
     apiName: "",
     apiPath: "",
