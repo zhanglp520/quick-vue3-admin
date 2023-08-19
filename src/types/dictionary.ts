@@ -1,20 +1,9 @@
+import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+
 export interface IDictionary {
     id?: number;
     dicTypeId?: number;
     dicId: string;
     dicName: string;
 }
-export interface IDictionaryPermissionButton {
-    // export interface IDictionaryPermissionButton extends PermissionButton {
-    import?: boolean;
-    export?: boolean;
-    add?: boolean;
-    batchDelete?: boolean;
-    print?: boolean;
-    download?: boolean;
-    edit?: boolean;
-    delete?: boolean;
-    detail?: boolean;
-    enabled?: boolean;
-    disabled?: boolean;
-}
+export interface IDictionaryPermissionButton extends PermissionButton {}

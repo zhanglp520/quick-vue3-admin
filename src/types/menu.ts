@@ -1,5 +1,7 @@
+import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+
 export interface IMenu {
-    id?: number;
+    id?: number | string;
     menuId: string;
     menuName: string;
     path: string;
@@ -20,17 +22,4 @@ export interface IMenuTree extends IMenu {
 export interface IMenubar extends IMenu {
     children: IMenubar[];
 }
-export interface IMenuPermissionButton {
-    // export interface IMenuPermissionButton extends PermissionButton {
-    import?: boolean;
-    export?: boolean;
-    add?: boolean;
-    batchDelete?: boolean;
-    print?: boolean;
-    download?: boolean;
-    edit?: boolean;
-    delete?: boolean;
-    detail?: boolean;
-    enabled?: boolean;
-    disabled?: boolean;
-}
+export interface IMenuPermissionButton extends PermissionButton {}

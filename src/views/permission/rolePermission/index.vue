@@ -186,6 +186,7 @@ onMounted(() => {
 .content {
     .el-card {
         height: 575px;
+        overflow-y: auto;
     }
 }
 </style>

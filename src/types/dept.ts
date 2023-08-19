@@ -1,3 +1,5 @@
+import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+
 export interface IDept {
     id?: number;
     deptId: string;
@@ -7,8 +9,7 @@ export interface IDept {
 export interface IDeptTree extends IDept {
     children: IDeptTree[];
 }
-export interface IDeptPermissionButton {
-    // export interface IDeptPermissionButton extends PermissionButton {
+export interface IDeptPermissionButton extends PermissionButton {
     import?: boolean;
     export?: boolean;
     add?: boolean;

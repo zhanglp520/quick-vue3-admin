@@ -190,4 +190,9 @@ onMounted(() => {
     </template>
     <template v-if="active === 3"> 待开发 </template>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-tree {
+    height: 400px;
+    overflow-y: auto;
+}
+</style>

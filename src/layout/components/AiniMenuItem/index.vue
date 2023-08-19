@@ -29,12 +29,13 @@ const { menuList } = toRefs(props) as {
     menuList: Ref<Array<IMenubar>>;
 };
 const menuClick = (item: IMenubar) => {
-    const { menuName, path, link, linkUrl } = item;
+    const { id, menuName, path, link, linkUrl } = item;
     if (link) {
         window.open(linkUrl);
     } else {
         const routerPath = path;
         const tab: ITab = {
+            id: id?.toString(),
             name: menuName,
             path: routerPath
         };
@@ -49,6 +50,9 @@ const menuClick = (item: IMenubar) => {
         tabStore.addTab(tab);
     }
 };
+const getIndex = (item: IMenubar) => {
+    return item.id ? item.id.toString() : "";
+};
 </script>
 <template>
     <template
@@ -56,7 +60,7 @@ const menuClick = (item: IMenubar) => {
         :key="item.id"
     >
         <template v-if="item.children && item.children.length > 0">
-            <el-sub-menu :index="item.path!">
+            <el-sub-menu :index="getIndex(item)">
                 <template #title>
                     <el-icon>
                         <component :is="item.icon" />
@@ -68,7 +72,7 @@ const menuClick = (item: IMenubar) => {
         </template>
         <template v-else>
             <el-menu-item
-                :index="item.path"
+                :index="getIndex(item)"
                 @click="menuClick(item)"
             >
                 <template #title>

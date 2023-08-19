@@ -17,7 +17,7 @@ export const useUserStore = defineStore("userStore", {
     state: (): IUserState => {
         return {
             user: {
-                id: "",
+                id: undefined,
                 userId: "",
                 userName: "",
                 fullName: "",
@@ -37,7 +37,7 @@ export const useUserStore = defineStore("userStore", {
             const tabStore = useTabStore();
             const activeTab = tabStore.getActiveTab;
             const menuPermission = this.permissionMenuList.filter(
-                (x) => x.id === activeTab.id
+                (x) => x.id?.toString() === activeTab.id
             );
             if (menuPermission && menuPermission[0]) {
                 const btns = this.permissionMenuList.filter(
