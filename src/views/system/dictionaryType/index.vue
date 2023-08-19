@@ -89,18 +89,21 @@ const tableColumns = reactive<Array<Column>>([
         prop: "dicTypeName"
     }
 ]);
+
 /**
  * 加载数据
  */
-const load = () => {
+const loadData = () => {
     loading.value = true;
     getDictionaryTypeList().then((res) => {
         loading.value = false;
         const { data: dictionaryTypeList } = res;
+        console.log("dictionaryTypeList", dictionaryTypeList);
         dataList.length = 0;
         dataList.push(...dictionaryTypeList);
     });
 };
+
 /**
  * 表单
  */
@@ -110,7 +113,6 @@ const dialogTitle = reactive({
     detail: "字典分类详情"
 });
 const formModel = reactive<IDictionaryType>({
-    id: "",
     dicTypeId: "",
     dicTypeName: ""
 });
@@ -119,13 +121,13 @@ const formItems = reactive<Array<FormItem>>([
         label: "分类编号",
         labelWidth: "80px",
         vModel: "dicTypeId",
-        placeholder: "分类编号",
+        placeholder: "请输入分类编号",
         editReadonly: true,
         prop: "dicTypeId",
         rules: [
             {
                 required: true,
-                message: "分类编号不能为空",
+                message: "请输入分类编号",
                 trigger: "blur"
             }
         ]
@@ -134,12 +136,12 @@ const formItems = reactive<Array<FormItem>>([
         label: "分类名称",
         labelWidth: "80px",
         vModel: "dicTypeName",
-        placeholder: "分类名称",
+        placeholder: "请输入分类名称",
         prop: "dicTypeName",
         rules: [
             {
                 required: true,
-                message: "分类名称不能为空",
+                message: "请输入分类名称",
                 trigger: "blur"
             }
         ]
@@ -151,7 +153,7 @@ const handleFormSubmit = (form: IDictionaryType, done: any) => {
         updateDictionaryType(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户修改成功"
+                message: "字典分类修改成功"
             });
             done();
         });
@@ -160,7 +162,7 @@ const handleFormSubmit = (form: IDictionaryType, done: any) => {
         addDictionaryType(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户创建成功"
+                message: "字典分类创建成功"
             });
             done();
         });
@@ -178,7 +180,7 @@ const handleFormSubmit = (form: IDictionaryType, done: any) => {
         :table-toolbar="tableToolbar"
         dialog-titles="dialogTitles"
         :loading="loading"
-        @on-load="load"
+        @on-load="loadData"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
     ></quick-crud>

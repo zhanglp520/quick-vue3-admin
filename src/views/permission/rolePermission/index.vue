@@ -2,7 +2,7 @@
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { ElTree, ElMessage, ElMessageBox } from "element-plus";
 import { Toolbar, Tree } from "@ainiteam/quick-vue3-ui";
-import { listToTree, treeFormat, validatePermission } from "@/utils";
+import { listToTableTree, treeFormat, validatePermission } from "@/utils";
 import { IMenuTree } from "@/types/menu";
 import { IRolePermissionButton } from "@/types/permission";
 import { useUserStore } from "@/store/modules/user";
@@ -101,7 +101,7 @@ const tableToolbar = reactive<Toolbar>({
 const menuLoad = () => {
     getMenuList().then((res) => {
         const { data: menuList } = res;
-        const menuTree = listToTree(menuList, 0, {
+        const menuTree = listToTableTree(menuList, 0, {
             pId: "pId"
         });
         menuTreeList.length = 0;
@@ -126,9 +126,7 @@ const roleTreeLoad = () => {
     getRoleList().then((res) => {
         const { data: roleList } = res;
         const roleTree = treeFormat(roleList, {
-            id: "id",
-            label: "roleName",
-            children: "children"
+            label: "roleName"
         });
         roleTreeData.length = 0;
         roleTreeData.push(...roleTree);

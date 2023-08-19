@@ -13,8 +13,8 @@ import {
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
-import { selectTreeFormat, validatePermission } from "@/utils";
-import { IDept, IDeptTree, IDeptPermissionButton } from "@/types/dept";
+import { validatePermission, listToSelectTree, listToTableTree } from "@/utils";
+import { IDept, IDeptPermissionButton } from "@/types/dept";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDeptList,
@@ -29,7 +29,7 @@ import {
 const userStore = useUserStore();
 const loading = ref(false);
 const deptDdataListTemp = reactive<Array<IDept>>([]);
-const dicTypeList = reactive<Array<Options>>([]);
+const deptTreeData = reactive<Array<Options>>([]);
 const dataList = reactive<Array<IDept>>([]);
 const currentTreeData = ref<Tree>({
     id: "",
@@ -101,59 +101,11 @@ const tableColumns = reactive<Array<Column>>([
         prop: "deptName"
     }
 ]);
-const deptTreeFormat = (data: Array<IDept>, pId: number = 0) => {
-    const arr: Array<Tree> = [];
-    const obj: Tree = {
-        id: "",
-        label: "",
-        children: []
-    };
-    const parentData = data.find((x: IDept) => x.pId === pId);
-    if (parentData) {
-        obj.id = parentData.id!.toString();
-        obj.label = parentData.deptName;
-        const parentId = parentData.id;
-        const companyData = data.filter((x: IDept) => x.pId === parentId);
-        companyData.forEach((item: IDept) => {
-            if (companyData) {
-                const companyObj: Tree = {
-                    id: item.id!.toString(),
-                    label: item.deptName,
-                    children: []
-                };
-                const companyPid = item.id;
-                const deptData = data.filter(
-                    (x: IDept) => x.pId === companyPid
-                );
-                deptData.forEach((deptItem) => {
-                    companyObj.children.push({
-                        id: deptItem.id!.toString(),
-                        label: deptItem.deptName,
-                        children: []
-                    });
-                });
-                obj.children.push(companyObj);
-            }
-        });
-    }
-    arr.push(obj);
-    return arr;
-};
-const listToTableTree = (data: Array<IDept>, pId: number = 0) => {
-    const arr: Array<IDeptTree> = [];
-    const parentData = data.filter((x: IDept) => x.pId === pId);
-    parentData.forEach((item: IDept) => {
-        const obj: IDeptTree = { ...item, children: [] };
-        obj.children = listToTableTree(data, item.id!);
-        arr.push(obj);
-    });
-    return arr;
-};
 
 /**
  * 加载数据
  */
-const load = () => {
+const loadData = () => {
     const { id } = currentTreeData.value;
     const pId = id;
     loading.value = true;
@@ -175,25 +127,27 @@ const treeLoad = (done: any) => {
     getDeptList().then((res) => {
         const { data: deptList } = res;
         console.log("deptList", deptList);
+
         deptDdataListTemp.length = 0;
         deptDdataListTemp.push(...deptList);
-        const data = deptTreeFormat(deptList);
-        leftTree.treeData.length = 0;
-        leftTree.treeData.push(...data);
-        const selectTreeData = selectTreeFormat(data, {
-            value: "id"
+
+        const deptTree = listToSelectTree(deptList, 0, {
+            label: "deptName"
         });
-        dicTypeList.length = 0;
-        dicTypeList.push(...selectTreeData);
-        if (!currentTreeData.value.id) {
-            currentTreeData.value.id = data[0].id;
-        }
+        console.log("deptTree", deptTree);
+        leftTree.treeData.length = 0;
+        leftTree.treeData.push(...deptTree);
+        console.log("leftTree", leftTree.treeData);
+        deptTreeData.length = 0;
+        deptTreeData.push(...deptTree);
+        console.log("deptTreeData", deptTreeData);
+        currentTreeData.value.id = deptTree && deptTree[0].id;
         done(currentTreeData.value.id);
     });
 };
 const handleTreeClick = (data: Tree, done: any) => {
     currentTreeData.value = data;
-    load();
+    loadData();
     done();
 };
 
@@ -206,23 +160,22 @@ const dialogTitle = reactive({
     detail: "部门详情"
 });
 const formModel = reactive<IDept>({
-    id: undefined,
     deptId: "",
     deptName: "",
-    pId: 0
+    pId: undefined
 });
 const formItems = reactive<Array<FormItem>>([
     {
         label: "部门编号",
         labelWidth: "80px",
         vModel: "deptId",
-        placeholder: "部门编号",
+        placeholder: "请输入部门编号",
         editReadonly: true,
         prop: "deptId",
         rules: [
             {
                 required: true,
-                message: "部门编号不能为空",
+                message: "请输入部门编号",
                 trigger: "blur"
             }
         ]
@@ -231,12 +184,12 @@ const formItems = reactive<Array<FormItem>>([
         label: "部门名称",
         labelWidth: "80px",
         vModel: "deptName",
-        placeholder: "部门名称",
+        placeholder: "请输入部门名称",
         prop: "deptName",
         rules: [
             {
                 required: true,
-                message: "部门名称不能为空",
+                message: "请输入部门名称",
                 trigger: "blur"
             }
         ]
@@ -245,13 +198,20 @@ const formItems = reactive<Array<FormItem>>([
         label: "父级部门",
         labelWidth: "80px",
         vModel: "pId",
-        placeholder: "父级部门",
+        placeholder: "请选择父级部门",
         type: "tree",
-        addDisabled: true,
-        editDisabled: true,
-        detailDisabled: true,
-        options: dicTypeList,
-        prop: "pId"
+        // addDisabled: true,
+        // editDisabled: true,
+        // detailDisabled: true,
+        options: deptTreeData,
+        prop: "pId",
+        rules: [
+            {
+                required: true,
+                message: "请选择父级部门",
+                trigger: "change"
+            }
+        ]
     }
 ]);
 const handleFormSubmit = (form: IDept, done: any) => {

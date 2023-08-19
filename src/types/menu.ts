@@ -7,11 +7,12 @@ export interface IMenu {
     menuType?: number;
     icon?: string;
     sort?: number;
-    pId: number;
+    pId?: number;
     link?: number;
     linkUrl?: string;
     enabled?: boolean;
     status?: boolean;
+    cache: boolean;
 }
 export interface IMenuTree extends IMenu {
     children: IMenuTree[];

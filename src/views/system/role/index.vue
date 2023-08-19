@@ -2,17 +2,24 @@
 /**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+import {
+    Column,
+    Actionbar,
+    Toolbar,
+    FormItem,
+    Options
+} from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
-import { validatePermission } from "@/utils";
+import { listToSelectTree, validatePermission } from "@/utils";
 import { IRole, IRolePermissionButton } from "@/types/role";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,
     addRole,
     updateRole,
-    deleteRole
+    deleteRole,
+    getDeptList
 } from "@/api/system/role";
 
 /**
@@ -20,7 +27,8 @@ import {
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<IRole>>([]);
+const tableDataList = reactive<Array<IRole>>([]);
+const deptTreeData = reactive<Array<Options>>([]);
 const permissionBtn = computed<IRolePermissionButton>(() => {
     return userStore.getPermissionBtns as IRolePermissionButton;
 });
@@ -66,7 +74,12 @@ const tableColumns = reactive<Array<Column>>([
     },
     {
         label: "角色名称",
-        prop: "roleName"
+        prop: "roleName",
+        width: "200"
+    },
+    {
+        label: "所属部门",
+        prop: "deptId"
     }
 ]);
 const handleDelete = (item: IRole, done: any) => {
@@ -89,15 +102,31 @@ const handleDelete = (item: IRole, done: any) => {
 };
 
 /**
+ * 加载部门下拉框数据
+ */
+const loadDeptSelectData = () => {
+    getDeptList().then((res) => {
+        const { data: deptList } = res;
+        deptTreeData.length = 0;
+        const deptTree = listToSelectTree(deptList, 0, {
+            label: "deptName"
+        });
+        deptTreeData.push(...deptTree);
+    });
+};
+
+/**
  * 加载数据
  */
-const load = () => {
+const loadData = () => {
     loading.value = true;
+    loadDeptSelectData();
     getRoleList().then((res) => {
         loading.value = false;
         const { data: roleList } = res;
-        dataList.length = 0;
-        dataList.push(...roleList);
+        console.log("roleList", roleList);
+        tableDataList.length = 0;
+        tableDataList.push(...roleList);
     });
 };
 
@@ -110,7 +139,6 @@ const dialogTitle = reactive({
     detail: "角色详情"
 });
 const formModel = reactive<IRole>({
-    id: undefined,
     roleId: "",
     roleName: ""
 });
@@ -119,13 +147,13 @@ const formItems = reactive<Array<FormItem>>([
         label: "角色编号",
         labelWidth: "80px",
         vModel: "roleId",
-        placeholder: "角色编号",
+        placeholder: "请输入角色编号",
         editReadonly: true,
         prop: "roleId",
         rules: [
             {
                 required: true,
-                message: "角色编号不能为空",
+                message: "请输入角色编号",
                 trigger: "blur"
             }
         ]
@@ -134,13 +162,29 @@ const formItems = reactive<Array<FormItem>>([
         label: "角色名称",
         labelWidth: "80px",
         vModel: "roleName",
-        placeholder: "角色名称",
+        placeholder: "请输入角色名称",
         prop: "roleName",
         rules: [
             {
                 required: true,
-                message: "角色名称不能为空",
+                message: "请输入角色名称",
                 trigger: "blur"
+            }
+        ]
+    },
+    {
+        label: "所属部门",
+        labelWidth: "80px",
+        vModel: "deptId",
+        placeholder: "请选择所属部门",
+        type: "tree",
+        prop: "deptId",
+        options: deptTreeData,
+        rules: [
+            {
+                required: true,
+                message: "请选择所属部门",
+                trigger: "change"
             }
         ]
     }
@@ -171,13 +215,13 @@ const handleFormSubmit = (form: IRole, done: any) => {
         :dialog-title="dialogTitle"
         :form-model="formModel"
         :form-items="formItems"
-        :table-data="dataList"
+        :table-data="tableDataList"
         :table-columns="tableColumns"
         :table-actionbar="tableActionbar"
         :table-toolbar="tableToolbar"
         dialog-titles="dialogTitles"
         :loading="loading"
-        @on-load="load"
+        @on-load="loadData"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
     ></quick-crud>

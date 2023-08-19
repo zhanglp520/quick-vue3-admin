@@ -170,8 +170,7 @@ const treeLoad = (done: any) => {
     getRoleList().then((res) => {
         const { data: roleList } = res;
         const data = treeFormat(roleList, {
-            label: "roleName",
-            children: "children"
+            label: "roleName"
         });
         treeDataList.length = 0;
         treeDataList.push(...data);

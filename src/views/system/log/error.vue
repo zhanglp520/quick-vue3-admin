@@ -24,6 +24,7 @@ const dataList = reactive<Array<ILog>>([]);
 const permissionBtn = computed<ILogPermissionButton>(() => {
     return userStore.getPermissionBtns as ILogPermissionButton;
 });
+
 /**
  * 分页
  */
@@ -33,6 +34,7 @@ const page = reactive<Page>({
     sizes: [10, 20, 30, 40, 50],
     total: 0
 });
+
 /**
  * 搜索
  */
@@ -49,6 +51,7 @@ const searchFormItems = reactive<Array<FormItem>>([
         type: "datetimerange"
     }
 ]);
+
 /**
  * 工具栏
  */
@@ -59,6 +62,7 @@ const tableToolbar = reactive<Toolbar>({
     hiddenPrintButton: true,
     hiddenBatchDeleteButton: true
 });
+
 /**
  * 操作栏
  */
@@ -79,6 +83,7 @@ const tableActionbar = reactive<Actionbar>({
     hiddenDeleteButton: true,
     hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
 });
+
 /**
  * 表格
  */
@@ -118,10 +123,11 @@ const tableColumns = reactive<Array<Column>>([
         prop: "request.url"
     }
 ]);
+
 /**
  * 加载数据
  */
-const load = (params: any) => {
+const loadData = (params: any) => {
     let obj = {};
     const { logTime } = params;
     if (logTime) {
@@ -138,6 +144,7 @@ const load = (params: any) => {
     getLogPageList(obj).then((res: any) => {
         loading.value = false;
         const { data: logList, page: pagination } = res;
+        console.log("logList", logList);
         if (logList) {
             dataList.length = 0;
             dataList.push(...logList);
@@ -147,6 +154,7 @@ const load = (params: any) => {
         }
     });
 };
+
 /**
  * 表单
  */
@@ -154,7 +162,6 @@ const dialogTitle = reactive({
     detail: "日志详情"
 });
 const formModel = reactive<ILog>({
-    id: "",
     type: 0,
     ip: "",
     request: "",
@@ -230,7 +237,7 @@ const formItems = reactive<Array<FormItem>>([
         :page="page"
         :form-inline="true"
         :loading="loading"
-        @on-load="load"
+        @on-load="loadData"
         @on-detail="handleDetail"
     ></quick-crud>
 </template>

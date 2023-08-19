@@ -36,7 +36,7 @@ import {
 const loginStore = useAuthStore();
 const userStore = useUserStore();
 const loading = ref(false);
-const dataList = reactive<Array<IUser>>([]);
+const tableDataList = reactive<Array<IUser>>([]);
 const uploadRef = ref<HTMLElement | null>(null);
 const permissionBtn = computed<IUserPermissionButton>(() => {
     return userStore.getPermissionBtns as IUserPermissionButton;
@@ -186,7 +186,7 @@ const tableToolbar = reactive<Toolbar>({
                         value: "address"
                     }
                 ];
-                exportExcel(dataList, "用户列表", columns);
+                exportExcel(tableDataList, "用户列表", columns);
             }
         }
     ]
@@ -372,15 +372,16 @@ const tableColumns = reactive<Array<Column>>([
 /**
  * 加载数据
  */
-const load = (parmas: object) => {
+const loadData = (parmas: object) => {
     loading.value = true;
     getUserPageList(parmas)
         .then((res) => {
             loading.value = false;
             const { data: userList, total } = res;
+            console.log("userList", userList);
             if (userList) {
-                dataList.length = 0;
-                dataList.push(...userList);
+                tableDataList.length = 0;
+                tableDataList.push(...userList);
             }
             page.total = total;
         })
@@ -397,7 +398,8 @@ const dialogTitle = reactive({
     edit: "编辑用户",
     detail: "用户详情"
 });
-const validateUserId = (value: string, callback: any) => {
+const validateUserId = (rule: any, value: string, callback: any) => {
+    console.log("rule", rule);
     const reg = /^YH_\d+$/;
     if (!reg.test(value)) {
         callback(new Error("用户编号必须是以YH_开头和数字组合"));
@@ -405,7 +407,8 @@ const validateUserId = (value: string, callback: any) => {
         callback();
     }
 };
-const validateUserName = (value: string, callback: any) => {
+const validateUserName = (rule: any, value: string, callback: any) => {
+    console.log("rule", rule);
     const reg = /^[a-zA-Z0-9]{4,16}$/;
     if (!reg.test(value)) {
         callback(new Error("用户必须是4-16位的字母、数字"));
@@ -413,7 +416,8 @@ const validateUserName = (value: string, callback: any) => {
         callback();
     }
 };
-const validateFullName = (value: string, callback: any) => {
+const validateFullName = (rule: any, value: string, callback: any) => {
+    console.log("rule", rule);
     const reg = /^[\u4e00-\u9fa5]{2,4}$/;
     if (!value) {
         callback();
@@ -423,7 +427,8 @@ const validateFullName = (value: string, callback: any) => {
         callback();
     }
 };
-const validatePhone = (value: string, callback: any) => {
+const validatePhone = (rule: any, value: string, callback: any) => {
+    console.log("rule", rule);
     const reg =
         /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
     if (!value) {
@@ -434,7 +439,8 @@ const validatePhone = (value: string, callback: any) => {
         callback();
     }
 };
-const validateEmail = (value: string, callback: any) => {
+const validateEmail = (rule: any, value: string, callback: any) => {
+    console.log("rule", rule);
     const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (!value) {
         callback();
@@ -445,7 +451,6 @@ const validateEmail = (value: string, callback: any) => {
     }
 };
 const formModel = reactive<IUser>({
-    id: undefined,
     userId: "",
     userName: "",
     fullName: "",
@@ -460,12 +465,12 @@ const formItems = reactive<Array<FormItem>>([
         labelWidth: "80px",
         vModel: "userId",
         editReadonly: true,
-        placeholder: "用户编号",
+        placeholder: "请输入用户编号",
         prop: "userId",
         rules: [
             {
                 required: true,
-                message: "用户编号不能为空",
+                message: "请输入用户编号",
                 trigger: "blur"
             },
             {
@@ -478,12 +483,12 @@ const formItems = reactive<Array<FormItem>>([
         label: "用户名",
         labelWidth: "80px",
         vModel: "userName",
-        placeholder: "用户名",
+        placeholder: "请输入用户名",
         prop: "userName",
         rules: [
             {
                 required: true,
-                message: "用户名不能为空",
+                message: "请输入用户名",
                 trigger: "blur"
             },
             {
@@ -496,7 +501,7 @@ const formItems = reactive<Array<FormItem>>([
         label: "姓名",
         labelWidth: "80px",
         vModel: "fullName",
-        placeholder: "姓名",
+        placeholder: "请输入姓名",
         prop: "fullName",
         rules: [
             {
@@ -510,7 +515,7 @@ const formItems = reactive<Array<FormItem>>([
         label: "手机号",
         labelWidth: "80px",
         vModel: "phone",
-        placeholder: "手机号",
+        placeholder: "请输入手机号",
         prop: "phone",
         rules: [
             {
@@ -523,7 +528,7 @@ const formItems = reactive<Array<FormItem>>([
         label: "邮箱",
         labelWidth: "80px",
         vModel: "email",
-        placeholder: "邮箱",
+        placeholder: "请输入邮箱",
         prop: "email",
         rules: [
             {
@@ -536,14 +541,14 @@ const formItems = reactive<Array<FormItem>>([
         label: "地址",
         labelWidth: "80px",
         vModel: "address",
-        placeholder: "地址",
+        placeholder: "请输入地址",
         prop: "address"
     },
     {
         label: "备注",
         labelWidth: "80px",
         vModel: "remark",
-        placeholder: "备注",
+        placeholder: "请输入备注",
         type: "textarea",
         prop: "remark"
     }
@@ -596,7 +601,7 @@ const handleSuccess = () => {
         message: "导入用户成功."
     });
     dialogVisible.value = false;
-    load({
+    loadData({
         keyword: "",
         current: 1,
         size: 10
@@ -618,7 +623,7 @@ const handleClose = () => {
         :dialog-title="dialogTitle"
         :form-model="formModel"
         :form-items="formItems"
-        :table-data="dataList"
+        :table-data="tableDataList"
         :table-columns="tableColumns"
         :table-actionbar="tableActionbar"
         :table-toolbar="tableToolbar"
@@ -627,7 +632,7 @@ const handleClose = () => {
         dialog-titles="dialogTitles"
         :page="page"
         :loading="loading"
-        @on-load="load"
+        @on-load="loadData"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-batch-delete="handleBatchDelete"

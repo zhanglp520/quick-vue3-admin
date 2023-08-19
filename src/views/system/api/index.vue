@@ -156,12 +156,13 @@ const tableColumns = reactive<Array<Column>>([
 /**
  * 加载数据
  */
-const load = (parmas: object) => {
+const loadData = (parmas: object) => {
     loading.value = true;
     getApiPageList(parmas)
         .then((res) => {
             loading.value = false;
             const { data: apiList, total } = res;
+            console.log("apiList", apiList);
             if (apiList) {
                 dataList.length = 0;
                 dataList.push(...apiList);
@@ -182,7 +183,6 @@ const dialogTitle = reactive({
     detail: "接口详情"
 });
 const formModel = reactive<IApi>({
-    id: undefined,
     apiId: "",
     apiName: "",
     apiPath: "",
@@ -194,12 +194,12 @@ const formItems = reactive<Array<FormItem>>([
         labelWidth: "80px",
         vModel: "apiId",
         editReadonly: true,
-        placeholder: "接口编号",
+        placeholder: "请输入接口编号",
         prop: "apiId",
         rules: [
             {
                 required: true,
-                message: "接口编号不能为空",
+                message: "请输入接口编号",
                 trigger: "blur"
             }
         ]
@@ -208,12 +208,12 @@ const formItems = reactive<Array<FormItem>>([
         label: "接口名称",
         labelWidth: "80px",
         vModel: "apiName",
-        placeholder: "接口名称",
+        placeholder: "请输入接口名称",
         prop: "apiName",
         rules: [
             {
                 required: true,
-                message: "接口名称不能为空",
+                message: "请输入接口名称",
                 trigger: "blur"
             }
         ]
@@ -222,12 +222,12 @@ const formItems = reactive<Array<FormItem>>([
         label: "接口地址",
         labelWidth: "80px",
         vModel: "apiPath",
-        placeholder: "接口地址,例如：/api/v2/system/depts",
+        placeholder: "请输入接口地址",
         prop: "apiPath",
         rules: [
             {
                 required: true,
-                message: "接口地址不能为空",
+                message: "请输入接口地址",
                 trigger: "blur"
             }
         ]
@@ -277,7 +277,7 @@ const handleFormSubmit = (form: IApi, done: any) => {
         dialog-titles="dialogTitles"
         :page="page"
         :loading="loading"
-        @on-load="load"
+        @on-load="loadData"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-batch-delete="handleBatchDelete"

@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted, nextTick, watch } from "vue";
 import { getMenuList } from "@/api/system/menu";
 import { getApiList } from "@/api/system/api";
-import { listToTree } from "@/utils";
+import { listToTableTree } from "@/utils";
 import { IMenuTree } from "@/types/menu";
 import {
     getMenuPermission,
@@ -63,7 +63,7 @@ const apiProps = reactive({
 const menuLoad = () => {
     getMenuList().then((res) => {
         const { data: menuList } = res;
-        const menuTree = listToTree(menuList, 0, {
+        const menuTree = listToTableTree(menuList, 0, {
             pId: "pId"
         });
         menuTreeList.length = 0;

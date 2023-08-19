@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { listToTree } from "@/utils/index";
+import { listToTableTree } from "@/utils/index";
 import { IUser } from "@/types/user";
 import { IQuickResponseData } from "@/utils/request";
 import { IMenu, IMenubar } from "@/types/menu";
@@ -37,7 +37,7 @@ export const useUserStore = defineStore("userStore", {
             const tabStore = useTabStore();
             const activeTab = tabStore.getActiveTab;
             const menuPermission = this.permissionMenuList.filter(
-                (x) => x.id?.toString() === activeTab.id
+                (x) => x.id === activeTab.id
             );
             if (menuPermission && menuPermission[0]) {
                 const btns = this.permissionMenuList.filter(
@@ -73,7 +73,7 @@ export const useUserStore = defineStore("userStore", {
                     );
                     // const userMenuList = menuFormat(dt)
                     const dtNew = dt.filter((x: any) => x.menuType !== 2);
-                    const userMenuList = listToTree(dtNew, 0, {
+                    const userMenuList = listToTableTree(dtNew, 0, {
                         pId: "pId"
                     });
                     const m = JSON.parse(JSON.stringify(userMenuList));

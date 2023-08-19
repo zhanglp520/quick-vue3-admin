@@ -13,7 +13,7 @@ import {
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
-import { dicFormat, treeFormat, validatePermission } from "@/utils";
+import { selectFormat, treeFormat, validatePermission } from "@/utils";
 import { IDictionary, IDictionaryPermissionButton } from "@/types/dictionary";
 import { useUserStore } from "@/store/modules/user";
 import { getDictionaryTypeList } from "@/api/system/dictionaryType";
@@ -23,13 +23,14 @@ import {
     updateDictionary,
     deleteDictionary
 } from "@/api/system/dictionary";
+import { IDictionaryType } from "@/types/dictionaryType";
 
 /**
  * 属性
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dicTypeList = reactive<Array<Options>>([]);
+const dicTypeSelectData = reactive<Array<Options>>([]);
 const treeDataList = reactive<Array<Tree>>([]);
 const dataList = reactive<Array<IDictionary>>([]);
 const currentTreeData = ref<Tree>({
@@ -105,14 +106,28 @@ const tableColumns = reactive<Array<Column>>([
 ]);
 
 /**
+ * 加载字典分类下拉框
+ * @param data 字典分类数据
+ */
+const loadDicTypeSelect = (data: IDictionaryType[]) => {
+    const dicTypeselect = selectFormat(data, {
+        value: "dicTypeId",
+        label: "dicTypeName"
+    });
+    dicTypeSelectData.length = 0;
+    dicTypeSelectData.push(...dicTypeselect);
+};
+
+/**
  * 加载数据
  */
-const load = () => {
+const loadData = () => {
     const { id } = currentTreeData.value;
     loading.value = true;
     getDictionaryList(id).then((res) => {
         loading.value = false;
         const { data: dictionaryList } = res;
+        console.log("dictionaryList", dictionaryList);
         dataList.length = 0;
         dataList.push(...dictionaryList);
     });
@@ -124,32 +139,26 @@ const load = () => {
 const leftTree = reactive<LeftTree>({
     treeData: []
 });
-const treeLoad = (done: any) => {
+const treeloadData = (done: any) => {
     getDictionaryTypeList().then((res) => {
         const { data: dictionaryTypeList } = res;
-        const data = treeFormat(dictionaryTypeList, {
+        loadDicTypeSelect(dictionaryTypeList);
+        const dicTree = treeFormat(dictionaryTypeList, {
             id: "dicTypeId",
-            label: "dicTypeName",
-            children: "children"
-        });
-        treeDataList.length = 0;
-        treeDataList.push(...data);
-        leftTree.treeData.length = 0;
-        leftTree.treeData.push(...treeDataList);
-        const data1 = dicFormat(dictionaryTypeList, {
-            value: "dicTypeId",
             label: "dicTypeName"
         });
-        dicTypeList.length = 0;
-        dicTypeList.push(...data1);
+        treeDataList.length = 0;
+        treeDataList.push(...dicTree);
+        leftTree.treeData.length = 0;
+        leftTree.treeData.push(...treeDataList);
 
-        currentTreeData.value.id = treeDataList[0].id;
+        currentTreeData.value.id = treeDataList && treeDataList[0].id;
         done(currentTreeData.value.id);
     });
 };
 const handleTreeClick = (data: Tree, done: any) => {
     currentTreeData.value = data;
-    load();
+    loadData();
     done();
 };
 
@@ -162,9 +171,7 @@ const dialogTitle = reactive({
     detail: "字典详情"
 });
 const formModel = reactive<IDictionary>({
-    id: undefined,
     dicTypeId: "",
-    dicId: undefined,
     dicName: ""
 });
 const formItems = reactive<Array<FormItem>>([
@@ -206,7 +213,7 @@ const formItems = reactive<Array<FormItem>>([
         addDisabled: true,
         editDisabled: true,
         detailDisabled: true,
-        options: dicTypeList,
+        options: dicTypeSelectData,
         prop: "dicTypeId"
     }
 ]);
@@ -244,7 +251,7 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
         dialog-titles="dialogTitles"
         :left-tree="leftTree"
         :loading="loading"
-        @on-tree-load="treeLoad"
+        @on-tree-load="treeloadData"
         @on-tree-click="handleTreeClick"
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"

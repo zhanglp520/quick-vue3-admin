@@ -2,7 +2,7 @@ export interface IDept {
     id?: number;
     deptId: string;
     deptName: string;
-    pId: number;
+    pId?: number;
 }
 export interface IDeptTree extends IDept {
     children: IDeptTree[];

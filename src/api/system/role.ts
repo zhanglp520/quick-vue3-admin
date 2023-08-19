@@ -2,6 +2,7 @@
 import { IRole } from "@/types/role";
 import request, { IQuickResponseData } from "@/utils/request";
 import { role as api } from "./index";
+export { getDeptList } from "./dept";
 /*
  *@Description: 角色管理模块api
  *@Author: 土豆哥
