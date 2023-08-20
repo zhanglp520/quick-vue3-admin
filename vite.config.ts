@@ -8,13 +8,13 @@ import { resolve } from "path";
 export default defineConfig({
     base: "./",
     plugins: [
-        vue({
-            template: {
-                compilerOptions: {
-                    isCustomElement: (tag) => tag.includes("quick-")
-                }
-            }
-        }),
+        // vue({
+        //     template: {
+        //         compilerOptions: {
+        //             isCustomElement: (tag) => tag.includes("quick-")
+        //         }
+        //     }
+        // }),
         vue(),
         createHtmlPlugin({
             inject: {
