@@ -32,6 +32,7 @@
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-vue": "^9.17.0",
+        "husky": "^8.0.3",
         "md5-ts": "^0.1.6",
         "nprogress": "^0.2.0",
         "pinia": "^2.1.6",
