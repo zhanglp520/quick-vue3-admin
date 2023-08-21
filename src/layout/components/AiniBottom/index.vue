@@ -5,8 +5,3 @@
         <el-footer>Footer</el-footer>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.aini-bottom {
-}
-</style>

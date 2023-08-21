@@ -229,16 +229,16 @@ onMounted(() => {
 .aini-top {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 50px;
     line-height: 50px;
-    justify-content: space-between;
 
     .test {
         display: flex;
+        align-items: center;
         height: 100%;
         padding: 1px 10px 0;
         cursor: pointer;
-        align-items: center;
     }
 
     .test:hover {
@@ -247,14 +247,14 @@ onMounted(() => {
 
     .left {
         display: flex;
-        height: 100%;
         align-items: center;
+        height: 100%;
     }
 
     .right {
         display: flex;
-        min-width: 180px;
         align-items: center;
+        min-width: 180px;
         height: 100%;
     }
 }

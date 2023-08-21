@@ -92,36 +92,42 @@ onUnmounted(() => {
 .login-box {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    height: 100%;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
     // background-color: green;
     background: url("@/assets/images/login-bg.jpeg") no-repeat center center;
     // background: url('../images/login-bg.jpeg') no-repeat center center;
 
     background-size: 100% 100%;
     border-radius: 5px;
+
     .form {
+        align-content: center;
+        align-items: center;
         width: 550px;
         height: 400px;
-        align-items: center;
-        align-content: center;
         text-align: center;
+
         .el-card {
             height: 100%;
             border-radius: 20px;
         }
+
         .item {
             margin: 20px 0;
         }
+
         .el-button {
             width: 100%;
         }
+
         .tilte {
-            font-size: 30px;
             margin-bottom: 60px;
+            font-size: 30px;
         }
+
         .test {
             color: gray;
             text-align: left;

@@ -148,8 +148,8 @@ watch(tabList, (val) => {
 
 <style lang="scss" scoped>
 .aini-layout {
-    background: #f0f2f5;
     height: 100%;
+    background: #f0f2f5;
 
     .content {
         .el-card {
@@ -160,13 +160,14 @@ watch(tabList, (val) => {
 </style>
 <style>
 .el-header {
-    padding: 0;
     height: 50px;
+    padding: 0;
 }
 
 .el-main {
     /* height: calc(100vh - 60px - 100px); */
     padding: 20px;
+
     /* overflow: hidden; */
 }
 
@@ -175,8 +176,8 @@ watch(tabList, (val) => {
 }
 
 .el-aside {
-    background-color: #545c64;
     width: 200px;
     overflow: hidden;
+    background-color: #545c64;
 }
 </style>
