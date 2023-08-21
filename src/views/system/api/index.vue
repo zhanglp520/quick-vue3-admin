@@ -285,4 +285,3 @@ const handleFormSubmit = (form: IApi, done: any) => {
         @on-print="handlePrint"
     ></quick-crud>
 </template>
-<style scoped></style>

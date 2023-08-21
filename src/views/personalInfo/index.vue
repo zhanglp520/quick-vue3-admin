@@ -130,7 +130,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="personalInfo">
+    <div class="personal-info">
         <quick-form
             :model="form"
             :form-items="formItems"
@@ -154,7 +154,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.personalInfo {
+.personal-info {
     width: 50%;
 }
 </style>
