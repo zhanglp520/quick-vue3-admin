@@ -279,10 +279,10 @@ onMounted(() => {
 }
 
 .item {
-    height: 150px;
-    background-color: rgb(103, 194, 58);
-    color: rgb(255, 255, 255);
     position: relative;
+    height: 150px;
+    color: rgb(255 255 255);
+    background-color: rgb(103 194 58);
 
     .title {
         position: absolute;
@@ -292,10 +292,10 @@ onMounted(() => {
 
     .number {
         position: absolute;
-        left: 102px;
         top: 75px;
-        font-weight: 600;
+        left: 102px;
         font-size: 40px;
+        font-weight: 600;
         cursor: pointer;
     }
 

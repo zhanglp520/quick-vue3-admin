@@ -34,9 +34,9 @@ quick-vue3-admin is a free and open source framework for quickly building middle
 
 ## Preview
 
-- [quick-vue3-admin]（ https://quick.ainiteam.com/ ）- Framework Demo Version 2.0
+-   [quick-vue3-admin]（ https://quick.ainiteam.com/ ）- Framework Demo Version 2.0
 
-- [quick-vue3-admin]（ https://v1.quick.ainiteam.com/ ）- Framework Demo Version 1.0
+-   [quick-vue3-admin]（ https://v1.quick.ainiteam.com/ ）- Framework Demo Version 1.0
 
 Demo account password: admin/123456
 
@@ -52,7 +52,7 @@ Demo account password: admin/123456
 
 ## Installation and use
 
-- Clone Project
+-   Clone Project
 
 ```Bash
 
@@ -62,7 +62,7 @@ Gitee: git clone https://gitee.com/zhanglp520/quick-vue3-admin.git
 
 ```
 
-- Switch Taobao image
+-   Switch Taobao image
 
 ```Bash
 
@@ -70,14 +70,14 @@ npm config set registry https://registry.npm.taobao.org
 
 ```
 
-- Switch NPM
+-   Switch NPM
 
 ```Bash
 npm config set registry https://registry.npmjs.org
 
 ```
 
-- Verification of successful switching
+-   Verification of successful switching
 
 ```Bash
 
@@ -85,7 +85,7 @@ npm config get registry
 
 ```
 
-- Install pnpm
+-   Install pnpm
 
 ```Bash
 
@@ -93,7 +93,7 @@ npm install - g pnpm
 
 ```
 
-- Install Project Dependency Package
+-   Install Project Dependency Package
 
 ```Bash
 
@@ -103,7 +103,7 @@ pnpm install
 
 If the installation fails, delete pnpm lock.yaml and node_modules, as well as the. pnpm store directory on drive D, and reinstall
 
-- Run
+-   Run
 
 ```Bash
 
@@ -113,7 +113,7 @@ pnpm run dev
 
 After running the command execution service, the browser enters: http://localhost:3102/
 
-- Eslint detection
+-   Eslint detection
 
 ```Bash
 
@@ -121,7 +121,7 @@ PNPM run lint detection and attempt to repair
 
 ```
 
-- Pack and Go Live
+-   Pack and Go Live
 
 ```Bash
 
@@ -129,7 +129,7 @@ pnpm run build
 
 ```
 
-- Preview after packaging
+-   Preview after packaging
 
 ```Bash
 pnpm run preview
@@ -138,11 +138,11 @@ pnpm run preview
 
 ## Backend interface
 
-- Official backend interface project express version:
-  https://gitee.com/zhanglp520/quick-node-express.git Interface v1 version
+-   Official backend interface project express version:
+    https://gitee.com/zhanglp520/quick-node-express.git Interface v1 version
 
-- Officially provided backend interface project nestjs version:
-  https://github.com/zhanglp520/quick-node-Nestjs.git Interface v2 version
+-   Officially provided backend interface project nestjs version:
+    https://github.com/zhanglp520/quick-node-Nestjs.git Interface v2 version
 
 ## Seeking help
 
@@ -150,9 +150,9 @@ pnpm run preview
 2. Initiate Issue
 3. Add Quick Framework QQ Group:
 
-- Group 1: 528166164
-- Group 2: 485013155
-- Group 3: 558795174
+-   Group 1: 528166164
+-   Group 2: 485013155
+-   Group 3: 558795174
 
 ## License
 
