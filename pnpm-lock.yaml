@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@ainiteam/quick-vue3-ui':
-    specifier: 1.1.5-alpha.3
-    version: registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.1.5-alpha.3
+    specifier: 1.1.6-alpha.1
+    version: registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.1.6-alpha.1
   '@commitlint/cli':
     specifier: ^17.7.1
     version: registry.npmmirror.com/@commitlint/cli@17.7.1
@@ -158,10 +158,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.1.5-alpha.3:
-    resolution: {integrity: sha512-H9oskc66zGlOP9x3muad7SVaJT45uYJZn9fv2YYiFVSfJ94lNIkWKvvAlyjFljFWYP6++vXCoYSNsZ18VDllbw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ainiteam/quick-vue3-ui/-/quick-vue3-ui-1.1.5-alpha.3.tgz}
+  registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.1.6-alpha.1:
+    resolution: {integrity: sha512-ET94B4eLqz5Cet6cjU7Hzc9wkXwOEju1riBFHaWzgI4hxJwLwooUyYn9QRHn7iiVxwTjiHPRs+1Zvtkwnh6CWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ainiteam/quick-vue3-ui/-/quick-vue3-ui-1.1.6-alpha.1.tgz}
     name: '@ainiteam/quick-vue3-ui'
-    version: 1.1.5-alpha.3
+    version: 1.1.6-alpha.1
     engines: {node: '>=16 <19', pnpm: '>=8 <9'}
     requiresBuild: true
     dependencies:
