@@ -2,11 +2,11 @@
 /**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import {
-    Column,
-    Actionbar,
-    Toolbar,
-    FormItem,
-    Page
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem,
+    IPage
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -28,7 +28,7 @@ const permissionBtn = computed<ILogPermissionButton>(() => {
 /**
  * 分页
  */
-const page = reactive<Page>({
+const page = reactive<IPage>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
@@ -43,7 +43,7 @@ const searchForm = reactive<ISearchLog>({
     endTime: "",
     logTime: ""
 });
-const searchFormItems = reactive<Array<FormItem>>([
+const searchFormItems = reactive<Array<IFormItem>>([
     {
         label: "日志时间",
         vModel: "logTime",
@@ -55,7 +55,7 @@ const searchFormItems = reactive<Array<FormItem>>([
 /**
  * 工具栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenAddButton: true,
@@ -77,7 +77,7 @@ const handleDetail = (item: ILog, done: any) => {
         done(form);
     }
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 60,
     hiddenEditButton: true,
     hiddenDeleteButton: true,
@@ -87,7 +87,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection",
@@ -169,7 +169,7 @@ const formModel = reactive<ILog>({
     operateId: "",
     createTime: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "编号",
         labelWidth: "80px",

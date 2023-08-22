@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
-import { FormItem } from "@ainiteam/quick-vue3-ui";
+import { IFormItem } from "@ainiteam/quick-vue3-ui";
 import { ElMessage } from "element-plus";
 import { IChangePassword } from "@/types/user";
 import { changePassword } from "@/api/system/user";
@@ -18,7 +18,7 @@ const form = reactive<IChangePassword>({
     newPassword: "",
     confirmPassword: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "原密码",
         labelWidth: "80px",

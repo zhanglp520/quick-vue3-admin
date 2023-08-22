@@ -1,9 +1,9 @@
 import {
-    SelectTree,
-    Tree,
-    Options,
-    SelectTreeOptions,
-    TreeOptions
+    ISelectTree,
+    ITree,
+    IOptions,
+    ISelectTreeOptions,
+    ITreeOptions
 } from "@ainiteam/quick-vue3-ui";
 /*
  *@Description: 常用其他工具库
@@ -12,8 +12,8 @@ import {
  */
 
 //下拉框格式化
-export const selectFormat = (data: any, options: Options = {}) => {
-    const arr: Options[] = [];
+export const selectFormat = (data: any, options: IOptions = {}) => {
+    const arr: IOptions[] = [];
     const defaultOptions = {
         label: "label",
         value: "value"
@@ -32,8 +32,8 @@ export const selectFormat = (data: any, options: Options = {}) => {
 };
 
 //下拉框树格式化
-export const selectTreeFormat = (data: any, options?: SelectTreeOptions) => {
-    const arr: SelectTree[] = [];
+export const selectTreeFormat = (data: any, options?: ISelectTreeOptions) => {
+    const arr: ISelectTree[] = [];
     const defaultOptions = {
         value: "value",
         label: "label",
@@ -47,8 +47,8 @@ export const selectTreeFormat = (data: any, options?: SelectTreeOptions) => {
         options && options.children
             ? options.children
             : defaultOptions.children;
-    data.forEach((element: SelectTree) => {
-        const obj: SelectTree = {
+    data.forEach((element: ISelectTree) => {
+        const obj: ISelectTree = {
             label: element[label],
             value: element[value],
             children: []
@@ -61,8 +61,8 @@ export const selectTreeFormat = (data: any, options?: SelectTreeOptions) => {
     return arr;
 };
 //树格式化
-export const treeFormat = (data: any, options?: TreeOptions) => {
-    const arr: Tree[] = [];
+export const treeFormat = (data: any, options?: ITreeOptions) => {
+    const arr: ITree[] = [];
     const defaultOptions = {
         id: "id",
         label: "label",
@@ -75,8 +75,8 @@ export const treeFormat = (data: any, options?: TreeOptions) => {
         options && options.children
             ? options.children
             : defaultOptions.children;
-    data.forEach((element: Tree) => {
-        const obj: Tree = {
+    data.forEach((element: ITree) => {
+        const obj: ITree = {
             label: element[label],
             id: element[id],
             children: []

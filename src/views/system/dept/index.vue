@@ -3,13 +3,13 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    Actionbar,
-    Toolbar,
-    FormItem,
-    Options,
-    Tree,
-    LeftTree
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem,
+    IOptions,
+    ITree,
+    ILeftTree
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -34,9 +34,9 @@ import {
 const userStore = useUserStore();
 const loading = ref(false);
 const deptDdataListTemp = reactive<Array<IDept>>([]);
-const deptTreeData = reactive<Array<Options>>([]);
+const deptTreeData = reactive<Array<IOptions>>([]);
 const dataList = reactive<Array<IDept>>([]);
-const currentTreeData = ref<Tree>({
+const currentTreeData = ref<ITree>({
     id: "",
     label: "",
     children: []
@@ -53,7 +53,7 @@ const handleAdd = (item: IDept, done: any) => {
     form.pId = Number(currentTreeData.value.id);
     done(form);
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -82,7 +82,7 @@ const handleDelete = (item: IDept, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenDetailButton: true,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit)
@@ -91,7 +91,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -137,7 +137,7 @@ const loadData = () => {
  * 左树
  */
 
-const leftTree = reactive<LeftTree>({
+const leftTree = reactive<ILeftTree>({
     treeData: [],
     treeSpan: 6
 });
@@ -162,7 +162,7 @@ const treeLoad = (done: any) => {
         done(currentTreeData.value.id);
     });
 };
-const handleTreeClick = (data: Tree, done: any) => {
+const handleTreeClick = (data: ITree, done: any) => {
     currentTreeData.value = data;
     loadData();
     loadSelectTreeData();
@@ -183,7 +183,7 @@ const formModel = reactive<IDept>({
     deptName: "",
     pId: undefined
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "部门编号",
         labelWidth: "80px",
