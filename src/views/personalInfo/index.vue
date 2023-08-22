@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from "vue";
 import { ElMessage, UploadProps } from "element-plus";
-import { FormItem } from "@ainiteam/quick-vue3-ui";
+import { IFormItem } from "@ainiteam/quick-vue3-ui";
 import { IUser } from "@/types/user";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
@@ -41,7 +41,7 @@ const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
     }
     return true;
 };
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "头像",
         labelWidth: "80px",

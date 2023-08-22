@@ -1,6 +1,8 @@
 import { IDictionary } from "@/types/dictionary";
 import request, { IQuickResponseData } from "@/utils/request";
 import { dictionary as api } from "./index";
+export { getDictionaryTypeList } from "@/api/system/dictionaryType";
+
 /*
  *@Description: 字典管理模块api
  *@Author: 土豆哥

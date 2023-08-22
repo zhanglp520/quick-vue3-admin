@@ -1,4 +1,4 @@
-import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
 
 export interface IMenu {
     id?: number | string;
@@ -22,4 +22,4 @@ export interface IMenuTree extends IMenu {
 export interface IMenubar extends IMenu {
     children: IMenubar[];
 }
-export interface IMenuPermissionButton extends PermissionButton {}
+export interface IMenuPermissionButton extends IPermissionButton {}

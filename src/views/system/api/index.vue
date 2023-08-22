@@ -3,11 +3,11 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    FormItem,
-    Page,
-    Actionbar,
-    Toolbar
+    IColumn,
+    IFormItem,
+    IPage,
+    IActionbar,
+    IToolbar
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -35,7 +35,7 @@ const permissionBtn = computed<IApiPermissionButton>(() => {
 /**
  * 分页
  */
-const page = reactive<Page>({
+const page = reactive<IPage>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
@@ -48,7 +48,7 @@ const page = reactive<Page>({
 const searchForm = reactive<ISearchApi>({
     keyword: ""
 });
-const searchFormItems = reactive<Array<FormItem>>([
+const searchFormItems = reactive<Array<IFormItem>>([
     {
         label: "",
         vModel: "keyword",
@@ -78,7 +78,7 @@ const handleBatchDelete = (data: any, done: any) => {
 const handlePrint = () => {
     window.print();
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -107,7 +107,7 @@ const handleDelete = (item: IApi, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
@@ -117,7 +117,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -189,7 +189,7 @@ const formModel = reactive<IApi>({
     apiPath: "",
     remark: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "接口编号",
         labelWidth: "80px",

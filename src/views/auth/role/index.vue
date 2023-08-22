@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+import {
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem
+} from "@ainiteam/quick-vue3-ui";
 import { validatePermission } from "@/utils";
 import { IRole, IRolePermissionButton } from "@/types/role";
 import { IDialogProgress } from "@/types/dialogProgress";
@@ -34,7 +39,7 @@ const handleAuth = (item: IRole) => {
 /**
  * 工具栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -44,7 +49,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
@@ -61,7 +66,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -124,7 +129,7 @@ const formModel = reactive<IRole>({
     roleId: "",
     roleName: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "角色编号",
         labelWidth: "80px",

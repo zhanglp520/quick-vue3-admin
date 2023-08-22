@@ -21,7 +21,7 @@
         "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@ainiteam/quick-vue3-ui": "1.1.5-alpha.3",
+        "@ainiteam/quick-vue3-ui": "1.1.6-alpha.1",
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
         "@element-plus/icons-vue": "^2.1.0",

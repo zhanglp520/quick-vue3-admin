@@ -3,16 +3,16 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    Actionbar,
-    Toolbar,
-    FormItem,
-    SelectTreeOptions
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem,
+    ISelectTreeOptions
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
 import { listToSelectTree, validatePermission } from "@/utils";
-import { IRole, IRolePermissionButton } from "@/types/role";
+import { IRole, IRolePermissionButton, IDept } from "@/types/role";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,
@@ -21,7 +21,6 @@ import {
     deleteRole,
     getDeptList
 } from "@/api/system/role";
-import { IDept } from "@/types/dept";
 
 /**
  * 属性
@@ -29,7 +28,7 @@ import { IDept } from "@/types/dept";
 const userStore = useUserStore();
 const loading = ref(false);
 const tableDataList = reactive<Array<IRole>>([]);
-const deptTreeData = reactive<Array<SelectTreeOptions>>([]);
+const deptTreeData = reactive<Array<ISelectTreeOptions>>([]);
 const deptDataList = ref<Array<IDept>>();
 const permissionBtn = computed<IRolePermissionButton>(() => {
     return userStore.getPermissionBtns as IRolePermissionButton;
@@ -38,7 +37,7 @@ const permissionBtn = computed<IRolePermissionButton>(() => {
 /**
  * 工具栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -49,7 +48,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 操作栏
  */
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
@@ -59,7 +58,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -154,7 +153,7 @@ const formModel = reactive<IRole>({
     roleName: "",
     deptId: undefined
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "角色编号",
         labelWidth: "80px",

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox, ElTable } from "element-plus";
-import { Column, Toolbar, Tree, LeftTree } from "@ainiteam/quick-vue3-ui";
+import { IColumn, IToolbar, ITree, ILeftTree } from "@ainiteam/quick-vue3-ui";
 import { treeFormat, validatePermission } from "@/utils";
 import { IUser } from "@/types/user";
 import { IAssignUserButton } from "@/types/permission";
@@ -18,7 +18,7 @@ const loading = ref(false);
 const dataList = reactive<Array<IUser>>([]);
 const userList = reactive<Array<IUser>>([]);
 const checkDataList = ref<Array<IUser>>([]);
-const currentTreeData = ref<Tree>({
+const currentTreeData = ref<ITree>({
     id: "",
     label: "",
     children: []
@@ -67,7 +67,7 @@ const handleAssign = () => {
             });
         });
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -89,7 +89,7 @@ const tableToolbar = reactive<Toolbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -161,8 +161,8 @@ const getRows = (data: string[]) => {
 /**
  * 左树
  */
-const treeDataList = reactive<Array<Tree>>([]);
-const leftTree = reactive<LeftTree>({
+const treeDataList = reactive<Array<ITree>>([]);
+const leftTree = reactive<ILeftTree>({
     treeData: [],
     treeSpan: 6
 });
@@ -180,7 +180,7 @@ const treeLoad = (done: any) => {
         done(currentTreeData.value.id);
     });
 };
-const handleTreeClick = (data: Tree, done: any) => {
+const handleTreeClick = (data: ITree, done: any) => {
     clearSelection();
     currentTreeData.value = data;
     const { id } = currentTreeData.value;

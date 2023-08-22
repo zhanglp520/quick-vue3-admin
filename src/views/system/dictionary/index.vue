@@ -3,37 +3,40 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    Actionbar,
-    Toolbar,
-    FormItem,
-    Options,
-    Tree,
-    LeftTree
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem,
+    IOptions,
+    ITree,
+    ILeftTree
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
 import { selectFormat, treeFormat, validatePermission } from "@/utils";
-import { IDictionary, IDictionaryPermissionButton } from "@/types/dictionary";
-import { useUserStore } from "@/store/modules/user";
-import { getDictionaryTypeList } from "@/api/system/dictionaryType";
 import {
+    IDictionary,
+    IDictionaryPermissionButton,
+    IDictionaryType
+} from "@/types/dictionary";
+import { useUserStore } from "@/store/modules/user";
+import {
+    getDictionaryTypeList,
     getDictionaryList,
     addDictionary,
     updateDictionary,
     deleteDictionary
 } from "@/api/system/dictionary";
-import { IDictionaryType } from "@/types/dictionaryType";
 
 /**
  * 属性
  */
 const userStore = useUserStore();
 const loading = ref(false);
-const dicTypeSelectData = reactive<Array<Options>>([]);
-const treeDataList = reactive<Array<Tree>>([]);
+const dicTypeSelectData = reactive<Array<IOptions>>([]);
+const treeDataList = reactive<Array<ITree>>([]);
 const dataList = reactive<Array<IDictionary>>([]);
-const currentTreeData = ref<Tree>({
+const currentTreeData = ref<ITree>({
     id: "",
     label: "",
     children: []
@@ -50,7 +53,7 @@ const handleAdd = (item: IDictionary, done: any) => {
     form.dicTypeId = Number(currentTreeData.value.id);
     done(form);
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -79,7 +82,7 @@ const handleDelete = (item: IDictionary, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenDetailButton: true,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
@@ -89,7 +92,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -136,7 +139,7 @@ const loadData = () => {
 /**
  * 左树
  */
-const leftTree = reactive<LeftTree>({
+const leftTree = reactive<ILeftTree>({
     treeData: []
 });
 const treeloadData = (done: any) => {
@@ -156,7 +159,7 @@ const treeloadData = (done: any) => {
         done(currentTreeData.value.id);
     });
 };
-const handleTreeClick = (data: Tree, done: any) => {
+const handleTreeClick = (data: ITree, done: any) => {
     currentTreeData.value = data;
     loadData();
     done();
@@ -176,7 +179,7 @@ const formModel = reactive<IDictionary>({
     dicId: "",
     dicName: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "字典编号",
         labelWidth: "80px",
