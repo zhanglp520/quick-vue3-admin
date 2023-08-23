@@ -44,5 +44,3 @@ console.log("productId1", id.value);
         </el-tab-pane>
     </el-tabs>
 </template>
-
-<style lang="scss" scoped></style>

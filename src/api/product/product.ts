@@ -1,44 +1,59 @@
-import request, { type IQuickResponseData } from "@/utils/request";
+import { IProduct } from "@/types/product";
+import request, { IQuickResponseData } from "@/utils/request";
 import { product as api } from "./index";
-import { type Product } from "@/types/product";
 export { getDictionaryList } from "@/api/system/dictionary";
+export { getProductTypeList } from "@/api/product/productType";
+/*
+ *@Description: 产品管理模块api
+ *@Author: 土豆哥
+ *@Date: 2022-11-28 11:57:43
+ */
 
-//删除
-export const deleteProduct = (id: string) => {
-    return request({
-        url: `${api}/${id}`,
-        method: "DELETE"
-    });
-};
-//获取产品分页列表
+/**
+ * 获取产品分页列表
+ * @param params 参数
+ * @returns
+ */
 export const getProductPageList = (
     params: object
-): Promise<IQuickResponseData<Array<Product>>> => {
-    return request<IQuickResponseData<Array<Product>>>({
+): Promise<IQuickResponseData<Array<IProduct>>> => {
+    return request<IQuickResponseData<Array<IProduct>>>({
         url: api,
         method: "GET",
         params
     });
 };
-//获取产品列表
+/**
+ * 获取产品列表
+ * @returns
+ */
 export const getProductList = (): Promise<
-    IQuickResponseData<Array<Product>>
+    IQuickResponseData<Array<IProduct>>
 > => {
-    return request<IQuickResponseData<Array<Product>>>({
+    return request<IQuickResponseData<Array<IProduct>>>({
         url: `${api}/getProductList`,
         method: "GET"
     });
 };
-//新增
-export const addProduct = (data: Product) => {
+
+/**
+ * 新增产品
+ * @param data 数据
+ * @returns
+ */
+export const addProduct = (data: IProduct) => {
     return request({
         url: api,
         method: "POST",
         data
     });
 };
-//修改
-export const updateProduct = (data: Product) => {
+/**
+ * 修改产品
+ * @param data 数据
+ * @returns
+ */
+export const updateProduct = (data: IProduct) => {
     const { id } = data;
     return request({
         url: `${api}/${id}`,
@@ -46,15 +61,57 @@ export const updateProduct = (data: Product) => {
         data
     });
 };
-//启用产品
-export const enableProduct = (id: string) => {
+/**
+ * 删除产品
+ * @param id 产品编号
+ * @returns
+ */
+export const deleteProduct = (id: number) => {
+    return request({
+        url: `${api}/${id}`,
+        method: "DELETE"
+    });
+};
+
+/**
+ * 启用产品
+ * @param id 产品编号
+ * @returns
+ */
+export const enableProduct = (id: number) => {
     return request({
         url: `${api}/enabled/${id}`,
         method: "PATCH"
     });
 };
-//禁用产品
-export const disableProduct = (id: string) => {
+/**
+ * 禁用产品
+ * @param id 产品编号
+ * @returns
+ */
+export const disableProduct = (id: number) => {
+    return request({
+        url: `${api}/disable/${id}`,
+        method: "PATCH"
+    });
+};
+/**
+ * 发布产品
+ * @param id 产品编号
+ * @returns
+ */
+export const publishProduct = (id: number) => {
+    return request({
+        url: `${api}/enabled/${id}`,
+        method: "PATCH"
+    });
+};
+/**
+ * 撤销发布产品
+ * @param id 产品编号
+ * @returns
+ */
+export const UnpublishProduct = (id: number) => {
     return request({
         url: `${api}/disable/${id}`,
         method: "PATCH"
