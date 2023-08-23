@@ -12,7 +12,7 @@ import {
 
 /**导入项目文件 */
 import { validatePermission, selectTreeFormat, listToTree } from "@/utils";
-import { IRole, IRolePermissionButton } from "@/types/role";
+import { Product, IRolePermissionButton } from "@/types/role";
 import { useUserStore } from "@/store/modules/user";
 import {
     // getRoleList,
@@ -37,7 +37,7 @@ import { getProductTypeList } from "@/api/product/productType";
  */
 const userStore = useUserStore();
 const loading = ref(false);
-// const tableDataList = reactive<Array<IRole>>([]);
+// const tableDataList = reactive<Array<Product>>([]);
 // const deptTreeData = reactive<Array<SelectTreeOptions>>([]);
 // const deptDataList = ref<Array<IDept>>();
 const permissionBtn = computed<IRolePermissionButton>(() => {
@@ -250,7 +250,7 @@ const tableColumns = reactive<Array<Column>>([
     // {
     //     label: "所属部门",
     //     prop: "deptId",
-    //     format(row: IRole) {
+    //     format(row: Product) {
     //         const dept = deptDataList.value?.find(
     //             (x: IDept) => x.id === row.deptId
     //         );
@@ -258,7 +258,7 @@ const tableColumns = reactive<Array<Column>>([
     //     }
     // }
 ]);
-// const handleDelete = (item: IRole, done: any) => {
+// const handleDelete = (item: Product, done: any) => {
 //     ElMessageBox.confirm(`你真的删除【${item.roleName}】的角色吗？`, "警告", {
 //         confirmButtonText: "确定",
 //         cancelButtonText: "取消",
@@ -373,7 +373,7 @@ const dialogTitle = reactive({
     edit: "编辑产品",
     detail: "产品详情"
 });
-const formModel = reactive<IRole>({
+const formModel = reactive<Product>({
     id: "",
     productName: "",
     quantity: "",
@@ -436,7 +436,7 @@ const formItems = reactive<Array<FormItem>>([
         prop: "remark"
     }
 ]);
-const handleFormSubmit = (form: IRole, done: any) => {
+const handleFormSubmit = (form: Product, done: any) => {
     const row = { ...form };
     row.deptId = form.deptId ? form.deptId : 0;
     if (row.id) {
