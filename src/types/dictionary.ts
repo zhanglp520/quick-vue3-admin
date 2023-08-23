@@ -1,4 +1,5 @@
-import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
+export type { IDictionaryType } from "@/types/dictionaryType";
 
 export interface IDictionary {
     id?: number;
@@ -6,4 +7,4 @@ export interface IDictionary {
     dicId: string;
     dicName: string;
 }
-export interface IDictionaryPermissionButton extends PermissionButton {}
+export interface IDictionaryPermissionButton extends IPermissionButton {}

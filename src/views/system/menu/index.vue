@@ -3,11 +3,11 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    Actionbar,
-    Toolbar,
-    FormItem,
-    Options
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem,
+    IOptions
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
@@ -33,7 +33,7 @@ import {
 const userStore = useUserStore();
 const loading = ref(false);
 const tableDataList = reactive<Array<IMenu>>([]);
-const parentTreeData = reactive<Array<Options>>([]);
+const parentTreeData = reactive<Array<IOptions>>([]);
 const permissionBtn = computed<IMenuPermissionButton>(() => {
     return userStore.getPermissionBtns as IMenuPermissionButton;
 });
@@ -55,7 +55,7 @@ const handleDetail = (item: IMenu, done: any) => {
     }
     done(form);
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -81,7 +81,7 @@ const handleDelete = (item: IMenu, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 150,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
@@ -91,7 +91,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -234,7 +234,7 @@ const formModel = reactive<IMenu>({
     status: true,
     cache: true
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "菜单编号",
         labelWidth: "80px",

@@ -43,7 +43,7 @@ const goHome = () => {
             <img src="@/assets/logo.png" />
             <h5 v-if="!isCollapse">{{ title }}</h5>
         </div>
-        <el-scrollbar style="100%">
+        <el-scrollbar style="height: 100%">
             <aini-menu></aini-menu>
         </el-scrollbar>
     </div>
@@ -52,28 +52,31 @@ const goHome = () => {
 <style lang="scss" scoped>
 .aini-sidebar {
     height: calc(100% - 52px);
+
     .aini-title {
         display: flex;
         align-items: center;
-        padding-left: 7px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background-color: #545c64;
         height: 48px px;
         padding: 10px 4px 10px 10px;
+        padding-left: 7px;
+        cursor: pointer;
+        background-color: #545c64;
+        transition: all 0.2s ease;
+
         img {
             width: 32px;
             height: 32px;
         }
+
         h5 {
-            text-align: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 14px;
-            margin: 0;
             padding: 0 10px;
-            text-overflow: ellipsis;
+            margin: 0;
             overflow: hidden;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            text-overflow: ellipsis;
             // white-space: nowrap;
         }
     }

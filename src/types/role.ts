@@ -1,4 +1,5 @@
-import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
+export type { IDept } from "./dept";
 
 export interface IRole {
     id?: number;
@@ -6,4 +7,4 @@ export interface IRole {
     roleName: string;
     deptId?: number;
 }
-export interface IRolePermissionButton extends PermissionButton {}
+export interface IRolePermissionButton extends IPermissionButton {}

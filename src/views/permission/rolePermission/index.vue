@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { ElTree, ElMessage, ElMessageBox } from "element-plus";
-import { Toolbar, Tree } from "@ainiteam/quick-vue3-ui";
+import { IToolbar, ITree } from "@ainiteam/quick-vue3-ui";
 import { listToTableTree, treeFormat, validatePermission } from "@/utils";
 import { IMenuTree } from "@/types/menu";
 import { IRolePermissionButton } from "@/types/permission";
@@ -28,8 +28,8 @@ const roleProps = reactive({
     label: "label",
     children: "children"
 });
-const roleTreeData = reactive<Array<Tree>>([]);
-const currentTreeData = ref<Tree>({
+const roleTreeData = reactive<Array<ITree>>([]);
+const currentTreeData = ref<ITree>({
     id: "",
     label: "",
     children: []
@@ -81,7 +81,7 @@ const handleGrant = () => {
 /**
  * 操作栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     btns: [
         {
             name: "分配权限",
@@ -133,7 +133,7 @@ const roleTreeLoad = () => {
         nextTick(() => {
             const key = roleTree[0].id;
             roleTreeRef.value?.setCurrentKey(key);
-            const node = roleTreeRef.value?.getCurrentNode() as Tree;
+            const node = roleTreeRef.value?.getCurrentNode() as ITree;
             handleNodeClick(node);
         });
     });

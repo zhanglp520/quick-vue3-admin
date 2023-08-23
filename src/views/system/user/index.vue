@@ -3,11 +3,11 @@
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
-    Column,
-    FormItem,
-    Page,
-    Actionbar,
-    Toolbar
+    IColumn,
+    IFormItem,
+    IPage,
+    IActionbar,
+    IToolbar
 } from "@ainiteam/quick-vue3-ui";
 import * as XLSX from "xlsx";
 
@@ -45,7 +45,7 @@ const permissionBtn = computed<IUserPermissionButton>(() => {
 /**
  * 分页
  */
-const page = reactive<Page>({
+const page = reactive<IPage>({
     current: 1,
     size: 10,
     sizes: [10, 20, 30, 40, 50],
@@ -58,7 +58,7 @@ const page = reactive<Page>({
 const searchForm = reactive<ISearchUser>({
     keyword: ""
 });
-const searchFormItems = reactive<Array<FormItem>>([
+const searchFormItems = reactive<Array<IFormItem>>([
     {
         label: "",
         vModel: "keyword",
@@ -105,7 +105,7 @@ const changeFile = (event: any) => {
         console.log(outdata, "outdata");
     };
 };
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     importButtonName: "导入（默认后端方式）",
     exportButtonName: "导出（默认后端方式）",
     hiddenBatchDeleteButton: validatePermission(
@@ -271,7 +271,7 @@ const handleDisable = (item: IUser, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
@@ -310,7 +310,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -460,7 +460,7 @@ const formModel = reactive<IUser>({
     address: "",
     remark: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "用户编号",
         labelWidth: "80px",

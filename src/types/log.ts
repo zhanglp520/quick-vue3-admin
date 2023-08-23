@@ -1,4 +1,4 @@
-import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
 
 export interface ILog {
     id?: number;
@@ -16,4 +16,4 @@ export interface ISearchLog {
     endTime?: string;
     logTime: string;
 }
-export interface ILogPermissionButton extends PermissionButton {}
+export interface ILogPermissionButton extends IPermissionButton {}

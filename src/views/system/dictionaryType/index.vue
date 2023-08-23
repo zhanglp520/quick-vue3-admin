@@ -2,7 +2,12 @@
 /**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+import {
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem
+} from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
@@ -31,7 +36,7 @@ const permissionBtn = computed<IDictionaryTypePermissionButton>(() => {
 /**
  * 工具栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -64,7 +69,7 @@ const handleDelete = (item: IDictionaryType, done: any) => {
         });
     });
 };
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 100,
     hiddenDetailButton: true,
     hiddenEditButton: validatePermission(permissionBtn.value?.edit),
@@ -74,7 +79,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -117,7 +122,7 @@ const formModel = reactive<IDictionaryType>({
     dicTypeId: "",
     dicTypeName: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "分类编号",
         labelWidth: "80px",

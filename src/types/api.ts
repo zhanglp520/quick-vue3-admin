@@ -1,4 +1,4 @@
-import { PermissionButton } from "@ainiteam/quick-vue3-ui";
+import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
 
 export interface IApi {
     id?: number;
@@ -12,7 +12,7 @@ export interface ISearchApi {
     keyword: string;
 }
 
-export interface IApiPermissionButton extends PermissionButton {
+export interface IApiPermissionButton extends IPermissionButton {
     import?: boolean;
     export?: boolean;
     add?: boolean;

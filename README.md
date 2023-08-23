@@ -34,23 +34,23 @@ quick-vue3-admin 是一款免费开源快速搭建中后台系统框架。本框
 
 ## 预览
 
-- [quick-vue3-admin](https://quick.ainiteam.com/) - 框架演示 2.0 版本
-- [quick-vue3-admin](https://v1.quick.ainiteam.com/) - 框架演示 1.0 版本
+-   [quick-vue3-admin](https://quick.ainiteam.com/) - 框架演示 2.0 版本
+-   [quick-vue3-admin](https://v1.quick.ainiteam.com/) - 框架演示 1.0 版本
 
 演示账号密码：admin/123456
 
 ## 开发文档
 
-- [quick-vue3-admin](https://doc.ainiteam.com/) - quick-vue3-admin 开发文档
+-   [quick-vue3-admin](https://doc.ainiteam.com/) - quick-vue3-admin 开发文档
 
 ## 接口文档
 
-- [quick 接口文档](https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7) - quick 接口文档 1.0 版本
-- [quick 接口文档](https://console-docs.apipost.cn/preview/52de13c4d013470f/e5aa6f10d52601f7) - quick 接口文档 2.0 版本
+-   [quick 接口文档](https://console-docs.apipost.cn/preview/0e11a2eb3c3883a7/4fff7a394c074ac7) - quick 接口文档 1.0 版本
+-   [quick 接口文档](https://console-docs.apipost.cn/preview/52de13c4d013470f/e5aa6f10d52601f7) - quick 接口文档 2.0 版本
 
 ## 安装使用
 
-- 克隆项目
+-   克隆项目
 
 ```bash
 github： git clone https://github.com/zhanglp520/quick-vue3-admin.git
@@ -59,32 +59,32 @@ gitee：git clone https://gitee.com/zhanglp520/quick-vue3-admin.git
 
 ```
 
-- 切换淘宝镜像
+-   切换淘宝镜像
 
 ```bash
 npm config set registry https://registry.npm.taobao.org
 ```
 
-- 切换 npm
+-   切换 npm
 
 ```bash
 npm config set registry https://registry.npmjs.org
 
 ```
 
-- 切换是否成功验证
+-   切换是否成功验证
 
 ```bash
 npm config get registry
 ```
 
-- 安装 pnpm
+-   安装 pnpm
 
 ```bash
 npm install -g pnpm
 ```
 
-- 安装项目依赖包
+-   安装项目依赖包
 
 ```bash
 pnpm install
@@ -92,7 +92,7 @@ pnpm install
 
 如果 install 失败，删除 pnpm-lock.yaml 和 node_modules 以及 D 盘的.pnpm-store 目录，并且重新 install
 
-- 运行
+-   运行
 
 ```bash
 pnpm run dev
@@ -100,19 +100,19 @@ pnpm run dev
 
 运行命令执行服务启动后，浏览器输入：http://localhost:3102/
 
-- eslint 检测
+-   eslint 检测
 
 ```bash
 pnpm run lint 检测并尝试修复
 ```
 
-- 打包上线
+-   打包上线
 
 ```bash
 pnpm run build
 ```
 
-- 打包后预览
+-   打包后预览
 
 ```bash
 pnpm run preview
@@ -120,8 +120,8 @@ pnpm run preview
 
 ## 后端接口
 
-- 官方提供后端接口项目 express 版本：https://gitee.com/zhanglp520/quick-node-express.git 接口 v1 版本
-- 官方提供后端接口项目 nestjs 版本：https://github.com/zhanglp520/quick-node-Nestjs.git 接口 v2 版本
+-   官方提供后端接口项目 express 版本：https://gitee.com/zhanglp520/quick-node-express.git 接口 v1 版本
+-   官方提供后端接口项目 nestjs 版本：https://github.com/zhanglp520/quick-node-Nestjs.git 接口 v2 版本
 
 ## 寻求帮助
 
@@ -129,9 +129,9 @@ pnpm run preview
 2. 发起 Issue
 3. 加 quick 框架 QQ 群：
 
-- 群 1：528166164
-- 群 2：485013155
-- 群 3：558795174
+-   群 1：528166164
+-   群 2：485013155
+-   群 3：558795174
 
 ## License
 

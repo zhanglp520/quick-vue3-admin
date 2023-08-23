@@ -17,4 +17,3 @@ const inputValue = (e: any) => {
         @input="inputValue"
     />
 </template>
-<style></style>
