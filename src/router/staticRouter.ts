@@ -46,6 +46,20 @@ const staticRouter = [
         ]
     },
     {
+        path: "/product/product1",
+        name: "Product1",
+        component: layout,
+        redirect: "/product/product1/detail",
+        children: [
+            {
+                path: "/product/product1/detail",
+                name: "ProductDetail",
+                component: () =>
+                    import("../views/product/product/details/index.vue")
+            }
+        ]
+    },
+    {
         path: "/:catchAll(.*)",
         component: () => import("@/pages/404/index.vue")
     }
