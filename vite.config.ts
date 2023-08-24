@@ -46,6 +46,13 @@ export default defineConfig({
             }
         ]
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@use "@/assets/scss/globalVariable.scss" as *;'
+            }
+        }
+    },
     server: {
         https: false, // 运行服务是否以https方式
         host: true,
