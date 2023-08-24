@@ -1,53 +1,31 @@
 <script lang="ts" setup>
-// import { product } from "@/api/device";
-// import { defineProps } from "vue";
-// import { ElMessage } from "element-plus";
-// import clipboard3 from "vue-clipboard3";
+import { toRefs } from "vue";
+import { ElMessage } from "element-plus";
+import clipboard3 from "vue-clipboard3";
 
 const props = defineProps({
     productId: String
 });
-console.log("props", props);
+const { productId } = toRefs(props);
 
-// const { toClipboard } = clipboard3();
-// let content = ref("123");
-// const identifying = ref("");
-// const detailVisible = ref(false);
-// const name = ref("产品证书");
-// const valueFormat = (test: any) => {
-//     if (test.value == undefined) {
-//         return ''
-//     }
-//     else {
-//         return test.value + test.unit
-//     }
-// }
-// const onCopy = async (value: string) => {
-//     debugger;
-//     try {
-//         await toClipboard(value);
-//         ElMessage({
-//             type: "success",
-//             message: "复制成功!"
-//         });
-//     } catch (err) {
-//         // console.error(err)
-//         ElMessage({
-//             type: "error",
-//             message: "复制失败"
-//         });
-//     }
-// };
+const { toClipboard } = clipboard3();
 
-//查看
-// const handleDetailClick = (flag: string, attributeName: string) => {
-//     identifying.value = flag;
-//     detailVisible.value = false;
-//     name.value = attributeName;
-//     nextTick(() => {
-//         detailVisible.value = true;
-//     });
-// };
+const handleCopy = async (value: string) => {
+    debugger;
+    try {
+        await toClipboard(value);
+        ElMessage({
+            type: "success",
+            message: "复制成功!"
+        });
+    } catch (err) {
+        // console.error(err)
+        ElMessage({
+            type: "error",
+            message: "复制失败"
+        });
+    }
+};
 </script>
 <template>
     <el-descriptions title="产品信息">
@@ -65,7 +43,7 @@ console.log("props", props);
             <el-button
                 link
                 class="el-button--text"
-                @click="onCopy('456')"
+                @click="handleCopy('456')"
                 >复制</el-button
             >
         </el-descriptions-item>
@@ -94,4 +72,3 @@ console.log("props", props);
         <el-descriptions-item label="产品描述"></el-descriptions-item>
     </el-descriptions>
 </template>
-<style scoped></style>

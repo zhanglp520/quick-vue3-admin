@@ -2,7 +2,12 @@
 /**导入第三方库 */
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Column, Actionbar, Toolbar, FormItem } from "@ainiteam/quick-vue3-ui";
+import {
+    IColumn,
+    IActionbar,
+    IToolbar,
+    IFormItem
+} from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
 import { listToTableTree } from "@/utils";
@@ -19,7 +24,7 @@ const tableDataList = reactive<Array<ProductType>>([]);
 /**
  * 工具栏
  */
-const tableToolbar = reactive<Toolbar>({
+const tableToolbar = reactive<IToolbar>({
     hiddenBatchDeleteButton: true,
     hiddenImportButton: true,
     hiddenExportButton: true,
@@ -42,7 +47,7 @@ const formModel = reactive<ProductType>({
     pId: "",
     remark: ""
 });
-const formItems = reactive<Array<FormItem>>([
+const formItems = reactive<Array<IFormItem>>([
     {
         label: "分类编号",
         labelWidth: "100px",
@@ -86,10 +91,10 @@ const formItems = reactive<Array<FormItem>>([
         prop: "pId"
     },
     {
-        label: "备注",
+        label: "描述",
         labelWidth: "80px",
         vModel: "remark",
-        placeholder: "备注",
+        placeholder: "描述",
         type: "textarea",
         prop: "remark"
     }
@@ -97,7 +102,7 @@ const formItems = reactive<Array<FormItem>>([
 /**
  * 操作栏
  */
-const tableActionbar = reactive<Actionbar>({
+const tableActionbar = reactive<IActionbar>({
     width: 150,
     hiddenEditButton: false,
     hiddenDeleteButton: false,
@@ -107,7 +112,7 @@ const tableActionbar = reactive<Actionbar>({
 /**
  * 表格
  */
-const tableColumns = reactive<Array<Column>>([
+const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
         type: "selection"
@@ -123,7 +128,7 @@ const tableColumns = reactive<Array<Column>>([
         width: "200"
     },
     {
-        label: "备注",
+        label: "描述",
         prop: "remark"
     }
 ]);

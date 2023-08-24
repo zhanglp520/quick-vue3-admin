@@ -148,7 +148,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "200"
     },
     {
-        label: "备注",
+        label: "描述",
         prop: "remark"
     }
 ]);
@@ -234,10 +234,10 @@ const formItems = reactive<Array<IFormItem>>([
         ]
     },
     {
-        label: "备注",
+        label: "描述",
         labelWidth: "80px",
         vModel: "remark",
-        placeholder: "备注",
+        placeholder: "描述",
         type: "textarea",
         prop: "remark"
     }

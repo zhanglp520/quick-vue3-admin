@@ -1,46 +1,42 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import productInformation from "./components/productInformation/index.vue";
-import thingSpecificationLanguage from "./components/thingSpecificationLanguage/index.vue";
-import topicList from "./components/topicList/index.vue";
 import { useRoute } from "vue-router";
+
+import ThingSpecificationLanguage from "./components/thingSpecificationLanguage/index.vue";
+import ProductInformation from "./components/productInformation/index.vue";
+import TopicList from "./components/topicList/index.vue";
 
 const route = useRoute();
 const id = ref("");
-const activeName = ref("first");
+const activeName = ref("info");
 
-const handleClick = () => {
-    // console.log(tab, event)
-};
-id.value = route.query.id;
-console.log("productId1", id.value);
+id.value = route.query.id!.toString();
 </script>
 
 <template>
     <el-tabs
         v-model="activeName"
         class="demo-tabs"
-        @tab-click="handleClick"
     >
         <el-tab-pane
             label="产品信息"
-            name="first"
+            name="info"
         >
-            <productInformation :productId="id"></productInformation>
+            <ProductInformation :productId="id"></ProductInformation>
         </el-tab-pane>
         <el-tab-pane
             label="主题列表"
-            name="second"
+            name="toPic"
         >
-            <topicList></topicList>
+            <TopicList></TopicList>
         </el-tab-pane>
         <el-tab-pane
             label="物模型数据"
             name="model"
         >
-            <thingSpecificationLanguage
+            <ThingSpecificationLanguage
                 :productId="id"
-            ></thingSpecificationLanguage>
+            ></ThingSpecificationLanguage>
         </el-tab-pane>
     </el-tabs>
 </template>

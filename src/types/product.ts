@@ -1,4 +1,5 @@
 import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
+import { TableColumnCtx } from "element-plus";
 export type { IDictionary } from "./dictionary";
 
 export interface IProduct {
@@ -31,10 +32,11 @@ export interface ITopic {
     permissions: string;
     describe: string;
 }
-export interface ICustomTopic {
-    customTheme: string;
-    permissions: string;
-    subscription: string;
-    compress: string;
-    describe: string;
+export interface ISpanMethodProps {
+    row: ITopic;
+    column: TableColumnCtx<ITopic>;
+    rowIndex: number;
+    columnIndex: number;
 }
+
+export interface ITopicPermissionButton extends IPermissionButton {}
