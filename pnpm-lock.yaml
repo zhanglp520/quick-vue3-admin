@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   vue:
     specifier: ^3.3.4
@@ -132,15 +136,15 @@ devDependencies:
   vite-plugin-html:
     specifier: ^3.2.0
     version: registry.npmmirror.com/vite-plugin-html@3.2.0(vite@4.4.5)
-  vue-clipboard3:
-    specifier: ^2.0.0
-    version: registry.npmmirror.com/vue-clipboard3@2.0.0
-     vite-plugin-vue-extend:
+  vite-plugin-vue-extend:
     specifier: ^1.0.9
     version: registry.npmmirror.com/vite-plugin-vue-extend@1.0.9
   vite-plugin-vue-setup-extend:
     specifier: ^0.4.0
     version: registry.npmmirror.com/vite-plugin-vue-setup-extend@0.4.0(vite@4.4.5)
+  vue-clipboard3:
+    specifier: ^2.0.0
+    version: registry.npmmirror.com/vue-clipboard3@2.0.0
   vue-i18n:
     specifier: ^9.2.2
     version: registry.npmmirror.com/vue-i18n@9.2.2(vue@3.3.4)
@@ -5618,7 +5622,3 @@ packages:
     dependencies:
       tslib: registry.npmmirror.com/tslib@2.3.0
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
