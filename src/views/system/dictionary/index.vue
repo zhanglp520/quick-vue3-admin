@@ -18,7 +18,7 @@ import {
     IDictionary,
     IDictionaryPermissionButton,
     IDictionaryType
-} from "@/types/dictionary";
+} from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDictionaryTypeList,

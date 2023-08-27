@@ -11,7 +11,7 @@ import {
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { ILog, ISearchLog, ILogPermissionButton } from "@/types/log";
+import { ILog, ISearchLog, ILogPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import { getLogPageList } from "@/api/system/log";
 

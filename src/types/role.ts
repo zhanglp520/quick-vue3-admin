@@ -1,5 +1,4 @@
 import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
-export type { IDept } from "./dept";
 
 export interface IRole {
     id?: number;

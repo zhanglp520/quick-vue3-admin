@@ -19,7 +19,7 @@ import {
     listToTableTree,
     listToTree
 } from "@/utils";
-import { IDept, IDeptPermissionButton } from "@/types/dept";
+import { IDept, IDeptPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDeptList,

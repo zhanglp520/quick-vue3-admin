@@ -12,7 +12,7 @@ import {
 
 /**导入项目文件 */
 import { listToSelectTree, validatePermission } from "@/utils";
-import { IRole, IRolePermissionButton, IDept } from "@/types/role";
+import { IRole, IRolePermissionButton, IDept } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,

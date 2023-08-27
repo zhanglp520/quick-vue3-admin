@@ -16,7 +16,7 @@ import {
     listToTableTree,
     validatePermission
 } from "@/utils/index";
-import { IMenu, IMenuPermissionButton } from "@/types/menu";
+import { IMenu, IMenuPermissionButton } from "@/types";
 import "@/assets/iconfont/quickIconFont.js";
 import quickIconFont from "@/config/quickIconFont.json";
 import { useUserStore } from "@/store/modules/user";
