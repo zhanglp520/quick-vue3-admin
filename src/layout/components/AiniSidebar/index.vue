@@ -2,8 +2,7 @@
 import { computed, ref } from "vue";
 import { useAppStore } from "@/store/modules/app";
 import { useTabStore } from "@/store/modules/tab";
-import { ITab } from "@/types/tab";
-import { IMenubar } from "@/types/menu";
+import { ITab, IMenubar } from "@/types";
 import AiniMenu from "@/layout/components/AiniMenu/index.vue";
 
 const title = ref("quick-vue3-admin");

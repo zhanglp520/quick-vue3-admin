@@ -17,8 +17,7 @@ import { useTabStore } from "@/store/modules/tab";
 import QuickBreadcrumb from "@/components/QuickBreadcrumb/index.vue";
 import AiniTheme from "../AiniTheme/index.vue";
 // import MyInput from "../MyInput/index.vue";
-import { IMenu } from "@/types/menu";
-import { ITab } from "@/types/tab";
+import { IMenu, ITab } from "@/types";
 
 const router = useRouter();
 const appStore = useAppStore();

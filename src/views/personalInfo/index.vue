@@ -2,7 +2,7 @@
 import { onMounted, reactive } from "vue";
 import { ElMessage, UploadProps } from "element-plus";
 import { IFormItem } from "@ainiteam/quick-vue3-ui";
-import { IUser } from "@/types/user";
+import { IUser } from "@/types";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import { updateUser } from "@/api/system/user";

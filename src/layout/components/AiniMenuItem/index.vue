@@ -2,8 +2,7 @@
 import { Ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import { useTabStore } from "@/store/modules/tab";
-import { IMenubar } from "@/types/menu";
-import { ITab } from "@/types/tab";
+import { IMenubar, ITab } from "@/types";
 
 // eslint-disable-next-line no-undef
 defineOptions({

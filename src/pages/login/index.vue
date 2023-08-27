@@ -3,7 +3,7 @@ import { UserFilled, Lock } from "@element-plus/icons-vue";
 import { onMounted, onUnmounted, reactive, ref } from "vue";
 import { router } from "@/router";
 import pinia from "@/store";
-import { ILoginParams } from "@/types/auth";
+import { ILoginParams } from "@/types";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 /**

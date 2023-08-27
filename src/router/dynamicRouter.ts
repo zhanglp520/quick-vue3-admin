@@ -1,5 +1,5 @@
 import { Router, RouteRecordRaw } from "vue-router";
-import { IMenu } from "@/types/menu";
+import { IMenu } from "@/types";
 import pinia from "@/store";
 import { useUserStore } from "@/store/modules/user";
 

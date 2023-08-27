@@ -1,4 +1,4 @@
-import { IDept } from "@/types/dept";
+import { IDept } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { dept as api } from "./index";
 /*

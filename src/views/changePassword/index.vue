@@ -2,7 +2,7 @@
 import { onMounted, reactive } from "vue";
 import { IFormItem } from "@ainiteam/quick-vue3-ui";
 import { ElMessage } from "element-plus";
-import { IChangePassword } from "@/types/user";
+import { IChangePassword } from "@/types";
 import { changePassword } from "@/api/system/user";
 import { useUserStore } from "@/store/modules/user";
 import { encryptForMd5 } from "@/utils/crypto";

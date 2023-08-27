@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ITab } from "@/types/tab";
+import { ITab } from "@/types";
 
 interface ITabState {
     activeTab: ITab;

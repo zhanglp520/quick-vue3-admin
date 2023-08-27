@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 import { useAppStore } from "@/store/modules/app";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
-import { ITab } from "@/types/tab";
+import { ITab } from "@/types";
 import config from "@/config/index";
 import AiniTop from "./components/AiniTop/index.vue";
 import AiniSidebar from "./components/AiniSidebar/index.vue";

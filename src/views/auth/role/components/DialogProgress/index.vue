@@ -3,15 +3,14 @@ import { ref, reactive, onMounted, nextTick, watch } from "vue";
 import { getMenuList } from "@/api/system/menu";
 import { getApiList } from "@/api/system/api";
 import { listToTableTree } from "@/utils";
-import { IMenuTree } from "@/types/menu";
+import { IMenuTree } from "@/types";
 import {
     getMenuPermission,
     getApiPermission,
     rolePermission
 } from "@/api/auth";
 import { ElTree } from "element-plus";
-import { IRole } from "@/types/role";
-import { IApi } from "@/types/api";
+import { IRole, IApi } from "@/types";
 
 const emits = defineEmits(["active"]);
 

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IMenuTree } from "@/types/menu";
+import { IMenuTree } from "@/types";
 
 interface IMenuState {
     activeMenuId: string;

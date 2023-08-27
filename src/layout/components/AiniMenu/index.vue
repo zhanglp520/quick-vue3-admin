@@ -4,8 +4,7 @@ import { useAppStore } from "@/store/modules/app";
 import { useUserStore } from "@/store/modules/user";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
-import { IMenubar } from "@/types/menu";
-import { ITab } from "@/types/tab";
+import { IMenubar, ITab } from "@/types";
 import AiniMenuItem from "@/layout/components/AiniMenuItem/index.vue";
 
 const appStore = useAppStore();

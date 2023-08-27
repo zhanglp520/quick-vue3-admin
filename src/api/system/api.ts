@@ -1,5 +1,4 @@
-// import { Menu } from "@/types/menu";
-import { IApi } from "@/types/api";
+import { IApi } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { api } from "./index";
 // import { auth as authApi } from "../auth/index";

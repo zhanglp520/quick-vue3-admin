@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { listToTableTree } from "@/utils/index";
-import { IUser } from "@/types/user";
+import { IUser } from "@/types";
 import { IQuickResponseData } from "@/utils/request";
-import { IMenu, IMenubar } from "@/types/menu";
+import { IMenu, IMenubar } from "@/types";
 import { getUserByUserName } from "@/api/system/user";
 import { getPermission } from "@/api/auth";
 import { useTabStore } from "@/store/modules/tab";

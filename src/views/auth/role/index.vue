@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, computed } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -7,9 +8,10 @@ import {
     IToolbar,
     IFormItem
 } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { IRole, IRolePermissionButton } from "@/types/role";
-import { IDialogProgress } from "@/types/dialogProgress";
+import { IRole, IRolePermissionButton, IDialogProgress } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,
