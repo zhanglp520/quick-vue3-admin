@@ -1,4 +1,5 @@
 <script setup lang="ts" name="AiniTop">
+/**导入第三方库 */
 import { ref, computed, onMounted, watch } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -10,14 +11,16 @@ import {
     Phone
 } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+
+/**导入项目文件 */
 import { useAppStore } from "@/store/modules/app";
 import { useUserStore } from "@/store/modules/user";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
+import { IMenu, ITab } from "@/types";
 import QuickBreadcrumb from "@/components/QuickBreadcrumb/index.vue";
 import AiniTheme from "../AiniTheme/index.vue";
 // import MyInput from "../MyInput/index.vue";
-import { IMenu, ITab } from "@/types";
 
 const router = useRouter();
 const appStore = useAppStore();

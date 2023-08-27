@@ -19,7 +19,6 @@ import {
     listToTableTree,
     listToTree
 } from "@/utils";
-import { IDept, IDeptPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDeptList,
@@ -27,6 +26,7 @@ import {
     updateDept,
     deleteDept
 } from "@/api/system/dept";
+import { IDept, IDeptPermissionButton } from "@/types";
 
 /**
  * 属性

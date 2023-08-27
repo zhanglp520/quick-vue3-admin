@@ -1,8 +1,12 @@
 <script setup lang="ts">
+/**导入第三方库 */
 import { computed, watch, ref } from "vue";
-import { useI18n } from "vue-i18n";
+import { TabPaneName } from "element-plus";
 import { Close } from "@element-plus/icons-vue";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+
+/**导入项目文件 */
 import { useAppStore } from "@/store/modules/app";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
@@ -10,7 +14,6 @@ import { ITab } from "@/types";
 import config from "@/config/index";
 import AiniTop from "./components/AiniTop/index.vue";
 import AiniSidebar from "./components/AiniSidebar/index.vue";
-import { TabPaneName } from "element-plus";
 
 const router = useRouter();
 const appStore = useAppStore();

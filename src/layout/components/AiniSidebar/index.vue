@@ -1,5 +1,8 @@
 <script lang="ts" setup name="AiniSidebar">
+/**导入第三方库 */
 import { computed, ref } from "vue";
+
+/**导入项目文件 */
 import { useAppStore } from "@/store/modules/app";
 import { useTabStore } from "@/store/modules/tab";
 import { ITab, IMenubar } from "@/types";

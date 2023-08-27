@@ -12,7 +12,6 @@ import {
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { IApi, ISearchApi, IApiPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getApiPageList,
@@ -21,6 +20,7 @@ import {
     deleteApi,
     batchDeleteApi
 } from "@/api/system/api";
+import { IApi, ISearchApi, IApiPermissionButton } from "@/types";
 
 /**
  * 属性

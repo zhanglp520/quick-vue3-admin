@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { computed, nextTick, onMounted, reactive, ref } from "vue";
 import { ElTree, ElMessage, ElMessageBox } from "element-plus";
 import { IToolbar, ITree } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { listToTableTree, treeFormat, validatePermission } from "@/utils";
-import { IMenuTree, IRole1PermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import { getMenuPermission, assignPermission } from "@/api/auth";
 import { getRoleList } from "@/api/system/role";
 import { getMenuList } from "@/api/system/menu";
+import { IMenuTree, IRole1PermissionButton } from "@/types";
 
 /**
  * 属性

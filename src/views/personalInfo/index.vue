@@ -1,11 +1,14 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { onMounted, reactive } from "vue";
 import { ElMessage, UploadProps } from "element-plus";
 import { IFormItem } from "@ainiteam/quick-vue3-ui";
-import { IUser } from "@/types";
+
+/**导入项目文件 */
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import { updateUser } from "@/api/system/user";
+import { IUser } from "@/types";
 
 /**
  * 属性

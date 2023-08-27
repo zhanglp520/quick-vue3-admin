@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { UserFilled, Lock } from "@element-plus/icons-vue";
+/**导入第三方库 */
 import { onMounted, onUnmounted, reactive, ref } from "vue";
+import { UserFilled, Lock } from "@element-plus/icons-vue";
+
+import { ILoginParams } from "@/types";
 import { router } from "@/router";
 import pinia from "@/store";
-import { ILoginParams } from "@/types";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 /**

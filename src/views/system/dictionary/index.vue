@@ -14,11 +14,6 @@ import {
 
 /**导入项目文件 */
 import { selectFormat, treeFormat, validatePermission } from "@/utils";
-import {
-    IDictionary,
-    IDictionaryPermissionButton,
-    IDictionaryType
-} from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDictionaryTypeList,
@@ -27,6 +22,11 @@ import {
     updateDictionary,
     deleteDictionary
 } from "@/api/system/dictionary";
+import {
+    IDictionary,
+    IDictionaryPermissionButton,
+    IDictionaryType
+} from "@/types";
 
 /**
  * 属性

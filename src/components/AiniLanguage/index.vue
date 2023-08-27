@@ -1,6 +1,9 @@
 <script lang="ts">
+/**导入第三方库 */
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
+
+/**导入项目文件 */
 import pinia from "@/store";
 import { useAppStore } from "@/store/modules/app";
 

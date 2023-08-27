@@ -11,7 +11,6 @@ import {
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { IRole, IRolePermissionButton, IDialogProgress } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,
@@ -19,6 +18,7 @@ import {
     updateRole,
     deleteRole
 } from "@/api/system/role";
+import { IRole, IRolePermissionButton, IDialogProgress } from "@/types";
 import DialogProgress from "./components/DialogProgress/index.vue";
 
 /**

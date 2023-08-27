@@ -1,6 +1,9 @@
 <script lang="ts" setup name="AiniMenuItem">
+/**导入第三方库 */
 import { Ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
+
+/**导入项目文件 */
 import { useTabStore } from "@/store/modules/tab";
 import { IMenubar, ITab } from "@/types";
 

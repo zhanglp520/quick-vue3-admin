@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { computed, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox, ElTable } from "element-plus";
 import { IColumn, IToolbar, ITree, ILeftTree } from "@ainiteam/quick-vue3-ui";
+
+/**导入项目文件 */
 import { treeFormat, validatePermission } from "@/utils";
-import { IUser, IAssignUserButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import { getUserPermission, assignUser } from "@/api/auth";
 import { getRoleList } from "@/api/system/role";
 import { getUserList } from "@/api/system/user";
+import { IUser, IAssignUserButton } from "@/types";
 
 /**
  * 属性

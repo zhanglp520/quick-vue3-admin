@@ -11,7 +11,6 @@ import {
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { IDictionaryType, IDictionaryTypePermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getDictionaryTypeList,
@@ -19,6 +18,7 @@ import {
     updateDictionaryType,
     deleteDictionaryType
 } from "@/api/system/dictionaryType";
+import { IDictionaryType, IDictionaryTypePermissionButton } from "@/types";
 
 /**
  * 属性

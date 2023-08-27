@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/**导入第三方库 */
 import { onMounted } from "vue";
 import * as echarts from "echarts";
 import { Tickets } from "@element-plus/icons-vue";

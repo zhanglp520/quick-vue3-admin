@@ -1,17 +1,23 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { onMounted, reactive } from "vue";
-import { IFormItem } from "@ainiteam/quick-vue3-ui";
 import { ElMessage } from "element-plus";
-import { IChangePassword } from "@/types";
-import { changePassword } from "@/api/system/user";
-import { useUserStore } from "@/store/modules/user";
-import { encryptForMd5 } from "@/utils/crypto";
+import { IFormItem } from "@ainiteam/quick-vue3-ui";
 
+/**导入项目文件 */
+import { encryptForMd5 } from "@/utils/crypto";
+import { useUserStore } from "@/store/modules/user";
+import { changePassword } from "@/api/system/user";
+import { IChangePassword } from "@/types";
+
+/**
+ * 属性
+ */
 const userStore = useUserStore();
 const { user } = userStore.$state;
 
 /**
- * 属性
+ * 表单
  */
 const form = reactive<IChangePassword>({
     oldPassword: "",
@@ -41,6 +47,7 @@ const formItems = reactive<Array<IFormItem>>([
         placeholder: "确认密码"
     }
 ]);
+
 /**
  * 函数
  */
