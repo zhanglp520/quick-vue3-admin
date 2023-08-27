@@ -1,9 +1,11 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="AiniMenuItem">
+/**导入第三方库 */
 import { Ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
+
+/**导入项目文件 */
 import { useTabStore } from "@/store/modules/tab";
-import { IMenubar } from "@/types/menu";
-import { ITab } from "@/types/tab";
+import { IMenubar, ITab } from "@/types";
 
 // eslint-disable-next-line no-undef
 defineOptions({

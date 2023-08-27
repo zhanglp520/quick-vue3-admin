@@ -1,5 +1,4 @@
-// import { Menu } from "@/types/menu";
-import { IRole } from "@/types/role";
+import { IRole } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { role as api } from "./index";
 export { getDeptList } from "./dept";

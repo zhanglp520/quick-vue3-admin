@@ -12,7 +12,6 @@ import {
 
 /**导入项目文件 */
 import { listToSelectTree, validatePermission } from "@/utils";
-import { IRole, IRolePermissionButton, IDept } from "@/types/role";
 import { useUserStore } from "@/store/modules/user";
 import {
     getRoleList,
@@ -21,6 +20,7 @@ import {
     deleteRole,
     getDeptList
 } from "@/api/system/role";
+import { IRole, IRolePermissionButton, IDept } from "@/types";
 
 /**
  * 属性

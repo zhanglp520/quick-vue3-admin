@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { userLogin, refreshToken } from "@/api/auth";
-import { ILoginData, ILoginParams, IToken } from "@/types/auth";
+import { ILoginData, ILoginParams, IToken } from "@/types";
 import { encryptForMd5 } from "@/utils/crypto";
 
 interface ILoginState {

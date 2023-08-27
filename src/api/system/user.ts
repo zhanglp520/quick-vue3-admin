@@ -1,4 +1,4 @@
-import { IChangePassword, IUser } from "@/types/user";
+import { IChangePassword, IUser } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { user as api } from "./index";
 export { downloadFileStream } from "@/api/common";

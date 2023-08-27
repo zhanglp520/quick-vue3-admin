@@ -21,7 +21,7 @@
         "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@ainiteam/quick-vue3-ui": "1.1.6-alpha.1",
+        "@ainiteam/quick-vue3-ui": "^1.2.0",
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
         "@element-plus/icons-vue": "^2.1.0",
@@ -64,6 +64,8 @@
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-html": "^3.2.0",
         "vue-clipboard3": "^2.0.0",
+        "vite-plugin-vue-extend": "^1.0.9",
+        "vite-plugin-vue-setup-extend": "^0.4.0",
         "vue-i18n": "^9.2.2",
         "vue-router": "^4.2.4",
         "vue-tsc": "^1.8.5",

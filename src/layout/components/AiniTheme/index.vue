@@ -1,4 +1,5 @@
 <script lang="ts" setup name="AiniTheme">
+/**导入第三方库 */
 import { onMounted, reactive, ref, Ref, toRefs, watch } from "vue";
 import { router } from "@/router";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -6,6 +7,9 @@ import { ElMessage, ElMessageBox } from "element-plus";
 // import en from "element-plus/dist/locale/en.mjs";
 import { v4 as uuid } from "uuid";
 
+/**
+ * 属性
+ */
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 console.log("props", props);

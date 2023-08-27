@@ -3,7 +3,7 @@
  *@Author: 土豆哥
  *@Date: 2022-11-28 11:56:16
  */
-import { IDictionaryType } from "@/types/dictionaryType";
+import { IDictionaryType } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { dictionaryType as api } from "./index";
 /*

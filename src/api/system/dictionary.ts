@@ -1,4 +1,4 @@
-import { IDictionary } from "@/types/dictionary";
+import { IDictionary } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { dictionary as api } from "./index";
 export { getDictionaryTypeList } from "@/api/system/dictionaryType";
