@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="AiniMenuItem">
 import { Ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import { useTabStore } from "@/store/modules/tab";
