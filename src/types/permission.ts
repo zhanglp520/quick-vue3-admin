@@ -4,6 +4,6 @@ export interface IAssignUserButton extends IPermissionButton {
     assignUser?: boolean;
 }
 
-export interface IRolePermissionButton extends IPermissionButton {
+export interface IRole1PermissionButton extends IPermissionButton {
     assignPermission?: boolean;
 }

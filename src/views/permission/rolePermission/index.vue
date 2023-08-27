@@ -4,7 +4,7 @@ import { ElTree, ElMessage, ElMessageBox } from "element-plus";
 import { IToolbar, ITree } from "@ainiteam/quick-vue3-ui";
 import { listToTableTree, treeFormat, validatePermission } from "@/utils";
 import { IMenuTree } from "@/types/menu";
-import { IRolePermissionButton } from "@/types/permission";
+import { IRole1PermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import { getMenuPermission, assignPermission } from "@/api/auth";
 import { getRoleList } from "@/api/system/role";
@@ -34,8 +34,8 @@ const currentTreeData = ref<ITree>({
     label: "",
     children: []
 });
-const permissionBtn = computed<IRolePermissionButton>(() => {
-    return userStore.getPermissionBtns as IRolePermissionButton;
+const permissionBtn = computed<IRole1PermissionButton>(() => {
+    return userStore.getPermissionBtns as IRole1PermissionButton;
 });
 
 /**

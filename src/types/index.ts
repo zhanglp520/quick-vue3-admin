@@ -7,6 +7,6 @@ export * from "./dictionaryType";
 export * from "./log";
 export * from "./menu";
 export * from "./permission";
-// export * from "./role";
+export * from "./role";
 export * from "./tab";
 export * from "./user";
