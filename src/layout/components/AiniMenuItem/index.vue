@@ -7,11 +7,6 @@ import { ElMessage } from "element-plus";
 import { useTabStore } from "@/store/modules/tab";
 import { IMenubar, ITab } from "@/types";
 
-// eslint-disable-next-line no-undef
-defineOptions({
-    name: "AiniMenuItem"
-});
-
 const tabStore = useTabStore();
 /**
  * props

@@ -22,6 +22,7 @@
     },
     "devDependencies": {
         "@ainiteam/quick-vue3-ui": "^1.2.0",
+        "@ainiteam/vite-plugin-vue3-extend": "^1.0.2",
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
         "@element-plus/icons-vue": "^2.1.0",
