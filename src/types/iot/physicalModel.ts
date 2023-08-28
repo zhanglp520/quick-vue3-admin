@@ -1,5 +1,3 @@
-export type { IDictionary } from "@/types/dictionary";
-
 export interface IAttribute {
     identifying: string;
     name: string;

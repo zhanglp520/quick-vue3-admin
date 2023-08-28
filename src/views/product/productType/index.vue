@@ -11,9 +11,8 @@ import {
 
 /**导入项目文件 */
 import { listToTableTree } from "@/utils";
-import { ProductType } from "@/types/ProductType";
+import { ProductType } from "@/types";
 import { deleteRole } from "@/api/system/role";
-// import { IDept } from "@/types/dept";
 
 import { getProductTypeList } from "@/api/product/productType";
 /**
@@ -45,7 +44,9 @@ const formModel = reactive<ProductType>({
     productTypeId: "",
     productTypeName: "",
     pId: "",
-    remark: ""
+    remark: "",
+    productType: 0,
+    roleName: undefined
 });
 const formItems = reactive<Array<IFormItem>>([
     {

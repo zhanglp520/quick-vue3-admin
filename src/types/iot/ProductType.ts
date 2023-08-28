@@ -1,4 +1,5 @@
 export interface ProductType {
+    roleName: any;
     productType: number;
     id: string | undefined | number;
     productTypeId: string;

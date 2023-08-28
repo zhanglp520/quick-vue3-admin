@@ -1,6 +1,6 @@
 import request, { type IQuickResponseData } from "@/utils/request";
 import { physicalModel as api } from "./index";
-import { IAttribute, IFunc, IEvent } from "@/types/physicalModel";
+import { IAttribute, IFunc, IEvent } from "@/types";
 export { getDictionaryList } from "@/api/system/dictionary";
 
 //#region 属性

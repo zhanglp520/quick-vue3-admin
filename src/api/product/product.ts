@@ -1,4 +1,4 @@
-import { IProduct } from "@/types/product";
+import { IProduct } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { product as api } from "./index";
 export { getDictionaryList } from "@/api/system/dictionary";

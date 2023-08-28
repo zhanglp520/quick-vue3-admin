@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from "vue";
-import { ITopic, ISpanMethodProps } from "@/types/product";
+import { ITopic, ISpanMethodProps } from "@/types";
 
 const props = defineProps({
     productId: String

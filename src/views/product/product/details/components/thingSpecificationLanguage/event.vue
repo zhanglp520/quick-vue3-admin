@@ -10,7 +10,7 @@ import {
 } from "@ainiteam/quick-vue3-ui";
 
 import { selectTreeFormat } from "@/utils";
-import { IEvent, IDictionary } from "@/types/physicalModel";
+import { IEvent, IDictionary } from "@/types";
 import {
     getEventList,
     addEvent,

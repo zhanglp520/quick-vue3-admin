@@ -10,7 +10,7 @@ import {
     ITree
 } from "@ainiteam/quick-vue3-ui";
 
-import { IFunc } from "@/types/physicalModel";
+import { IFunc } from "@/types";
 import {
     getFuncList,
     addFunction,

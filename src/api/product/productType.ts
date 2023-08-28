@@ -1,5 +1,5 @@
-import { ProductType } from "@/types/productType";
-import request, { QuickResponseData } from "@/utils/request";
+import { ProductType } from "@/types";
+import request, { IQuickResponseData } from "@/utils/request";
 import { productType as api } from "./index";
 /*
  *@Description: 菜单管理模块api
@@ -7,9 +7,9 @@ import { productType as api } from "./index";
  *@Date: 2022-11-28 11:57:03
  */
 export const getProductTypeList = (): Promise<
-    QuickResponseData<Array<ProductType>>
+    IQuickResponseData<Array<ProductType>>
 > => {
-    return request<QuickResponseData<Array<ProductType>>>({
+    return request<IQuickResponseData<Array<ProductType>>>({
         url: api,
         method: "GET"
     });

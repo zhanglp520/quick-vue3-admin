@@ -12,14 +12,14 @@ import {
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { ITopic, ITopicPermissionButton } from "@/types/product";
+import { ITopic, ITopicPermissionButton } from "@/types";
 import { useUserStore } from "@/store/modules/user";
 import {
     getTopicList,
     addTopic,
     updateTopic,
     deleteTopic
-} from "@/api/system/topic";
+} from "@/api/product";
 
 /**
  * 属性
@@ -113,7 +113,7 @@ const handleDelete = (item: ITopic, done: any) => {
  */
 const loadData = () => {
     loading.value = true;
-    getTopicList().then((res) => {
+    getTopicList().then((res: any) => {
         loading.value = false;
         const { data: topicList } = res;
         console.log("topicList", topicList);
@@ -194,7 +194,6 @@ const formItems = reactive<Array<IFormItem>>([
 ]);
 const handleFormSubmit = (form: ITopic, done: any) => {
     const row = { ...form };
-    row.deptId = form.deptId ? form.deptId : 0;
     if (row.id) {
         updateTopic(row).then(() => {
             ElMessage({

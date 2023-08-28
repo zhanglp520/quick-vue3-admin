@@ -1,6 +1,5 @@
 import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
 import { TableColumnCtx } from "element-plus";
-export type { IDictionary } from "./dictionary";
 
 export interface IProduct {
     id?: number;

@@ -10,3 +10,6 @@ export * from "./permission";
 export * from "./role";
 export * from "./tab";
 export * from "./user";
+
+//物联网
+export * from "./iot";
