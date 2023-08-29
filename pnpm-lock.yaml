@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@ainiteam/quick-vue3-ui':
-    specifier: ^1.2.0
-    version: registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.2.0
+    specifier: ^1.2.1-alpha.2
+    version: registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.2.1-alpha.2
   '@ainiteam/vite-plugin-vue3-extend':
     specifier: ^1.0.2
     version: registry.npmmirror.com/@ainiteam/vite-plugin-vue3-extend@1.0.2
@@ -167,10 +167,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.2.0:
-    resolution: {integrity: sha512-rziTrLyqeEKQslCkzu8ZmMiKZlW2+MNAkFiSpnudeGpzFN7XuR83Nv+piUlDaPTCzbssMn/ZlZvtcF3P+v6euQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ainiteam/quick-vue3-ui/-/quick-vue3-ui-1.2.0.tgz}
+  registry.npmmirror.com/@ainiteam/quick-vue3-ui@1.2.1-alpha.2:
+    resolution: {integrity: sha512-YfkJ1J5g719VtFVHptn9P2aPXQh/l90eWKC+WsavdFE9PCBprxGN8g8aC/R7kY8IGyvrwPk/Tx156oPONiedCA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@ainiteam/quick-vue3-ui/-/quick-vue3-ui-1.2.1-alpha.2.tgz}
     name: '@ainiteam/quick-vue3-ui'
-    version: 1.2.0
+    version: 1.2.1-alpha.2
     engines: {node: '>=16 <19', pnpm: '>=8 <9'}
     requiresBuild: true
     dependencies:

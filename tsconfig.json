@@ -9,7 +9,7 @@
         "ignoreDeprecations": "5.0",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "types": ["element-plus/global", "@ainiteam/quick-vue3-ui"],
+        "types": ["element-plus/global", "@ainiteam/quick-vue3-ui/global"],
         /* Bundler mode */
         "moduleResolution": "Node",
         "allowImportingTsExtensions": true,
