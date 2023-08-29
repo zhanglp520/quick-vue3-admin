@@ -14,7 +14,6 @@ import * as XLSX from "xlsx";
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
 import { downloadExcel, exportExcel } from "@/utils/download";
-import { IUser, ISearchUser, IUserPermissionButton } from "@/types/user";
 import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import {
@@ -29,6 +28,7 @@ import {
     disableUser,
     downloadFileStream
 } from "@/api/system/user";
+import { ISearchUser, IUser, IUserPermissionButton } from "@/types";
 
 /**
  * 属性

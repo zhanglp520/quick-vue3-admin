@@ -1,4 +1,4 @@
-import { ILog } from "@/types/log";
+import { ILog } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { log as api } from "./index";
 /*

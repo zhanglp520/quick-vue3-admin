@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import eslintPlugin from "vite-plugin-eslint";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { resolve } from "path";
+import vueSetupExtend from "@ainiteam/vite-plugin-vue3-extend";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
         //     }
         // }),
         vue(),
+        vueSetupExtend(),
         createHtmlPlugin({
             inject: {
                 data: {
@@ -45,6 +47,13 @@ export default defineConfig({
                 replacement: "vue-i18n/dist/vue-i18n.cjs.js"
             }
         ]
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@use "@/assets/scss/globalVariable.scss" as *;'
+            }
+        }
     },
     server: {
         https: false, // 运行服务是否以https方式

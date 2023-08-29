@@ -1,5 +1,4 @@
 import { IPermissionButton } from "@ainiteam/quick-vue3-ui";
-export type { IDictionaryType } from "@/types/dictionaryType";
 
 export interface IDictionary {
     id?: number;

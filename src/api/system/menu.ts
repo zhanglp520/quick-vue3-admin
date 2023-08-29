@@ -1,4 +1,4 @@
-import { IMenu } from "@/types/menu";
+import { IMenu } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { menu as api } from "./index";
 /*

@@ -1,5 +1,4 @@
-import { ILoginData, ILoginParams, IToken } from "@/types/auth";
-import { IMenu } from "@/types/menu";
+import { ILoginData, ILoginParams, IToken, IMenu } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { defaultVersion } from "../index";
 /*

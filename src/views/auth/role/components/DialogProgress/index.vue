@@ -1,20 +1,20 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref, reactive, onMounted, nextTick, watch } from "vue";
-import { getMenuList } from "@/api/system/menu";
-import { getApiList } from "@/api/system/api";
+import { ElTree } from "element-plus";
+
+/**导入项目文件 */
 import { listToTableTree } from "@/utils";
-import { IMenuTree } from "@/types/menu";
 import {
     getMenuPermission,
     getApiPermission,
     rolePermission
 } from "@/api/auth";
-import { ElTree } from "element-plus";
-import { IRole } from "@/types/role";
-import { IApi } from "@/types/api";
+import { getMenuList } from "@/api/system/menu";
+import { getApiList } from "@/api/system/api";
+import { IRole, IApi, IMenuTree } from "@/types";
 
 const emits = defineEmits(["active"]);
-
 const props = defineProps({
     role: {
         type: Object,

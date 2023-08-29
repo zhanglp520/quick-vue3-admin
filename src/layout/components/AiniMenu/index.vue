@@ -1,23 +1,24 @@
 <script lang="ts" setup name="AiniMenu">
+/**导入第三方库 */
 import { computed, watch, ref } from "vue";
+
+/**导入项目文件 */
 import { useAppStore } from "@/store/modules/app";
 import { useUserStore } from "@/store/modules/user";
 import { useMenuStore } from "@/store/modules/menu";
 import { useTabStore } from "@/store/modules/tab";
-import { IMenubar } from "@/types/menu";
-import { ITab } from "@/types/tab";
+import { IMenubar, ITab } from "@/types";
 import AiniMenuItem from "@/layout/components/AiniMenuItem/index.vue";
 
 const appStore = useAppStore();
 const userStore = useUserStore();
 const menuStore = useMenuStore();
 const tabStore = useTabStore();
-
 const isCollapse = computed(() => appStore.getCollapse);
-
 const defaultActive = ref("home");
 const activeMenuId = computed(() => menuStore.getAciveMenuId);
 const menuList = computed(() => userStore.getMenuList);
+
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath);
 };
