@@ -62,7 +62,7 @@ export default defineConfig({
         open: false,
         proxy: {
             "/dev-api": {
-                target: "http://localhost:4100/", // 代理的目标地址-本地
+                target: "http://localhost:2101/", // 代理的目标地址-本地
                 // target: "https://api.quick.ainiteam.com/", // 代理的目标地址-线上
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3102 代理服务会把origin修改为目标地址
                 secure: true, // 是否https接
@@ -78,7 +78,7 @@ export default defineConfig({
         open: false,
         proxy: {
             "/prod-api": {
-                target: "http://localhost:4100/", // 代理的目标地址-本地
+                target: "http://localhost:2101/", // 代理的目标地址-本地
                 // target: 'https://api.quick.ainiteam.com/', // 代理的目标地址-线上
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3000 代理服务会把origin修改为目标地址
                 secure: false, // 是否https接口
