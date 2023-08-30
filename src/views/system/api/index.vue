@@ -245,6 +245,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IApi, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateApi", row);
         updateApi(row).then(() => {
             ElMessage({
                 type: "success",
@@ -254,6 +255,7 @@ const handleFormSubmit = (form: IApi, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addApi", row);
         addApi(row).then(() => {
             ElMessage({
                 type: "success",
