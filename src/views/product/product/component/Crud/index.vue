@@ -64,8 +64,8 @@ const dataProtocolDic = reactive<Array<IDictionary>>([]);
 const dataProtocolSelectData = reactive<Array<IOptions>>([]);
 
 //联网方式
-const networkTypeDic = reactive<Array<IDictionary>>([]);
-const networkTypeSelectData = reactive<Array<IOptions>>([]);
+const networkModeDic = reactive<Array<IDictionary>>([]);
+const networkModeSelectData = reactive<Array<IOptions>>([]);
 
 /**
  * 分页
@@ -109,7 +109,7 @@ const handlePrint = () => {
     window.print();
 };
 const tableToolbar = reactive<IToolbar>({
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add),
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenBatchDeleteButton: true,
@@ -232,13 +232,13 @@ const handleUnpublish = (item: IProduct, done: any) => {
 };
 const tableActionbar = reactive<IActionbar>({
     width: 350,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
+    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete),
     hiddenDetailButton: true,
     btns: [
         {
             name: "查看",
-            hidden: validatePermission(permissionBtn.value?.detail),
+            hidden: !validatePermission(permissionBtn.value?.detail),
             click(item: IProduct) {
                 router.push({
                     path: "/product/product1/detail",
@@ -248,7 +248,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "设备管理",
-            hidden: validatePermission(permissionBtn.value?.device),
+            hidden: !validatePermission(permissionBtn.value?.device),
             click(item: IProduct) {
                 router.push({
                     path: "/device/device",
@@ -258,7 +258,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "启用",
-            hidden: validatePermission(permissionBtn.value?.enabled),
+            hidden: !validatePermission(permissionBtn.value?.enabled),
             click(item: IProduct, done: any) {
                 handleEnable(item, done);
             },
@@ -266,10 +266,12 @@ const tableActionbar = reactive<IActionbar>({
                 return row.enabled === 0;
             }
         },
+        // !validatePermission(permissionBtn.value?.disabled)
         {
             name: "禁用",
-            hidden: validatePermission(permissionBtn.value?.disabled),
+            hidden: false,
             click(item: IProduct, done: any) {
+                console.log(!validatePermission(permissionBtn.value?.disabled));
                 handleDisable(item, done);
             },
             render(row: IProduct) {
@@ -278,7 +280,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "发布",
-            hidden: validatePermission(permissionBtn.value?.publish),
+            hidden: !validatePermission(permissionBtn.value?.publish),
             click(item: IProduct, done: any) {
                 handlePublish(item, done);
             },
@@ -288,7 +290,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "撤销发布",
-            hidden: validatePermission(permissionBtn.value?.Unpublish),
+            hidden: !validatePermission(permissionBtn.value?.Unpublish),
             click(item: IProduct, done: any) {
                 handleUnpublish(item, done);
             },
@@ -355,7 +357,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = deviceTypeDic.find(
-                (x: any) => x.dicId === row.deviceType?.toString()
+                (x: IDictionary) => x.dicId === row.deviceType?.toString()
             );
             return obj && obj.dicName;
         }
@@ -366,7 +368,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = accessProtocolDic.find(
-                (x: any) => x.dicId === row.accessProtocol?.toString()
+                (x: IDictionary) => x.dicId === row.accessProtocol?.toString()
             );
             return obj && obj.dicName;
         }
@@ -377,18 +379,18 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = dataProtocolDic.find(
-                (x: any) => x.dicId === row.dataProtocol?.toString()
+                (x: IDictionary) => x.dicId === row.dataProtocol?.toString()
             );
             return obj && obj.dicName;
         }
     },
     {
         label: "联网方式",
-        prop: "networkType",
+        prop: "networkMode",
         width: "100",
         format: (row: IProduct) => {
-            const obj = networkTypeDic.find(
-                (x: any) => x.dicId === row.networkType?.toString()
+            const obj = networkModeDic.find(
+                (x: IDictionary) => x.dicId === row.networkMode?.toString()
             );
             return obj && obj.dicName;
         }
@@ -427,7 +429,7 @@ const tableColumns = reactive<Array<IColumn>>([
  * 加载产品类型下拉框树
  */
 const loadProductTypeSelectTree = () => {
-    getProductTypeList().then((res: any) => {
+    getProductTypeList().then((res) => {
         const { data: productTypeList } = res;
         // productTypeList.length = 0;
         // productTypeList.push(...data);
@@ -444,7 +446,7 @@ const loadProductTypeSelectTree = () => {
  * 加载设备类型下拉框
  */
 const loadDeviceListSelect = () => {
-    getDictionaryList("deviceType").then((res: any) => {
+    getDictionaryList("deviceType").then((res) => {
         const { data: deviceTypeList } = res;
         deviceTypeDic.length = 0;
         deviceTypeDic.push(...deviceTypeList);
@@ -461,7 +463,7 @@ const loadDeviceListSelect = () => {
  * 加载接入协议下拉框
  */
 const loadAccessProtocolSelect = () => {
-    getDictionaryList("accessProtocol").then((res: any) => {
+    getDictionaryList("accessProtocol").then((res) => {
         const { data: accessProtocolList } = res;
         accessProtocolDic.length = 0;
         accessProtocolDic.push(...accessProtocolList);
@@ -478,7 +480,7 @@ const loadAccessProtocolSelect = () => {
  * 加载数据协议下拉框
  */
 const loadDataProtocolSelect = () => {
-    getDictionaryList("dataProtocol").then((res: any) => {
+    getDictionaryList("dataProtocol").then((res) => {
         const { data: dataProtocolList } = res;
         dataProtocolDic.length = 0;
         dataProtocolDic.push(...dataProtocolList);
@@ -495,16 +497,16 @@ const loadDataProtocolSelect = () => {
  * 加载联网方式下拉框
  */
 const loadNetworkingMethodsSelect = () => {
-    getDictionaryList("networkType").then((res: any) => {
+    getDictionaryList("networkMode").then((res) => {
         const { data } = res;
-        networkTypeDic.length = 0;
-        networkTypeDic.push(...data);
+        networkModeDic.length = 0;
+        networkModeDic.push(...data);
         const data1 = selectTreeFormat(data, {
             value: "dicId",
             label: "dicName"
         });
-        networkTypeSelectData.length = 0;
-        networkTypeSelectData.push(...data1);
+        networkModeSelectData.length = 0;
+        networkModeSelectData.push(...data1);
     });
 };
 
@@ -547,11 +549,12 @@ const formModel = reactive<IProduct>({
     productId: "",
     productName: "",
     category: "0",
+    categoryMode: 0,
     productType: [],
     deviceType: undefined,
     accessProtocol: undefined,
     dataProtocol: undefined,
-    networkType: undefined,
+    networkMode: undefined,
     remark: ""
 });
 const formItems = reactive<Array<IFormItem>>([
@@ -679,12 +682,12 @@ const formItems = reactive<Array<IFormItem>>([
     {
         label: "联网方式",
         labelWidth: "80px",
-        vModel: "networkType",
+        vModel: "networkMode",
         placeholder: "请选择联网方式",
-        prop: "networkType",
+        prop: "networkMode",
         type: "select",
         width: "400px",
-        options: networkTypeSelectData,
+        options: networkModeSelectData,
         rules: [
             {
                 required: true,

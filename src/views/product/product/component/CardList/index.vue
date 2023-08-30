@@ -1,8 +1,20 @@
 <script lang="ts" setup>
 import { reactive, ref, computed } from "vue";
-import { IFormItem, IOptions, IPage, ITree } from "@ainiteam/quick-vue3-ui";
+import {
+    ICardOption,
+    IFormItem,
+    IOptions,
+    IPage,
+    ITree
+} from "@ainiteam/quick-vue3-ui";
 
-import { IDictionary, IProduct, IProductPermissionButton } from "@/types";
+import {
+    ICommand,
+    IDictionary,
+    IProduct,
+    IProductPermissionButton,
+    ISearchProduct
+} from "@/types";
 import {
     getDictionaryList,
     getProductPageList,
@@ -28,6 +40,7 @@ const userStore = useUserStore();
 const permissionBtn = computed<IProductPermissionButton>(() => {
     return userStore.getPermissionBtns as IProductPermissionButton;
 });
+console.log("permissionBtn", validatePermission(permissionBtn.value?.publish));
 
 const loading = ref(false);
 const cardDataList = reactive<Array<IProduct>>([]);
@@ -50,8 +63,8 @@ const dataProtocolDic = reactive<Array<IDictionary>>([]);
 const dataProtocolSelectData = reactive<Array<IOptions>>([]);
 
 //联网方式
-const networkTypeDic = reactive<Array<IDictionary>>([]);
-const networkTypeSelectData = reactive<Array<IOptions>>([]);
+const networkModeDic = reactive<Array<IDictionary>>([]);
+const networkModeSelectData = reactive<Array<IOptions>>([]);
 
 //弹窗显隐
 const dialogFormVisible = ref(false);
@@ -72,7 +85,7 @@ const handleCurrentChange = (val: number) => {
     refresh();
 };
 
-const cardOption = reactive<any>({
+const cardOption = reactive<ICardOption>({
     infoRow: 3,
     column: 3,
     actionbar: true,
@@ -88,8 +101,9 @@ const cardOption = reactive<any>({
 /**
  * 搜索栏
  */
-const searchForm = reactive<any>({
-    keyword: ""
+const searchForm = reactive<ISearchProduct>({
+    keyword: "",
+    productType: ""
 });
 const searchFormItems = reactive<Array<IFormItem>>([
     {
@@ -124,17 +138,17 @@ const page = reactive<IPage>({
 /**
  * 表单
  */
-
 const form = reactive<IProduct>({
     id: undefined,
     productId: "",
     productName: "",
     category: "0",
+    categoryMode: 0,
     productType: [],
     deviceType: undefined,
     accessProtocol: undefined,
     dataProtocol: undefined,
-    networkType: undefined,
+    networkMode: undefined,
     remark: ""
 });
 
@@ -263,19 +277,19 @@ const formItems = reactive<Array<IFormItem>>([
     {
         label: "联网方式",
         labelWidth: "80px",
-        vModel: "networkType",
+        vModel: "networkMode",
         placeholder: "请选择联网方式",
-        prop: "networkType",
+        prop: "networkMode",
         type: "select",
         width: "400px",
-        options: networkTypeSelectData
-        // rules: [
-        //     {
-        //         required: true,
-        //         message: "请选择联网方式",
-        //         trigger: "blur"
-        //     }
-        // ]
+        options: networkModeSelectData,
+        rules: [
+            {
+                required: true,
+                message: "请选择联网方式",
+                trigger: "blur"
+            }
+        ]
     },
     {
         label: "描述",
@@ -309,7 +323,7 @@ const handleCancellation = () => {
  */
 const deviceTypeFormat = (deviceType: number) => {
     const obj = deviceTypeDic.find(
-        (x: any) => x.dicId === deviceType?.toString()
+        (x: IDictionary) => x.dicId === deviceType?.toString()
     );
     return obj && obj.dicName;
 };
@@ -319,7 +333,7 @@ const handleAdd = () => {
     dialogFormVisible.value = true;
 };
 
-const handleDetail = (item: any) => {
+const handleDetail = (item: IProduct) => {
     ElMessage({
         message: JSON.stringify(item),
         type: "success"
@@ -387,7 +401,7 @@ const handleDisabled = (item: IProduct) => {
     // });
     // console.log("handleDisabled", item);
 };
-const handleCommand = (data: any) => {
+const handleCommand = (data: ICommand) => {
     /* eslint-disable indent */
     const { cmd, item } = data;
     switch (cmd) {
@@ -411,7 +425,7 @@ const handleCommand = (data: any) => {
     }
 };
 //卡片编辑按钮
-const handleEdit = (item: any) => {
+const handleEdit = (item: IProduct) => {
     debugger;
     console.log("点编辑按钮拿到的数据", item);
     dialogFormVisible.value = true;
@@ -420,10 +434,10 @@ const handleEdit = (item: any) => {
     form.productName = item.productName;
     form.category = item.category;
     form.productType = item.productType;
-    form.deviceType = deviceTypeFormat(item.deviceType);
+    // form.deviceType = deviceTypeFormat(item.deviceType);
     form.accessProtocol = item.accessProtocol;
     form.dataProtocol = item.dataProtocol;
-    form.networkType = item.networkType;
+    form.networkMode = item.networkMode;
     form.remark = item.remark;
     // ElMessage({
     //     message: JSON.stringify(item),
@@ -455,7 +469,7 @@ const handleDelete = (item: IProduct) => {
     });
 };
 //卡片设备管理按钮
-const handleDevice = (item: any) => {
+const handleDevice = (item: IProduct) => {
     router.push({
         path: "/device/device",
         query: { productId: item.id }
@@ -467,7 +481,7 @@ const handleDevice = (item: any) => {
     // console.log("handleCmd3", item);
 };
 //卡片发布按钮
-const handlePublish = (item: any) => {
+const handlePublish = (item: IProduct) => {
     ElMessageBox.confirm(
         `你真的发布【${item.productName}】的产品吗？`,
         "警告",
@@ -495,7 +509,7 @@ const handlePublish = (item: any) => {
     // console.log("handleCmd3", item);
 };
 //卡片撤销发布按钮
-const handleUnpublish = (item: any) => {
+const handleUnpublish = (item: IProduct) => {
     ElMessageBox.confirm(
         `你真的撤销发布【${item.productName}】的产品吗？`,
         "警告",
@@ -522,7 +536,7 @@ const handleUnpublish = (item: any) => {
     // });
     // console.log("handleCmd3", item);
 };
-const beforeHandleCommand = (cmd: string, item: any) => {
+const beforeHandleCommand = (cmd: string, item: IProduct) => {
     return {
         cmd,
         item
@@ -533,7 +547,7 @@ const beforeHandleCommand = (cmd: string, item: any) => {
  * 加载设备类型下拉框
  */
 const loadDeviceListSelect = () => {
-    getDictionaryList("deviceType").then((res: any) => {
+    getDictionaryList("deviceType").then((res) => {
         const { data: deviceTypeList } = res;
         deviceTypeDic.length = 0;
         deviceTypeDic.push(...deviceTypeList);
@@ -550,7 +564,7 @@ const loadDeviceListSelect = () => {
  * 加载产品类型下拉框树
  */
 const loadProductTypeSelectTree = () => {
-    getProductTypeList().then((res: any) => {
+    getProductTypeList().then((res) => {
         const { data: productTypeList } = res;
         // productTypeList.length = 0;
         // productTypeList.push(...data);
@@ -567,7 +581,7 @@ const loadProductTypeSelectTree = () => {
  * 加载接入协议下拉框
  */
 const loadAccessProtocolSelect = () => {
-    getDictionaryList("accessProtocol").then((res: any) => {
+    getDictionaryList("accessProtocol").then((res) => {
         const { data: accessProtocolList } = res;
         accessProtocolDic.length = 0;
         accessProtocolDic.push(...accessProtocolList);
@@ -584,7 +598,7 @@ const loadAccessProtocolSelect = () => {
  * 加载数据协议下拉框
  */
 const loadDataProtocolSelect = () => {
-    getDictionaryList("dataProtocol").then((res: any) => {
+    getDictionaryList("dataProtocol").then((res) => {
         const { data: dataProtocolList } = res;
         dataProtocolDic.length = 0;
         dataProtocolDic.push(...dataProtocolList);
@@ -601,16 +615,16 @@ const loadDataProtocolSelect = () => {
  * 加载联网方式下拉框
  */
 const loadNetworkingMethodsSelect = () => {
-    getDictionaryList("networkType").then((res: any) => {
+    getDictionaryList("networkMode").then((res) => {
         const { data } = res;
-        networkTypeDic.length = 0;
-        networkTypeDic.push(...data);
+        networkModeDic.length = 0;
+        networkModeDic.push(...data);
         const data1 = selectTreeFormat(data, {
             value: "dicId",
             label: "dicName"
         });
-        networkTypeSelectData.length = 0;
-        networkTypeSelectData.push(...data1);
+        networkModeSelectData.length = 0;
+        networkModeSelectData.push(...data1);
     });
 };
 
@@ -690,36 +704,45 @@ refresh();
                 :underline="false"
                 class="button"
                 @click="handleDevice(item)"
-                >设备管理</el-link
-            >
-            <el-link
-                :underline="false"
-                class="button"
-                @click="handleEnabled(item)"
-                v-if="item.enabled === 0"
-                >启用</el-link
-            >
-            <el-link
-                :underline="false"
-                class="button"
-                @click="handleDisabled(item)"
-                v-else
-                >禁用</el-link
-            >
-            <el-link
-                :underline="false"
-                class="button"
-                @click="handlePublish(item)"
-                v-if="item.enabled === 0"
-                >发布</el-link
-            >
-            <el-link
-                :underline="false"
-                class="button"
-                @click="handleUnpublish(item)"
-                v-else
-                >撤销发布</el-link
-            >
+                >设备管理
+            </el-link>
+            <template v-if="item.enabled === 0">
+                <el-link
+                    :underline="false"
+                    class="button"
+                    @click="handleEnabled(item)"
+                    v-if="validatePermission(permissionBtn?.enabled)"
+                    >启用</el-link
+                >
+            </template>
+            <template v-else>
+                <el-link
+                    :underline="false"
+                    class="button"
+                    @click="handleDisabled(item)"
+                    v-if="validatePermission(permissionBtn?.disabled)"
+                    >禁用</el-link
+                >
+            </template>
+            <template v-if="item.enabled === 0">
+                <el-link
+                    :underline="false"
+                    class="button"
+                    @click="handlePublish(item)"
+                    v-if="validatePermission(permissionBtn?.publish)"
+                    >发布</el-link
+                >
+            </template>
+            <template v-else>
+                <el-link
+                    :underline="false"
+                    class="button"
+                    @click="handleUnpublish(item)"
+                    v-if="validatePermission(permissionBtn?.unpublish)"
+                    >撤销发布</el-link
+                >
+            </template>
+
             <el-dropdown @command="handleCommand">
                 <el-link
                     :underline="false"

@@ -6,13 +6,21 @@ export interface IProduct {
     productId: string;
     productName: string;
     category?: string;
+    categoryMode: number;
     productType?: number[] | string;
     deviceType?: number;
     accessProtocol?: number;
     dataProtocol?: number;
-    networkType?: number;
+    networkMode?: number;
+    accessKey?: number;
+    productKey?: number;
+    productSecret?: number;
     enabled?: number;
+    published?: boolean;
     createTime?: string;
+    updateTime?: Date;
+    publishTime?: Date;
+    unpublishTime?: Date;
     remark?: string;
 }
 export interface ISearchProduct {
@@ -22,9 +30,8 @@ export interface ISearchProduct {
 
 export interface IProductPermissionButton extends IPermissionButton {
     publish?: boolean;
-    Unpublish?: boolean;
+    unpublish?: boolean;
     device?: boolean;
-    actionbar?: boolean;
 }
 export interface ITopic {
     function: string;
@@ -40,3 +47,8 @@ export interface ISpanMethodProps {
 }
 
 export interface ITopicPermissionButton extends IPermissionButton {}
+
+export interface ICommand {
+    cmd: string;
+    item: IProduct;
+}
