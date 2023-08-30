@@ -38,7 +38,7 @@ const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add)
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add)
 });
 
 /**
@@ -69,8 +69,8 @@ const handleDelete = (item: IDictionaryType, done: any) => {
 const tableActionbar = reactive<IActionbar>({
     width: 100,
     hiddenDetailButton: true,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete)
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
+    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete)
 });
 
 /**
