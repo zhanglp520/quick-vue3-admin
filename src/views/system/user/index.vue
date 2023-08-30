@@ -108,20 +108,20 @@ const changeFile = (event: any) => {
 const tableToolbar = reactive<IToolbar>({
     importButtonName: "导入（默认后端方式）",
     exportButtonName: "导出（默认后端方式）",
-    hiddenBatchDeleteButton: validatePermission(
+    hiddenBatchDeleteButton: !validatePermission(
         permissionBtn.value?.batchDelete
     ),
-    hiddenImportButton: validatePermission(permissionBtn.value?.import),
-    hiddenExportButton: validatePermission(permissionBtn.value?.export),
-    hiddenAddButton: validatePermission(permissionBtn.value?.add),
-    hiddenPrintButton: validatePermission(permissionBtn.value?.print),
+    hiddenImportButton: !validatePermission(permissionBtn.value?.import),
+    hiddenExportButton: !validatePermission(permissionBtn.value?.export),
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add),
+    hiddenPrintButton: !validatePermission(permissionBtn.value?.print),
     position: "right",
     btns: [
         {
             name: "下载模板(浏览器下载方式)",
             position: "left",
             type: "warning",
-            hidden: validatePermission(permissionBtn.value?.download),
+            hidden: !validatePermission(permissionBtn.value?.download),
             click() {
                 window.location.href = `${
                     import.meta.env.VITE_APP_BASE_URL
@@ -132,7 +132,7 @@ const tableToolbar = reactive<IToolbar>({
             name: "下载模板(流文件方式)",
             position: "left",
             type: "success",
-            hidden: validatePermission(permissionBtn.value?.download),
+            hidden: !validatePermission(permissionBtn.value?.download),
             click() {
                 downloadFileStream("templates/用户模板.xlsx").then((res) => {
                     downloadExcel(res, "用户导入模板");
@@ -143,7 +143,7 @@ const tableToolbar = reactive<IToolbar>({
             name: "导入(前端方式)",
             position: "left",
             type: "warning",
-            hidden: validatePermission(permissionBtn.value?.import),
+            hidden: !validatePermission(permissionBtn.value?.import),
             click() {
                 const fileBtn = uploadRef.value as HTMLInputElement;
                 fileBtn.click();
@@ -153,7 +153,7 @@ const tableToolbar = reactive<IToolbar>({
             name: "导出(前端方式)",
             position: "left",
             type: "danger",
-            hidden: validatePermission(permissionBtn.value?.export),
+            hidden: !validatePermission(permissionBtn.value?.export),
             click() {
                 // 导出的字段映射
                 const columns = [
@@ -273,20 +273,20 @@ const handleDisable = (item: IUser, done: any) => {
 };
 const tableActionbar = reactive<IActionbar>({
     width: 300,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail),
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
+    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete),
+    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail),
     btns: [
         {
             name: "重置密码",
-            hidden: validatePermission(permissionBtn.value?.resetPassword),
+            hidden: !validatePermission(permissionBtn.value?.resetPassword),
             click(item: IUser, done: any) {
                 handleResetPassword(item, done);
             }
         },
         {
             name: "启用",
-            hidden: validatePermission(permissionBtn.value?.enabled),
+            hidden: !validatePermission(permissionBtn.value?.enabled),
             click(item: IUser, done: any) {
                 handleEnable(item, done);
             },
@@ -296,7 +296,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "禁用",
-            hidden: validatePermission(permissionBtn.value?.disabled),
+            hidden: !validatePermission(permissionBtn.value?.disabled),
             click(item: IUser, done: any) {
                 handleDisable(item, done);
             },

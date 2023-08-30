@@ -81,7 +81,7 @@ const tableActionbar = reactive<IActionbar>({
     width: 60,
     hiddenEditButton: true,
     hiddenDeleteButton: true,
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
+    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail)
 });
 
 /**

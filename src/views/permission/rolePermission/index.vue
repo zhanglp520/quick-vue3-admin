@@ -90,7 +90,7 @@ const tableToolbar = reactive<IToolbar>({
             position: "left",
             type: "primary",
             size: "small",
-            hidden: validatePermission(permissionBtn.value?.assignPermission),
+            hidden: !validatePermission(permissionBtn.value?.assignPermission),
             click() {
                 handleGrant();
             }
