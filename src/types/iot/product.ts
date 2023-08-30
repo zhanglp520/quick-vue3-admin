@@ -24,6 +24,7 @@ export interface IProductPermissionButton extends IPermissionButton {
     publish?: boolean;
     Unpublish?: boolean;
     device?: boolean;
+    actionbar?: boolean;
 }
 export interface ITopic {
     function: string;

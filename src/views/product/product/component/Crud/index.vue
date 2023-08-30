@@ -29,7 +29,9 @@ import {
     enableProduct,
     disableProduct,
     getProductTypeList,
-    getDictionaryList
+    getDictionaryList,
+    publishProduct,
+    UnpublishProduct
 } from "@/api/product/product";
 import { router } from "@/router";
 import { listToSelectTree, selectTreeFormat } from "@/utils";
@@ -197,7 +199,7 @@ const handlePublish = (item: IProduct, done: any) => {
         if (!item.id) {
             return;
         }
-        enableProduct(item.id).then(() => {
+        publishProduct(item.id).then(() => {
             ElMessage({
                 type: "success",
                 message: "产品发布成功"
@@ -219,7 +221,7 @@ const handleUnpublish = (item: IProduct, done: any) => {
         if (!item.id) {
             return;
         }
-        disableProduct(item.id).then(() => {
+        UnpublishProduct(item.id).then(() => {
             ElMessage({
                 type: "success",
                 message: "产品撤销发布成功"
