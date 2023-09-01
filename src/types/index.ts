@@ -10,3 +10,6 @@ export * from "./permission";
 export * from "./role";
 export * from "./tab";
 export * from "./user";
+
+//订单管理系统
+export * from "./order";

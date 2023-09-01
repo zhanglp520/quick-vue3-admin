@@ -8,7 +8,7 @@ import { useTabStore } from "@/store/modules/tab";
 import { ITab, IMenubar } from "@/types";
 import AiniMenu from "@/layout/components/AiniMenu/index.vue";
 
-const title = ref("quick-vue3-admin");
+const title = ref("quick-order");
 const tabStore = useTabStore();
 const appStore = useAppStore();
 const isCollapse = computed(() => appStore.getCollapse);

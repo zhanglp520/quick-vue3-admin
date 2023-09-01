@@ -58,7 +58,7 @@ export default defineConfig({
     server: {
         https: false, // 运行服务是否以https方式
         host: true,
-        port: 5173,
+        port: 6100,
         open: false,
         proxy: {
             "/dev-api": {
