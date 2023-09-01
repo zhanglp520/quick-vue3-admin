@@ -294,7 +294,6 @@ const loadData = (param: object) => {
         unitList.length = 0;
         unitList.push(...data1);
     });
-    debugger;
     getAttributeList({
         productId: productId.value
     })

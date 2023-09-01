@@ -1,4 +1,4 @@
-import { ProductType } from "@/types";
+import { IProductType } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { productType as api } from "./index";
 /*
@@ -7,21 +7,21 @@ import { productType as api } from "./index";
  *@Date: 2022-11-28 11:57:03
  */
 export const getProductTypeList = (): Promise<
-    IQuickResponseData<Array<ProductType>>
+    IQuickResponseData<Array<IProductType>>
 > => {
-    return request<IQuickResponseData<Array<ProductType>>>({
+    return request<IQuickResponseData<Array<IProductType>>>({
         url: api,
         method: "GET"
     });
 };
-export const addProductType = (data: ProductType) => {
+export const addProductType = (data: IProductType) => {
     return request({
         url: api,
         method: "POST",
         data
     });
 };
-export const updateMenu = (data: ProductType) => {
+export const updateMenu = (data: IProductType) => {
     const { id } = data;
     return request({
         url: `${api}/${id}`,

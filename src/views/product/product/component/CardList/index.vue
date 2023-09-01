@@ -5,7 +5,8 @@ import {
     IFormItem,
     IOptions,
     IPage,
-    ITree
+    ITree,
+    QuickForm
 } from "@ainiteam/quick-vue3-ui";
 
 import {
@@ -23,7 +24,9 @@ import {
     disableProduct,
     publishProduct,
     UnpublishProduct,
-    getProductTypeList
+    getProductTypeList,
+    updateProduct,
+    addProduct
 } from "@/api/product/product";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { router } from "@/router";
@@ -68,7 +71,9 @@ const networkModeSelectData = reactive<Array<IOptions>>([]);
 
 //弹窗显隐
 const dialogFormVisible = ref(false);
-
+const dialogTitle = ref(""); //弹窗标题
+const dialogFormType = ref("");
+const quickFormRef = ref<InstanceType<typeof QuickForm>>();
 // const currentPage4 = ref(5);
 // const pageSize4 = ref(10);
 const small = ref(false);
@@ -121,7 +126,7 @@ const handleSearch = () => {
     });
 };
 const handleClear = () => {
-    searchForm.userName = "";
+    // searchForm.userName = "";
     console.log("handleClear", searchForm);
 };
 
@@ -142,7 +147,6 @@ const form = reactive<IProduct>({
     id: undefined,
     productId: "",
     productName: "",
-    category: "0",
     categoryMode: 0,
     productType: [],
     deviceType: undefined,
@@ -200,19 +204,19 @@ const formItems = reactive<Array<IFormItem>>([
     {
         label: "品类方式",
         labelWidth: "80px",
-        vModel: "category",
+        vModel: "categoryMode",
         placeholder: "请选择品类方式",
-        prop: "category",
+        prop: "categoryMode",
         type: "select",
         width: "400px",
         options: [
             {
                 label: "标准品类",
-                value: "0"
+                value: 0
             },
             {
                 label: "自定义品类",
-                value: "1"
+                value: 1
             }
         ],
         rules: [
@@ -300,20 +304,45 @@ const formItems = reactive<Array<IFormItem>>([
         prop: "remark"
     }
 ]);
-//表单确定按钮
-const handleSubmit = () => {
-    console.log("handleSubmit", form);
 
+const handleOk = () => {
+    console.log("handleOk", form);
+    quickFormRef.value?.handleSubmit();
+};
+//表单确定按钮
+const handleFormSubmit = () => {
     // dialogFormVisible.value = false;
-    ElMessage({
-        type: "success",
-        message: "产品添加成功"
-    });
-    // console.log("handleSubmit", form);
+
+    const row = { ...form };
+    const productType = row.productType as Array<number>;
+    row.productType = productType.join();
+    console.log("row", JSON.stringify(row));
+    if (row.id) {
+        console.log("updateProduct", updateProduct);
+        updateProduct(row).then(() => {
+            ElMessage({
+                type: "success",
+                message: "产品修改成功"
+            });
+            // done();
+            refresh();
+        });
+    } else {
+        console.log("addProduct", row);
+        row.id = undefined;
+        addProduct(row).then(() => {
+            ElMessage({
+                type: "success",
+                message: "产品创建成功"
+            });
+            // done();
+            refresh();
+        });
+    }
 };
 
 //表单取消按钮
-const handleCancellation = () => {
+const handleCancel = () => {
     dialogFormVisible.value = false;
 };
 
@@ -330,6 +359,9 @@ const deviceTypeFormat = (deviceType: number) => {
 
 //卡片新增按钮
 const handleAdd = () => {
+    console.log("handleAdd", form);
+    dialogFormType.value = "add";
+    dialogTitle.value = "新增用户";
     dialogFormVisible.value = true;
 };
 
@@ -426,13 +458,14 @@ const handleCommand = (data: ICommand) => {
 };
 //卡片编辑按钮
 const handleEdit = (item: IProduct) => {
-    debugger;
     console.log("点编辑按钮拿到的数据", item);
+    dialogFormType.value = "edit";
+    dialogTitle.value = "编辑用户";
     dialogFormVisible.value = true;
     form.id = item.id;
     form.productId = item.productId;
     form.productName = item.productName;
-    form.category = item.category;
+    form.categoryMode = item.categoryMode;
     form.productType = item.productType;
     // form.deviceType = deviceTypeFormat(item.deviceType);
     form.accessProtocol = item.accessProtocol;
@@ -552,7 +585,7 @@ const loadDeviceListSelect = () => {
         deviceTypeDic.length = 0;
         deviceTypeDic.push(...deviceTypeList);
         const data1 = selectTreeFormat(deviceTypeList, {
-            value: "dicId",
+            value: "id",
             label: "dicName"
         });
         deviceTypeSelectData.length = 0;
@@ -586,7 +619,7 @@ const loadAccessProtocolSelect = () => {
         accessProtocolDic.length = 0;
         accessProtocolDic.push(...accessProtocolList);
         const data1 = selectTreeFormat(accessProtocolList, {
-            value: "dicId",
+            value: "id",
             label: "dicName"
         });
         accessProtocolSelectData.length = 0;
@@ -603,7 +636,7 @@ const loadDataProtocolSelect = () => {
         dataProtocolDic.length = 0;
         dataProtocolDic.push(...dataProtocolList);
         const data1 = selectTreeFormat(dataProtocolList, {
-            value: "dicId",
+            value: "id",
             label: "dicName"
         });
         dataProtocolSelectData.length = 0;
@@ -620,7 +653,7 @@ const loadNetworkingMethodsSelect = () => {
         networkModeDic.length = 0;
         networkModeDic.push(...data);
         const data1 = selectTreeFormat(data, {
-            value: "dicId",
+            value: "id",
             label: "dicName"
         });
         networkModeSelectData.length = 0;
@@ -685,7 +718,7 @@ refresh();
                 direction="vertical"
             >
                 <el-descriptions-item label="品类方式">{{
-                    item.category
+                    item.categoryMode
                 }}</el-descriptions-item>
                 <el-descriptions-item label="设备类型">{{
                     deviceTypeFormat(item.deviceType)
@@ -778,10 +811,13 @@ refresh();
             @current-change="handleCurrentChange"
         />
     </div>
-    <el-dialog
+    <!-- <el-dialog
         v-model="dialogFormVisible"
         title="添加"
     >
+        @submit="handleFormSubmit"
+                    @clear="handleCancel"
+
         <el-row :guster="20">
             <el-col>
                 <quick-form
@@ -789,21 +825,19 @@ refresh();
                     :form-items="formItems"
                     :show-action="true"
                     :action-slot="true"
-                    @submit="handleSubmit"
-                    @clear="handleCancellation"
                 >
                     <template #action>
                         <el-button
                             type="primary"
-                            @click="handleSubmit"
+                            @click="handleFormSubmit"
                             >确定</el-button
                         >
-                        <el-button @click="handleCancellation">取消</el-button>
+                        <el-button @click="handleCancel">取消</el-button>
                     </template>
                 </quick-form>
             </el-col>
         </el-row>
-        <!-- <template #footer>
+        <template #footer>
             <span class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Cancel</el-button>
                 <el-button
@@ -813,7 +847,43 @@ refresh();
                     Confirm
                 </el-button>
             </span>
-        </template> -->
+        </template>
+    </el-dialog> -->
+    <el-dialog
+        v-model="dialogFormVisible"
+        :title="dialogTitle"
+        width="35%"
+        @close="handleCancel()"
+    >
+        <quick-form
+            ref="quickFormRef"
+            :model="form"
+            :form-items="formItems"
+            :form-type="dialogFormType"
+            :hidden-action="true"
+            @on-submit="handleFormSubmit"
+            @on-cancel="handleCancel"
+        >
+        </quick-form>
+        <template #footer>
+            <span class="dialog-footer">
+                <template v-if="dialogFormType === 'detail'">
+                    <el-button
+                        type="primary"
+                        @click="handleCancel()"
+                        >关闭</el-button
+                    >
+                </template>
+                <template v-else>
+                    <el-button @click="handleCancel()">取消</el-button>
+                    <el-button
+                        type="primary"
+                        @click="handleOk()"
+                        >确定</el-button
+                    >
+                </template>
+            </span>
+        </template>
     </el-dialog>
 </template>
 <style>

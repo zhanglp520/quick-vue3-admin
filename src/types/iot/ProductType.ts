@@ -1,15 +1,15 @@
-export interface ProductType {
+export interface IProductType {
     roleName: any;
     productType: number;
-    id: string | undefined | number;
+    id?: number;
     productTypeId: string;
     productTypeName: string;
     pId: string | number;
     remark: string;
 }
-export interface ProductTypeTree extends ProductType {
-    children: ProductTypeTree[];
+export interface IProductTypeTree extends IProductType {
+    children: IProductTypeTree[];
 }
-export interface ProductTypebar extends ProductType {
-    children: ProductTypebar[];
+export interface IProductTypebar extends IProductType {
+    children: IProductTypebar[];
 }

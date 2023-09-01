@@ -37,6 +37,18 @@ export const getProductList = (): Promise<
 };
 
 /**
+ * 获取产品详情
+ */
+export const getProducDetails = (
+    id: number
+): Promise<IQuickResponseData<IProduct>> => {
+    return request<IQuickResponseData<IProduct>>({
+        url: `${api}/${id}`,
+        method: "GET"
+    });
+};
+
+/**
  * 新增产品
  * @param data 数据
  * @returns

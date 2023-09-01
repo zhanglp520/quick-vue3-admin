@@ -13,7 +13,7 @@ import {
 } from "@ainiteam/quick-vue3-ui";
 
 /**导入项目文件 */
-import { validatePermission } from "@/utils";
+import { selectFormat, validatePermission } from "@/utils";
 import {
     IProduct,
     ISearchProduct,
@@ -34,7 +34,7 @@ import {
     UnpublishProduct
 } from "@/api/product/product";
 import { router } from "@/router";
-import { listToSelectTree, selectTreeFormat } from "@/utils";
+import { listToSelectTree } from "@/utils";
 
 /**
  * 属性
@@ -239,7 +239,8 @@ const tableActionbar = reactive<IActionbar>({
         {
             name: "查看",
             hidden: !validatePermission(permissionBtn.value?.detail),
-            click(item: IProduct) {
+            click(item: any) {
+                console.log(item);
                 router.push({
                     path: "/product/product1/detail",
                     query: { id: item.id }
@@ -266,10 +267,10 @@ const tableActionbar = reactive<IActionbar>({
                 return row.enabled === 0;
             }
         },
-        // !validatePermission(permissionBtn.value?.disabled)
+
         {
             name: "禁用",
-            hidden: false,
+            hidden: !validatePermission(permissionBtn.value?.disabled),
             click(item: IProduct, done: any) {
                 console.log(!validatePermission(permissionBtn.value?.disabled));
                 handleDisable(item, done);
@@ -290,7 +291,7 @@ const tableActionbar = reactive<IActionbar>({
         },
         {
             name: "撤销发布",
-            hidden: !validatePermission(permissionBtn.value?.Unpublish),
+            hidden: !validatePermission(permissionBtn.value?.unpublish),
             click(item: IProduct, done: any) {
                 handleUnpublish(item, done);
             },
@@ -327,10 +328,10 @@ const tableColumns = reactive<Array<IColumn>>([
     },
     {
         label: "品类方式",
-        prop: "category",
+        prop: "categoryMode",
         width: "100",
         format: (row: IProduct) => {
-            return row.category === "1" ? "自定义品类" : "标准品类";
+            return row.categoryMode === 1 ? "自定义品类" : "标准品类";
         }
     },
     // {
@@ -357,7 +358,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = deviceTypeDic.find(
-                (x: IDictionary) => x.dicId === row.deviceType?.toString()
+                (x: IDictionary) => x.id === row.deviceType
             );
             return obj && obj.dicName;
         }
@@ -368,7 +369,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = accessProtocolDic.find(
-                (x: IDictionary) => x.dicId === row.accessProtocol?.toString()
+                (x: IDictionary) => x.id === row.accessProtocol
             );
             return obj && obj.dicName;
         }
@@ -379,7 +380,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = dataProtocolDic.find(
-                (x: IDictionary) => x.dicId === row.dataProtocol?.toString()
+                (x: IDictionary) => x.id === row.dataProtocol
             );
             return obj && obj.dicName;
         }
@@ -390,7 +391,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "100",
         format: (row: IProduct) => {
             const obj = networkModeDic.find(
-                (x: IDictionary) => x.dicId === row.networkMode?.toString()
+                (x: IDictionary) => x.id === row.networkMode
             );
             return obj && obj.dicName;
         }
@@ -450,8 +451,8 @@ const loadDeviceListSelect = () => {
         const { data: deviceTypeList } = res;
         deviceTypeDic.length = 0;
         deviceTypeDic.push(...deviceTypeList);
-        const data1 = selectTreeFormat(deviceTypeList, {
-            value: "dicId",
+        const data1 = selectFormat(deviceTypeList, {
+            value: "id",
             label: "dicName"
         });
         deviceTypeSelectData.length = 0;
@@ -467,8 +468,8 @@ const loadAccessProtocolSelect = () => {
         const { data: accessProtocolList } = res;
         accessProtocolDic.length = 0;
         accessProtocolDic.push(...accessProtocolList);
-        const data1 = selectTreeFormat(accessProtocolList, {
-            value: "dicId",
+        const data1 = selectFormat(accessProtocolList, {
+            value: "id",
             label: "dicName"
         });
         accessProtocolSelectData.length = 0;
@@ -484,8 +485,8 @@ const loadDataProtocolSelect = () => {
         const { data: dataProtocolList } = res;
         dataProtocolDic.length = 0;
         dataProtocolDic.push(...dataProtocolList);
-        const data1 = selectTreeFormat(dataProtocolList, {
-            value: "dicId",
+        const data1 = selectFormat(dataProtocolList, {
+            value: "id",
             label: "dicName"
         });
         dataProtocolSelectData.length = 0;
@@ -501,8 +502,8 @@ const loadNetworkingMethodsSelect = () => {
         const { data } = res;
         networkModeDic.length = 0;
         networkModeDic.push(...data);
-        const data1 = selectTreeFormat(data, {
-            value: "dicId",
+        const data1 = selectFormat(data, {
+            value: "id",
             label: "dicName"
         });
         networkModeSelectData.length = 0;
@@ -548,7 +549,6 @@ const formModel = reactive<IProduct>({
     id: undefined,
     productId: "",
     productName: "",
-    category: "0",
     categoryMode: 0,
     productType: [],
     deviceType: undefined,
@@ -605,19 +605,19 @@ const formItems = reactive<Array<IFormItem>>([
     {
         label: "品类方式",
         labelWidth: "80px",
-        vModel: "category",
+        vModel: "categoryMode",
         placeholder: "请选择品类方式",
-        prop: "category",
+        prop: "categoryMode",
         type: "select",
         width: "400px",
         options: [
             {
                 label: "标准品类",
-                value: "0"
+                value: 0
             },
             {
                 label: "自定义品类",
-                value: "1"
+                value: 1
             }
         ],
         rules: [

@@ -5,8 +5,7 @@ export interface IProduct {
     id?: number;
     productId: string;
     productName: string;
-    category?: string;
-    categoryMode: number;
+    categoryMode?: number;
     productType?: number[] | string;
     deviceType?: number;
     accessProtocol?: number;
@@ -15,8 +14,8 @@ export interface IProduct {
     accessKey?: number;
     productKey?: number;
     productSecret?: number;
-    enabled?: number;
-    published?: boolean;
+    enabled?: boolean;
+    published?: number;
     createTime?: string;
     updateTime?: Date;
     publishTime?: Date;
