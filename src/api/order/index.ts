@@ -6,4 +6,4 @@ import { defaultVersion } from "../index";
  */
 const parentModule = "/order";
 const apiUrl = `${defaultVersion}${parentModule}`;
-export const qqGroup = `${apiUrl}/qqgroups`;
+export const qqGroup = `${apiUrl}/qqGroups`;

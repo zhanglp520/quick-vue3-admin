@@ -10,11 +10,9 @@ import {
     IToolbar,
     IOptions
 } from "@ainiteam/quick-vue3-ui";
-import * as XLSX from "xlsx";
 
 /**导入项目文件 */
 import { selectFormat, validatePermission } from "@/utils";
-import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import {
     getQQGroupPageList,
@@ -31,12 +29,12 @@ import { getDictionaryList } from "@/api/system/dictionary";
 /**
  * 属性
  */
-const loginStore = useAuthStore();
+
 const userStore = useUserStore();
 const loading = ref(false);
 const tableDataList = reactive<Array<IQQGroup>>([]);
 const keywordSelectData = reactive<Array<IOptions>>([]);
-const uploadRef = ref<HTMLElement | null>(null);
+
 const permissionBtn = computed<IQQGroupPermissionButton>(() => {
     return userStore.getPermissionBtns as IQQGroupPermissionButton;
 });
@@ -111,18 +109,6 @@ const handleBatchDelete = (data: any, done: any) => {
     });
 };
 
-const changeFile = (event: any) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = (e: any) => {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: "binary", cellDates: true });
-        const wsname = workbook.SheetNames[0];
-        const outdata = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
-        console.log(outdata, "outdata");
-    };
-};
 const handleBatchExcute = (data: any, done: any) => {
     const { ids } = data;
     ElMessageBox.confirm(`你真的处理选择的订单吗？`, "警告", {
@@ -138,6 +124,11 @@ const handleBatchExcute = (data: any, done: any) => {
             done();
         });
     });
+};
+const handleDetail = (item: IQQGroup, done: any) => {
+    const form = { ...item };
+    form.content = JSON.stringify(JSON.parse(form.content), null, 8);
+    done(form);
 };
 const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
@@ -196,6 +187,7 @@ const handleExcute = (item: IQQGroup, done: any) => {
 };
 const tableActionbar = reactive<IActionbar>({
     width: 200,
+    hiddenEditButton: true,
     btns: [
         {
             name: "处理",
@@ -320,11 +312,11 @@ const tableColumns = reactive<Array<IColumn>>([
             return obj && obj.sender && obj.sender.nickname;
         }
     },
-    {
-        label: "内容",
-        prop: "content",
-        width: "200"
-    },
+    // {
+    //     label: "内容",
+    //     prop: "content",
+    //     width: "200"
+    // },
     {
         label: "备注",
         prop: "remark"
@@ -335,7 +327,7 @@ const tableColumns = reactive<Array<IColumn>>([
  * 加载关键字下拉框
  */
 const loadKeywordSelect = () => {
-    getDictionaryList("networkMode").then((res) => {
+    getDictionaryList("keyword").then((res) => {
         const { data } = res;
         // keywordDic.length = 0;
         // keywordDic.push(...data);
@@ -463,45 +455,6 @@ const handleFormSubmit = (form: IQQGroup, done: any) => {
         });
     }
 };
-
-/**
- * 导入
- */
-const dialogVisible = ref(false);
-const action = `${
-    import.meta.env.VITE_APP_BASE_URL
-}/api/v2/system/qqGroups/importQQGroup`;
-const headers = reactive({
-    authorization: `Bearer ${loginStore.getAccessToken}`
-});
-const handleSuccess = () => {
-    // const handleSuccess = (data: any) => {
-    // const {
-    //   response,
-    //   uploadFile,
-    //   uploadFiles
-    // }=data
-    ElMessage({
-        type: "success",
-        message: "导入qq群成功."
-    });
-    dialogVisible.value = false;
-    loadData({
-        keyword: "",
-        current: 1,
-        size: 10
-    });
-};
-const handleError = () => {
-    ElMessage({
-        type: "success",
-        message: "导入qq群失败."
-    });
-    dialogVisible.value = false;
-};
-const handleClose = () => {
-    dialogVisible.value = false;
-};
 </script>
 <template>
     <quick-crud
@@ -521,21 +474,6 @@ const handleClose = () => {
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-batch-delete="handleBatchDelete"
+        @on-detail="handleDetail"
     ></quick-crud>
-    <quick-upload
-        :dialog-visible="dialogVisible"
-        :action="action"
-        :headers="headers"
-        @on-success="handleSuccess"
-        @on-error="handleError"
-        @on-close="handleClose"
-    ></quick-upload>
-    <input
-        ref="uploadRef"
-        style="display: none"
-        type="file"
-        accept=".xls,.xlsx"
-        class="upload-file"
-        @change="changeFile($event)"
-    />
 </template>
