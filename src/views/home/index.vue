@@ -1,17 +1,25 @@
 <script setup lang="ts">
-/**导入第三方库 */
-import { onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import * as echarts from "echarts";
 import { Tickets } from "@element-plus/icons-vue";
-// import { useRouter } from "vue-router";
+import { getOrderStatistics } from "@/api/order/qqGroup";
+import { useTabStore } from "@/store/modules/tab";
+import { useUserStore } from "@/store/modules/user";
+import { ITab } from "@/types/tab";
+import { IMenu } from "@/types/menu";
 
-// const router = useRouter();
-// const isOpen = ref(false);
-// const dayCountTemp = ref(0);
-// const dayCount = ref(0);
-// const yesterdayCount = ref(0);
-// const weekCount = ref(0);
-// const monthCount = ref(0);
+const tabStore = useTabStore();
+const userStore = useUserStore();
+
+const permissionMenuList = computed(() => userStore.getPermissionMenuList);
+
+const isOpen = ref(false);
+const dayCountTemp = ref(0);
+const dayCount = ref(0);
+const yesterdayCount = ref(0);
+const weekCount = ref(0);
+const monthCount = ref(0);
+const dayData = ref([]);
 const lineOptions = {
     xAxis: {
         type: "category",
@@ -22,7 +30,7 @@ const lineOptions = {
     },
     series: [
         {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: dayData.value,
             type: "line"
         }
     ]
@@ -37,28 +45,12 @@ const barOption = {
     },
     series: [
         {
-            data: [120, 200, 150, 80, 70, 110, 130],
+            data: dayData.value,
             type: "bar",
             showBackground: true,
-            itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: "#83bff6" },
-                    { offset: 0.5, color: "#188df0" },
-                    { offset: 1, color: "#188df0" }
-                ])
-            },
-            emphasis: {
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "#2378f7" },
-                        { offset: 0.7, color: "#2378f7" },
-                        { offset: 1, color: "#83bff6" }
-                    ])
-                }
+            backgroundStyle: {
+                color: "rgba(180, 180, 180, 0.2)"
             }
-            // backgroundStyle: {
-            //   color: 'rgba(180, 180, 180, 0.2)',
-            // },
         }
     ]
 };
@@ -106,21 +98,13 @@ const radarOption = {
     },
     radar: {
         // shape: 'circle',
-        // indicator: [
-        //     { name: "Sales", max: 6500 },
-        //     { name: "Administration", max: 16000 },
-        //     { name: "Information Technology", max: 30000 },
-        //     { name: "Customer Support", max: 38000 },
-        //     { name: "Development", max: 52000 },
-        //     { name: "Marketing", max: 25000 }
-        // ]
         indicator: [
-            { name: "Sales" },
-            { name: "Administration" },
-            { name: "Information Technology" },
-            { name: "Customer Support" },
-            { name: "Development" },
-            { name: "Marketing" }
+            { name: "Sales", max: 6500 },
+            { name: "Administration", max: 16000 },
+            { name: "Information Technology", max: 30000 },
+            { name: "Customer Support", max: 38000 },
+            { name: "Development", max: 52000 },
+            { name: "Marketing", max: 25000 }
         ]
     },
     series: [
@@ -140,10 +124,73 @@ const radarOption = {
         }
     ]
 };
+const noticeMe = () => {
+    getOrderStatistics().then((res) => {
+        const { data: payload } = res;
+        const {
+            dayOrderNum,
+            yesterDayOrderNum,
+            weekOrderNum,
+            monthOrderNum,
+            dayData: day
+        } = payload;
+        dayCount.value = dayOrderNum;
+        yesterdayCount.value = yesterDayOrderNum;
+        weekCount.value = weekOrderNum;
+        monthCount.value = monthOrderNum;
+        dayData.value = day;
+    });
+    setInterval(() => {
+        getOrderStatistics().then((res) => {
+            const { data: payload } = res;
+            const {
+                dayOrderNum,
+                yesterDayOrderNum,
+                weekOrderNum,
+                monthOrderNum,
+                dayData: day
+            } = payload;
+            dayCount.value = dayOrderNum;
+            yesterdayCount.value = yesterDayOrderNum;
+            weekCount.value = weekOrderNum;
+            monthCount.value = monthOrderNum;
+            dayData.value = day;
+            console.log(
+                "提醒条件，前面的数量大于后面的则会提醒",
+                dayCount.value,
+                dayCountTemp.value
+            );
+
+            if (dayCount.value > 0 && dayCount.value > dayCountTemp.value) {
+                console.log("有新的订单，即将播放音乐");
+                dayCountTemp.value = dayCount.value;
+                if (isOpen.value) {
+                    const myAudio = document.getElementById("audio");
+                    myAudio.muted = false;
+                    myAudio.play();
+                }
+            }
+        });
+    }, 1000 * 3);
+};
+const goOrder = () => {
+    const menu = permissionMenuList.value.find((x) => x.path === "order");
+    if (menu) {
+        const { id, menuName, path }: IMenu = menu;
+        const tab: ITab = {
+            id,
+            name: menuName,
+            path
+        };
+        tabStore.setActiveTab(tab);
+        // tabStore.addTab(tab)
+    }
+};
 onMounted(() => {
+    noticeMe();
     const arr = ["myChart1", "myChart2", "myChart3", "myChart4"];
     arr.forEach((element) => {
-        let options: any;
+        let options;
         if (element === "myChart1") {
             options = barOption;
         } else if (element === "myChart2") {
@@ -165,6 +212,24 @@ onMounted(() => {
 <template>
     <el-row>
         <el-col :span="24">
+            <!--此方式，为了解决音视频被浏览器限制的解决方案-->
+            <el-switch
+                v-model="isOpen"
+                active-text="打开提示音"
+            />
+        </el-col>
+    </el-row>
+    <audio
+        id="audio"
+        muted
+    >
+        <source
+            src="/audios/order.mp3"
+            type="audio/mpeg"
+        />
+    </audio>
+    <el-row>
+        <el-col :span="24">
             <el-card class="box-card">
                 <el-row :gutter="20">
                     <el-col :span="6">
@@ -176,10 +241,10 @@ onMounted(() => {
                             }"
                         >
                             <div class="title">当日订单数量</div>
-                            <div class="number">10</div>
-                            <el-icon :size="60">
-                                <Tickets />
-                            </el-icon>
+                            <div class="number">
+                                <a @click="goOrder">{{ dayCount }}</a>
+                            </div>
+                            <el-icon :size="60"><Tickets /></el-icon>
                         </div>
                     </el-col>
                     <el-col :span="6">
@@ -191,10 +256,10 @@ onMounted(() => {
                             }"
                         >
                             <div class="title">昨天订单数量</div>
-                            <div class="number">50</div>
-                            <el-icon :size="60">
-                                <Tickets />
-                            </el-icon>
+                            <div class="number">
+                                <a @click="goOrder">{{ yesterdayCount }}</a>
+                            </div>
+                            <el-icon :size="60"><Tickets /></el-icon>
                         </div>
                     </el-col>
                     <el-col :span="6">
@@ -206,10 +271,10 @@ onMounted(() => {
                             }"
                         >
                             <div class="title">本周订单数量</div>
-                            <div class="number">358</div>
-                            <el-icon :size="60">
-                                <Tickets />
-                            </el-icon>
+                            <div class="number">
+                                <a @click="goOrder">{{ weekCount }}</a>
+                            </div>
+                            <el-icon :size="60"><Tickets /></el-icon>
                         </div>
                     </el-col>
                     <el-col :span="6">
@@ -221,10 +286,10 @@ onMounted(() => {
                             }"
                         >
                             <div class="title">本月订单数量</div>
-                            <div class="number">1020</div>
-                            <el-icon :size="60">
-                                <Tickets />
-                            </el-icon>
+                            <div class="number">
+                                <a @click="goOrder">{{ monthCount }}</a>
+                            </div>
+                            <el-icon :size="60"><Tickets /></el-icon>
                         </div>
                     </el-col>
                 </el-row>
@@ -273,6 +338,7 @@ onMounted(() => {
             </el-card>
         </el-col>
     </el-row>
+    <!-- <audio id="audio" autoplay src="public/audios/order.mp3"></audio> -->
 </template>
 <style lang="scss" scoped>
 .chart {
@@ -280,26 +346,23 @@ onMounted(() => {
 }
 
 .item {
-    position: relative;
     height: 150px;
-    color: rgb(255 255 255);
-    background-color: rgb(103 194 58);
-
+    background-color: rgb(103, 194, 58);
+    color: rgb(255, 255, 255);
+    position: relative;
     .title {
         position: absolute;
         top: 21px;
         left: 31px;
     }
-
     .number {
         position: absolute;
-        top: 75px;
         left: 102px;
-        font-size: 40px;
+        top: 75px;
         font-weight: 600;
+        font-size: 40px;
         cursor: pointer;
     }
-
     .el-icon {
         position: absolute;
         top: 42px;

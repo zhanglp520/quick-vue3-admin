@@ -1,4 +1,4 @@
-import { IQQGroup } from "@/types";
+import { IOrderStatistics, IQQGroup } from "@/types";
 import request, { IQuickResponseData } from "@/utils/request";
 import { qqGroup as api } from "./index";
 export { downloadFileStream } from "@/api/common";
@@ -8,6 +8,15 @@ export { downloadFileStream } from "@/api/common";
  *@Author: 土豆哥
  *@Date: 2023-09-01 11:57:43
  */
+
+export const getOrderStatistics = (): Promise<
+    IQuickResponseData<IOrderStatistics>
+> => {
+    return request<IQuickResponseData<IOrderStatistics>>({
+        url: `${api}/statistics`,
+        method: "GET"
+    });
+};
 
 export const getQQGroupPageList = (
     params: object

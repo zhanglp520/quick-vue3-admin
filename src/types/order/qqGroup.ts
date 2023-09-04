@@ -15,11 +15,12 @@ export interface ISearchQQGroup {
     content: string;
     status: string;
 }
-export interface OrderStatistics {
+export interface IOrderStatistics {
     dayOrderNum: number;
     monthOrderNum: number;
     weekOrderNum: number;
     yesterDayOrderNum: number;
+    dayData: [];
 }
 export interface IQQGroupPermissionButton extends IPermissionButton {
     excute?: boolean;
