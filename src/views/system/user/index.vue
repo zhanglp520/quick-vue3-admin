@@ -566,6 +566,7 @@ const handleFormSubmit = (form: IUser, done: any) => {
             done();
         });
     } else {
+        row.id = undefined;
         console.log("addUser", row);
         addUser(row).then(() => {
             ElMessage({
