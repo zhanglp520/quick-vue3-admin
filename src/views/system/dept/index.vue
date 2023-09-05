@@ -235,6 +235,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IDept, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateDept", row);
         updateDept(row).then(() => {
             ElMessage({
                 type: "success",
@@ -244,6 +245,7 @@ const handleFormSubmit = (form: IDept, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addDept", row);
         addDept(row).then(() => {
             ElMessage({
                 type: "success",

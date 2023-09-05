@@ -165,6 +165,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IRole, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateRole", row);
         updateRole(row).then(() => {
             ElMessage({
                 type: "success",
@@ -174,6 +175,7 @@ const handleFormSubmit = (form: IRole, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addRole", row);
         addRole(row).then(() => {
             ElMessage({
                 type: "success",
