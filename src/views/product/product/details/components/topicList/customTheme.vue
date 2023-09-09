@@ -19,7 +19,7 @@ import {
     addTopic,
     updateTopic,
     deleteTopic
-} from "@/api/product";
+} from "@/api/product/productTopic";
 
 /**
  * 属性

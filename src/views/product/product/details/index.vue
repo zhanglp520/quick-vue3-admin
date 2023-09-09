@@ -1,19 +1,22 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
+/**导入项目文件 */
 import ThingSpecificationLanguage from "./components/thingSpecificationLanguage/index.vue";
 import ProductInformation from "./components/productInformation/index.vue";
 import TopicList from "./components/topicList/index.vue";
 // import { IProduct } from "@/types";
 
+/**
+ * 属性
+ */
 const route = useRoute();
 const id = ref("");
 const activeName = ref("info");
 
 id.value = route.query.id!.toString();
-// const product = JSON.parse() as IProduct;
-// console.log("产品详情路由传值", route.params);
 </script>
 
 <template>

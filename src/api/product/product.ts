@@ -114,7 +114,7 @@ export const disableProduct = (id: number) => {
  */
 export const publishProduct = (id: number) => {
     return request({
-        url: `${api}/enabled/${id}`,
+        url: `${api}/publish/${id}`,
         method: "PATCH"
     });
 };
@@ -125,7 +125,7 @@ export const publishProduct = (id: number) => {
  */
 export const UnpublishProduct = (id: number) => {
     return request({
-        url: `${api}/disable/${id}`,
+        url: `${api}/unpublish/${id}`,
         method: "PATCH"
     });
 };

@@ -1,15 +1,22 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { reactive, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import clipboard3 from "vue-clipboard3";
+
+/**导入项目文件 */
+import { IDictionary, IProduct, IProductType } from "@/types";
 import {
     getDictionaryList,
     getProducDetails,
     getProductTypeList
 } from "@/api/product/product";
-import { IDictionary, IProduct, IProductType } from "@/types";
+
 import { dateFormat } from "@ainiteam/date-format-ts";
 
+/**
+ * 属性
+ */
 const props = defineProps({
     productId: String
 });
@@ -17,10 +24,23 @@ const { productId } = toRefs(props);
 
 //接入协议
 const accessProtocolDic = reactive<Array<IDictionary>>([]);
+
 //设备类型
 const deviceTypeDic = reactive<Array<IDictionary>>([]);
+
+//数据协议
+const dataProtocolDic = reactive<Array<IDictionary>>([]);
+
+//联网方式
+const networkModeDic = reactive<Array<IDictionary>>([]);
+
+//产品类型
+const productTypeList = reactive<Array<IProductType>>([]);
+console.log("产品类型", productTypeList);
+
 //复制
 const { toClipboard } = clipboard3();
+
 const product = reactive<IProduct>({
     id: undefined,
     productId: "",
@@ -43,6 +63,7 @@ const product = reactive<IProduct>({
     remark: ""
 });
 
+//复制
 const handleCopy = async (value: string) => {
     try {
         await toClipboard(value);
@@ -59,12 +80,16 @@ const handleCopy = async (value: string) => {
     }
 };
 
-//所属品类
+/**
+ * 数据格式化
+ */
+
+//所属品类格式化
 const categoryModeFromat = () => {
     return product.categoryMode === 1 ? "自定义品类" : "标准品类";
 };
 
-//状态
+//状态格式化
 const enabledFromat = () => {
     return product.published === 1 ? "已禁用" : "已启用";
 };
@@ -82,15 +107,12 @@ const deviceTypeFromat = () => {
     const obj = deviceTypeDic.find((x: IDictionary) => x.id === deviceType);
     return obj && obj.dicName;
 };
-/**
- * 加载设备类型数据
- */
-const loadDeviceListData = () => {
-    getDictionaryList("deviceType").then((res) => {
-        const { data: deviceTypeList } = res;
-        deviceTypeDic.length = 0;
-        deviceTypeDic.push(...deviceTypeList);
-    });
+
+//数据协议格式化
+const dataProtocolFromat = () => {
+    const dataProtocol = format(product.dataProtocol);
+    const obj = dataProtocolDic.find((x: IDictionary) => x.id === dataProtocol);
+    return obj && obj.dicName;
 };
 
 /**
@@ -103,59 +125,13 @@ const accessProtocolFromat = () => {
     );
     return obj && obj.dicName;
 };
-/**
- * 加载接入协议
- */
-const loadAccessProtocolData = () => {
-    getDictionaryList("accessProtocol").then((res) => {
-        const { data: accessProtocolList } = res;
-        accessProtocolDic.length = 0;
-        accessProtocolDic.push(...accessProtocolList);
-    });
-};
 
-//数据协议
-const dataProtocolDic = reactive<Array<IDictionary>>([]);
-//数据协议格式化
-const dataProtocolFromat = () => {
-    const dataProtocol = format(product.dataProtocol);
-    const obj = dataProtocolDic.find((x: IDictionary) => x.id === dataProtocol);
-    return obj && obj.dicName;
-};
-
-/**
- * 加载数据协议下拉框
- */
-const loadDataProtocolData = () => {
-    getDictionaryList("dataProtocol").then((res) => {
-        const { data: dataProtocolList } = res;
-        dataProtocolDic.length = 0;
-        dataProtocolDic.push(...dataProtocolList);
-    });
-};
-//联网方式
-const networkModeDic = reactive<Array<IDictionary>>([]);
-
-//联网方式式化
+//联网方式格式化
 const networkModeFromat = () => {
     const networkMode = format(product.networkMode);
     const obj = networkModeDic.find((x: IDictionary) => x.id === networkMode);
     return obj && obj.dicName;
 };
-/**
- * 加载联网方式下拉框
- */
-const loadNetworkingMethodsData = () => {
-    getDictionaryList("networkMode").then((res) => {
-        const { data } = res;
-        networkModeDic.length = 0;
-        networkModeDic.push(...data);
-    });
-};
-
-//产品类型
-const productTypeList = reactive<Array<IProductType>>([]);
-console.log("产品类型", productTypeList);
 
 //产品类型格式化
 const productTypeFormat = () => {
@@ -176,6 +152,54 @@ const productTypeFormat = () => {
     console.log("arr", arr);
     return arr.join("/");
 };
+
+/**
+ * 加载的数据
+ */
+
+/**
+ * 加载接入协议数据
+ */
+const loadAccessProtocolData = () => {
+    getDictionaryList("accessProtocol").then((res) => {
+        const { data: accessProtocolList } = res;
+        accessProtocolDic.length = 0;
+        accessProtocolDic.push(...accessProtocolList);
+    });
+};
+/**
+ * 加载设备类型数据
+ */
+const loadDeviceListData = () => {
+    getDictionaryList("deviceType").then((res) => {
+        const { data: deviceTypeList } = res;
+        deviceTypeDic.length = 0;
+        deviceTypeDic.push(...deviceTypeList);
+    });
+};
+
+/**
+ * 加载数据协议下拉框
+ */
+const loadDataProtocolData = () => {
+    getDictionaryList("dataProtocol").then((res) => {
+        const { data: dataProtocolList } = res;
+        dataProtocolDic.length = 0;
+        dataProtocolDic.push(...dataProtocolList);
+    });
+};
+
+/**
+ * 加载联网方式下拉框
+ */
+const loadNetworkingMethodsData = () => {
+    getDictionaryList("networkMode").then((res) => {
+        const { data } = res;
+        networkModeDic.length = 0;
+        networkModeDic.push(...data);
+    });
+};
+
 /**
  * 产品类型数据
  */
@@ -222,6 +246,8 @@ const loadDetailData = () => {
         product.remark = productDetails.remark;
     });
 };
+
+//刷新
 loadDetailData();
 const format = (val: any) => {
     return val === undefined ? "" : val;

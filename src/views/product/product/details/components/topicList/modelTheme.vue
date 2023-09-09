@@ -1,7 +1,13 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { toRefs } from "vue";
+
+/**导入项目文件 */
 import { ITopic, ISpanMethodProps } from "@/types";
 
+/**
+ * 属性
+ */
 const props = defineProps({
     productId: String
 });

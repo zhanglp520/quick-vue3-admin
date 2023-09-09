@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { reactive, ref, toRefs } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -10,6 +11,7 @@ import {
     ITree
 } from "@ainiteam/quick-vue3-ui";
 
+/**导入项目文件 */
 import { IFunc } from "@/types";
 import {
     getFuncList,
@@ -17,6 +19,9 @@ import {
     deleteFunc
 } from "@/api/product/physicalModel";
 
+/**
+ * 属性
+ */
 const props = defineProps({
     productId: {
         type: String,
@@ -126,6 +131,8 @@ const formItems = reactive<Array<IFormItem>>([
         prop: "remark"
     }
 ]);
+
+//表单新增按钮
 const handleFormSubmit = (form: IFunc, done: any) => {
     const row = { ...form };
     addFunction(productId.value, row).then(() => {

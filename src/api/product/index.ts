@@ -11,3 +11,4 @@ export const product = `${api}/products`;
 export const productType = `${api}/productTypes`;
 export const simulator = `${api}/simulators`;
 export const physicalModel = `${api}/physicalModels`;
+export const productTopic = `${api}/productTopic`;

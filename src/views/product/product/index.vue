@@ -2,12 +2,12 @@
 /**导入第三方库 */
 import { ref } from "vue";
 
+/**导入项目文件 */
 import CardList from "./component/CardList/index.vue";
 import Crud from "./component/Crud/index.vue";
 
 //切换按钮
 const switchButton = ref(false);
-
 const handleswitch = (val: boolean) => {
     switchButton.value = val;
 };

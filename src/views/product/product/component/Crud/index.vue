@@ -188,7 +188,7 @@ const handleDisable = (item: IProduct, done: any) => {
 };
 const handlePublish = (item: IProduct, done: any) => {
     ElMessageBox.confirm(
-        `你真的发布【${item.productName}】的产品吗？`,
+        `你真的发布【${item.productName}】的产品吗 ？`,
         "警告",
         {
             confirmButtonText: "确定",

@@ -1,11 +1,16 @@
 <script lang="ts" setup>
+/**导入第三方库 */
 import { ref } from "vue";
 import type { TabsPaneContext } from "element-plus";
 
+/**导入项目文件 */
 import attribute from "./attribute.vue";
 import func from "./func.vue";
 import event from "./event.vue";
 
+/**
+ * 属性
+ */
 const props = defineProps({
     productId: String
 });
