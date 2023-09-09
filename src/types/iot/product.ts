@@ -24,7 +24,7 @@ export interface IProduct {
 }
 export interface ISearchProduct {
     keyword: string;
-    productType: string;
+    productType: number[];
 }
 
 export interface IProductPermissionButton extends IPermissionButton {

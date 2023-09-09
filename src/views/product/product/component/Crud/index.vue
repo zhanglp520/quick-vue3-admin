@@ -82,7 +82,7 @@ const page = reactive<IPage>({
  */
 const searchForm = reactive<ISearchProduct>({
     keyword: "",
-    productType: ""
+    productType: []
 });
 const searchFormItems = reactive<Array<IFormItem>>([
     {
@@ -286,7 +286,7 @@ const tableActionbar = reactive<IActionbar>({
                 handlePublish(item, done);
             },
             render(row: IProduct) {
-                return row.enabled === 0;
+                return row.published === 0 || row.published === 2;
             }
         },
         {
@@ -296,12 +296,12 @@ const tableActionbar = reactive<IActionbar>({
                 handleUnpublish(item, done);
             },
             render(row: IProduct) {
-                return row.enabled !== 0;
+                return row.published === 1;
             }
         }
     ]
 });
-
+// 0 未发布 1 已发布 2撤销发布
 /**
  * 表格
  */
@@ -514,14 +514,23 @@ const loadNetworkingMethodsSelect = () => {
 /**
  * 加载数据
  */
-const loadData = (parmas: object) => {
+const loadData = (parmas: any) => {
+    debugger;
+    const arr = parmas.productType; //[1,2,3]=>'1,2,3'
+    console.log("搜索参数", arr);
+    arr.join(",");
     loading.value = true;
     loadProductTypeSelectTree();
     loadDeviceListSelect();
     loadAccessProtocolSelect();
     loadDataProtocolSelect();
     loadNetworkingMethodsSelect();
-    getProductPageList(parmas)
+    getProductPageList({
+        productType: arr.join(","),
+        keyword: parmas.keyword,
+        current: parmas.current,
+        size: parmas.size
+    })
         .then((res) => {
             loading.value = false;
             const { data: productList, total } = res;

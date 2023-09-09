@@ -92,7 +92,7 @@ export const deleteProduct = (id: number) => {
  */
 export const enableProduct = (id: number) => {
     return request({
-        url: `${api}/enabled/${id}`,
+        url: `${api}/enable/${id}`,
         method: "PATCH"
     });
 };
