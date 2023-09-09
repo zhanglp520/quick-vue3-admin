@@ -225,6 +225,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IDictionary, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateDictionary", row);
         updateDictionary(row).then(() => {
             ElMessage({
                 type: "success",
@@ -234,6 +235,7 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addDictionary", row);
         addDictionary(row).then(() => {
             ElMessage({
                 type: "success",

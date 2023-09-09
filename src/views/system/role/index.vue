@@ -204,6 +204,7 @@ const handleFormSubmit = (form: IRole, done: any) => {
     const row = { ...form };
     row.deptId = form.deptId ? form.deptId : 0;
     if (row.id) {
+        console.log("updateRole", row);
         updateRole(row).then(() => {
             ElMessage({
                 type: "success",
@@ -212,6 +213,8 @@ const handleFormSubmit = (form: IRole, done: any) => {
             done();
         });
     } else {
+        row.id = undefined;
+        console.log("addRole", row);
         addRole(row).then(() => {
             ElMessage({
                 type: "success",

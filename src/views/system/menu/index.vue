@@ -394,6 +394,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
     const row = { ...form };
     row.pId = form.pId ? form.pId : 0;
     if (row.id) {
+        console.log("updateMenu", row);
         updateMenu(row).then(() => {
             ElMessage({
                 type: "success",
@@ -402,6 +403,8 @@ const handleFormSubmit = (form: IMenu, done: any) => {
             done();
         });
     } else {
+        row.id = undefined;
+        console.log("addMenu", row);
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",
