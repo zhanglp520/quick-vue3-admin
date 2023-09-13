@@ -105,6 +105,15 @@ const searchFormItems = reactive<Array<IFormItem>>([
 /**
  * 工具栏
  */
+const handleEdit = (item: IProduct, done: any) => {
+    const productType = item.productType.split(",");
+    console.log("产品分类处理", productType);
+    const arr = productType.map((x: any) => {
+        return Number(x);
+    });
+    item.productType = arr;
+    done(item);
+};
 const handlePrint = () => {
     window.print();
 };
@@ -515,10 +524,7 @@ const loadNetworkingMethodsSelect = () => {
  * 加载数据
  */
 const loadData = (parmas: any) => {
-    debugger;
     const arr = parmas.productType; //[1,2,3]=>'1,2,3'
-    console.log("搜索参数", arr);
-    arr.join(",");
     loading.value = true;
     loadProductTypeSelectTree();
     loadDeviceListSelect();
@@ -755,5 +761,6 @@ const handleFormSubmit = (form: IProduct, done: any) => {
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-print="handlePrint"
+        @on-edit="handleEdit"
     ></quick-crud>
 </template>

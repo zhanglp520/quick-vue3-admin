@@ -108,7 +108,7 @@ const cardOption = reactive<ICardOption>({
  */
 const searchForm = reactive<ISearchProduct>({
     keyword: "",
-    productType: ""
+    productType: []
 });
 const searchFormItems = reactive<Array<IFormItem>>([
     {
@@ -398,11 +398,6 @@ const handleEnabled = (item: IProduct) => {
             refresh();
         });
     });
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleEnabled", item);
 };
 
 //卡片禁用按钮
@@ -427,18 +422,13 @@ const handleDisabled = (item: IProduct) => {
             refresh();
         });
     });
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleDisabled", item);
 };
 const handleCommand = (data: ICommand) => {
     /* eslint-disable indent */
     const { cmd, item } = data;
     switch (cmd) {
         case "edit":
-            handleEdit(item);
+            handleEditClick(item);
             break;
         case "delete":
             handleDelete(item);
@@ -457,7 +447,7 @@ const handleCommand = (data: ICommand) => {
     }
 };
 //卡片编辑按钮
-const handleEdit = (item: IProduct) => {
+const handleEditClick = (item: IProduct) => {
     console.log("点编辑按钮拿到的数据", item);
     dialogFormType.value = "edit";
     dialogTitle.value = "编辑用户";
@@ -466,17 +456,16 @@ const handleEdit = (item: IProduct) => {
     form.productId = item.productId;
     form.productName = item.productName;
     form.categoryMode = item.categoryMode;
-    form.productType = item.productType;
+    const productType = item.productType.split(",");
+    const arr = productType.map((x: any) => {
+        return Number(x);
+    });
+    form.productType = arr;
     // form.deviceType = deviceTypeFormat(item.deviceType);
     form.accessProtocol = item.accessProtocol;
     form.dataProtocol = item.dataProtocol;
     form.networkMode = item.networkMode;
     form.remark = item.remark;
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleCmd1", item);
 };
 //卡片删除按钮
 const handleDelete = (item: IProduct) => {
@@ -507,11 +496,6 @@ const handleDevice = (item: IProduct) => {
         path: "/device/device",
         query: { productId: item.id }
     });
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleCmd3", item);
 };
 //卡片发布按钮
 const handlePublish = (item: IProduct) => {
@@ -535,11 +519,6 @@ const handlePublish = (item: IProduct) => {
             refresh();
         });
     });
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleCmd3", item);
 };
 //卡片撤销发布按钮
 const handleUnpublish = (item: IProduct) => {
@@ -563,11 +542,6 @@ const handleUnpublish = (item: IProduct) => {
             refresh();
         });
     });
-    // ElMessage({
-    //     message: JSON.stringify(item),
-    //     type: "success"
-    // });
-    // console.log("handleCmd3", item);
 };
 const beforeHandleCommand = (cmd: string, item: IProduct) => {
     return {
@@ -727,12 +701,6 @@ refresh();
             </el-descriptions>
         </template>
         <template #actionbar="{ item }">
-            <!-- <el-link
-                :underline="false"
-                class="button"
-                @click="handleEnabled(item)"
-                >查看</el-link
-            > -->
             <el-link
                 :underline="false"
                 class="button"
@@ -811,44 +779,6 @@ refresh();
             @current-change="handleCurrentChange"
         />
     </div>
-    <!-- <el-dialog
-        v-model="dialogFormVisible"
-        title="添加"
-    >
-        @submit="handleFormSubmit"
-                    @clear="handleCancel"
-
-        <el-row :guster="20">
-            <el-col>
-                <quick-form
-                    :model="form"
-                    :form-items="formItems"
-                    :show-action="true"
-                    :action-slot="true"
-                >
-                    <template #action>
-                        <el-button
-                            type="primary"
-                            @click="handleFormSubmit"
-                            >确定</el-button
-                        >
-                        <el-button @click="handleCancel">取消</el-button>
-                    </template>
-                </quick-form>
-            </el-col>
-        </el-row>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button
-                    type="primary"
-                    @click="dialogFormVisible = false"
-                >
-                    Confirm
-                </el-button>
-            </span>
-        </template>
-    </el-dialog> -->
     <el-dialog
         v-model="dialogFormVisible"
         :title="dialogTitle"
