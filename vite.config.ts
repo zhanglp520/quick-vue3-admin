@@ -59,12 +59,12 @@ export default defineConfig({
     server: {
         https: false, // 运行服务是否以https方式
         host: true,
-        port: 5173,
+        port: 5100,
         open: false,
         proxy: {
             "/dev-api": {
-                // target: "http://localhost:4100/", // 代理的目标地址-本地
-                target: "https://api.iot.ainiteam.com/", // 代理的目标地址-线上
+                target: "http://localhost:5101/", // 代理的目标地址-本地
+                // target: "https://api.iot.ainiteam.com/", // 代理的目标地址-线上
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3102 代理服务会把origin修改为目标地址
                 secure: true, // 是否https接
                 ws: false, // 是否代理websockets
@@ -75,11 +75,11 @@ export default defineConfig({
     preview: {
         https: false, // 运行服务是否以https方式
         host: true,
-        port: 5174,
+        port: 5100,
         open: false,
         proxy: {
             "/prod-api": {
-                target: "http://localhost:4100/", // 代理的目标地址-本地
+                target: "http://localhost:5101/", // 代理的目标地址-本地
                 // target: 'https://api.quick.ainiteam.com/', // 代理的目标地址-线上
                 changeOrigin: true, // 开发模式，默认的origin是真实的 origin:localhost:3000 代理服务会把origin修改为目标地址
                 secure: false, // 是否https接口
