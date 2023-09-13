@@ -3,7 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import eslintPlugin from "vite-plugin-eslint";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { resolve } from "path";
-import vueSetupExtend from "@ainiteam/vite-plugin-vue3-extend";
+// import vueSetupExtend from "@ainiteam/vite-plugin-vue3-extend";
+import vueSetupExtend from "vite-plugin-vue-setup-extend";
 
 // https://vitejs.dev/config/
 export default defineConfig({
