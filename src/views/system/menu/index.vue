@@ -145,7 +145,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "200"
     },
     {
-        label: "是否缓存",
+        label: "缓存",
         prop: "cache",
         width: "200",
         format: (row: IMenu) => {
@@ -153,7 +153,7 @@ const tableColumns = reactive<Array<IColumn>>([
         }
     },
     {
-        label: "是否显示",
+        label: "显示",
         prop: "status",
         width: "200",
         format: (row: IMenu) => {
@@ -161,7 +161,7 @@ const tableColumns = reactive<Array<IColumn>>([
         }
     },
     {
-        label: "是否启用",
+        label: "启用",
         prop: "enabled",
         width: "200",
         format: (row: IMenu) => {
@@ -349,7 +349,7 @@ const formItems = reactive<Array<IFormItem>>([
         prop: "pId"
     },
     {
-        label: "是否缓存",
+        label: "缓存",
         labelWidth: "80px",
         vModel: "cache",
         prop: "cache",
@@ -357,7 +357,7 @@ const formItems = reactive<Array<IFormItem>>([
         width: "400px"
     },
     {
-        label: "是否启用",
+        label: "启用",
         labelWidth: "80px",
         vModel: "enabled",
         prop: "enabled",
@@ -365,7 +365,7 @@ const formItems = reactive<Array<IFormItem>>([
         width: "400px"
     },
     {
-        label: "是否显示",
+        label: "显示",
         labelWidth: "80px",
         vModel: "status",
         prop: "status",

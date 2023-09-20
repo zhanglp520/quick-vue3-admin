@@ -346,7 +346,7 @@ const tableColumns = reactive<Array<IColumn>>([
         width: "200"
     },
     {
-        label: "是否启用",
+        label: "启用",
         prop: "enabled",
         width: "200",
         format: (row: IUser) => {
