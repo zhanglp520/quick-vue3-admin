@@ -67,25 +67,19 @@ export const deleteQQGroup = (id: number) => {
 
 export const batchDeleteQQGroup = (ids: string) => {
     return request({
-        url: `${api}/batchRemove`,
-        method: "POST",
-        params: {
-            ids
-        }
+        url: `${api}/batchRemove/${ids}`,
+        method: "DELETE"
     });
 };
 export const excuteOrder = (id: number) => {
     return request({
         url: `${api}/excute/${id}`,
-        method: "POST"
+        method: "PATCH"
     });
 };
 export const batchExcuteOrder = (ids: string) => {
     return request({
-        url: `${api}/batchExcute`,
-        method: "POST",
-        params: {
-            ids
-        }
+        url: `${api}/batchExcute/${ids}`,
+        method: "PATCH"
     });
 };
