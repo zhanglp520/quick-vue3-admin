@@ -55,8 +55,8 @@ export const getMenuPermission = (
 };
 export const getUserPermission = (
     roleId: string
-): Promise<IQuickResponseData<Array<string>>> => {
-    return request<IQuickResponseData<Array<string>>>({
+): Promise<IQuickResponseData<Array<number>>> => {
+    return request<IQuickResponseData<Array<number>>>({
         url: `${api}/getUserListByRoleId/${roleId}`,
         method: "GET"
     });

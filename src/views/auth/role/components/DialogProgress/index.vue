@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 /**导入第三方库 */
 import { ref, reactive, onMounted, nextTick, watch } from "vue";
-import { ElTree } from "element-plus";
+import { ElMessage, ElTree } from "element-plus";
 
 /**导入项目文件 */
 import { listToTableTree } from "@/utils";
@@ -48,6 +48,8 @@ const menuProps = reactive({
 const apiTreeRef = ref<InstanceType<typeof ElTree>>();
 const apiTreeData = reactive<Array<IApi>>([]);
 const apiTreeList = reactive<Array<IApi>>([]);
+const menuIds = ref("");
+const apiIds = ref("");
 const apiProps = reactive({
     id: "id",
     label: "apiName",
@@ -89,6 +91,7 @@ const getMenuPermission1 = (id: string) => {
 const apiLoad = () => {
     getApiList().then((res) => {
         const { data: apiList } = res;
+        apiTreeList.length = 0;
         apiTreeList.push(...apiList);
         getApiPermission1(role.id!.toString());
     });
@@ -109,32 +112,40 @@ const getApiPermission1 = (id: string) => {
 
 const prev = () => {
     if (active.value > 1) {
+        if (active.value === 2) {
+            const apiIdArr = apiTreeRef.value?.getCheckedKeys(true);
+            apiIds.value = apiIdArr ? apiIdArr.join(",") : "";
+        } else if (active.value === 3) {
+            //TODO:数据权限
+        }
+
         active.value--;
     }
 };
 const next = () => {
     if (active.value < 3) {
+        if (active.value === 1) {
+            const menuIdArr = menuTreeRef.value?.getCheckedKeys(true);
+            menuIds.value = menuIdArr ? menuIdArr?.join(",") : "";
+        } else if (active.value === 2) {
+            const apiIdArr = apiTreeRef.value?.getCheckedKeys(true);
+            apiIds.value = apiIdArr ? apiIdArr.join(",") : "";
+        }
+
         active.value++;
     }
 };
-const save = (callback: any) => {
-    if (!menuTreeRef.value) {
-        return;
-    }
-    const menuIdArr = menuTreeRef.value.getCheckedKeys(true);
-    const menuIds = menuIdArr.join(",");
-    if (!apiTreeRef.value) {
-        return;
-    }
-    const apiIdArr = apiTreeRef.value.getCheckedKeys(true);
-    const apiIds = apiIdArr.join(",");
-    const data = {
-        roleId: "",
-        menuIds,
-        apiIds
-    };
-    rolePermission(data).then(() => {
-        callback();
+const save = (done: any) => {
+    rolePermission({
+        roleId: role.id,
+        menuIds: menuIds.value,
+        apiIds: apiIds.value
+    }).then(() => {
+        ElMessage({
+            type: "success",
+            message: "角色授权成功"
+        });
+        done();
     });
 };
 defineExpose({

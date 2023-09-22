@@ -402,6 +402,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
             done();
         });
     } else {
+        row.id = undefined;
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",

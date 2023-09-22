@@ -69,16 +69,17 @@ const tableColumns = reactive<Array<IColumn>>([
         label: "序号"
     },
     {
+        width: "200",
         label: "角色编号",
-        prop: "roleId",
-        width: "200"
+        prop: "roleId"
     },
     {
+        width: "200",
         label: "角色名称",
-        prop: "roleName",
-        width: "200"
+        prop: "roleName"
     },
     {
+        width: "200",
         label: "所属部门",
         prop: "deptId",
         format(row: IRole) {
@@ -87,6 +88,15 @@ const tableColumns = reactive<Array<IColumn>>([
             );
             return dept ? dept.deptName : "";
         }
+    },
+    {
+        width: "200",
+        label: "创建时间",
+        prop: "createTime"
+    },
+    {
+        label: "备注",
+        prop: "remark"
     }
 ]);
 const handleDelete = (item: IRole, done: any) => {
@@ -212,6 +222,7 @@ const handleFormSubmit = (form: IRole, done: any) => {
             done();
         });
     } else {
+        row.id = undefined;
         addRole(row).then(() => {
             ElMessage({
                 type: "success",
