@@ -94,7 +94,7 @@ const searchFormItems = reactive<Array<IFormItem>>([
  */
 const handleBatchDelete = (data: any, done: any) => {
     const { ids } = data;
-    ElMessageBox.confirm("你真的删除选择的qq群吗？", "警告", {
+    ElMessageBox.confirm("你真的删除选择的订单吗？", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -102,7 +102,7 @@ const handleBatchDelete = (data: any, done: any) => {
         batchDeleteQQGroup(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "qq群删除成功"
+                message: "qq群订单删除成功"
             });
             done();
         });
@@ -119,7 +119,7 @@ const handleBatchExcute = (data: any, done: any) => {
         batchExcuteOrder(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "订单处理成功"
+                message: "qq群订单处理成功"
             });
             done();
         });
@@ -150,7 +150,7 @@ const tableToolbar = reactive<IToolbar>({
  * 操作栏
  */
 const handleDelete = (item: IQQGroup, done: any) => {
-    ElMessageBox.confirm(`你真的删除【${item.content}】的qq群吗？`, "警告", {
+    ElMessageBox.confirm(`你真的删除【${item.orderId}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -161,7 +161,7 @@ const handleDelete = (item: IQQGroup, done: any) => {
         deleteQQGroup(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "qq群删除成功"
+                message: "qq群订单删除成功"
             });
             done();
         });
@@ -179,7 +179,7 @@ const handleExcute = (item: IQQGroup, done: any) => {
         excuteOrder(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "订单处理成功"
+                message: "qq群订单处理成功"
             });
             done();
         });
