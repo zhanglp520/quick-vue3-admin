@@ -150,10 +150,10 @@ const clearSelection = () => {
         tabRef.value.clearSelection();
     }
 };
-const getRows = (data: string[]) => {
+const getRows = (data: number[]) => {
     const arr: IUser[] = [];
-    data.forEach((element: string) => {
-        const user = userList.find((x) => x.id?.toString() === element);
+    data.forEach((element: number) => {
+        const user = userList.find((x) => x.id === element);
         if (user) {
             arr.push(user);
         }

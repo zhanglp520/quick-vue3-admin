@@ -321,47 +321,47 @@ const tableColumns = reactive<Array<IColumn>>([
         label: "序号"
     },
     {
+        width: "100",
         label: "用户编号",
-        prop: "userId",
-        width: "100"
+        prop: "userId"
     },
     {
+        width: "100",
         label: "用户名",
-        prop: "userName",
-        width: "100"
+        prop: "userName"
     },
     {
+        width: "100",
         label: "姓名",
-        prop: "fullName",
-        width: "100"
+        prop: "fullName"
     },
     {
+        width: "120",
         label: "手机号",
-        prop: "phone",
-        width: "180"
+        prop: "phone"
     },
     {
-        label: "邮箱",
-        prop: "email",
-        width: "200"
-    },
-    {
-        label: "是否启用",
-        prop: "enabled",
         width: "200",
+        label: "邮箱",
+        prop: "email"
+    },
+    {
+        width: "60",
+        label: "启用",
+        prop: "enabled",
         format: (row: IUser) => {
             return row.enabled === 1 ? "启用" : "禁用";
         }
     },
     {
+        width: "180",
         label: "创建时间",
-        prop: "createTime",
-        width: "200"
+        prop: "createTime"
     },
     {
+        width: "150",
         label: "地址",
-        prop: "address",
-        width: "200"
+        prop: "address"
     },
     {
         label: "备注",
@@ -507,7 +507,6 @@ const formItems = reactive<Array<IFormItem>>([
         rules: [
             {
                 validator: validateFullName,
-
                 trigger: "blur"
             }
         ]
@@ -567,7 +566,6 @@ const handleFormSubmit = (form: IUser, done: any) => {
         });
     } else {
         row.id = undefined;
-        console.log("addUser", row);
         addUser(row).then(() => {
             ElMessage({
                 type: "success",
