@@ -58,7 +58,7 @@ const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add)
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add)
 });
 
 /**
@@ -85,8 +85,8 @@ const handleDelete = (item: IDictionary, done: any) => {
 const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenDetailButton: true,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete)
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
+    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete)
 });
 
 /**
@@ -225,6 +225,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IDictionary, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateDictionary", row);
         updateDictionary(row).then(() => {
             ElMessage({
                 type: "success",
@@ -234,6 +235,7 @@ const handleFormSubmit = (form: IDictionary, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addDictionary", row);
         addDictionary(row).then(() => {
             ElMessage({
                 type: "success",

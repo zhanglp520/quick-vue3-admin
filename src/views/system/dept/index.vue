@@ -58,7 +58,7 @@ const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add)
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add)
 });
 
 /**
@@ -85,7 +85,7 @@ const handleDelete = (item: IDept, done: any) => {
 const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenDetailButton: true,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit)
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit)
 });
 
 /**
@@ -235,6 +235,7 @@ const formItems = reactive<Array<IFormItem>>([
 const handleFormSubmit = (form: IDept, done: any) => {
     const row = { ...form };
     if (row.id) {
+        console.log("updateDept", row);
         updateDept(row).then(() => {
             ElMessage({
                 type: "success",
@@ -244,6 +245,7 @@ const handleFormSubmit = (form: IDept, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addDept", row);
         addDept(row).then(() => {
             ElMessage({
                 type: "success",

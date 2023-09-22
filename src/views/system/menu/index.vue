@@ -60,7 +60,7 @@ const tableToolbar = reactive<IToolbar>({
     hiddenImportButton: true,
     hiddenExportButton: true,
     hiddenPrintButton: true,
-    hiddenAddButton: validatePermission(permissionBtn.value?.add)
+    hiddenAddButton: !validatePermission(permissionBtn.value?.add)
 });
 
 /**
@@ -83,9 +83,9 @@ const handleDelete = (item: IMenu, done: any) => {
 };
 const tableActionbar = reactive<IActionbar>({
     width: 150,
-    hiddenEditButton: validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: validatePermission(permissionBtn.value?.detail)
+    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
+    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete),
+    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail)
 });
 
 /**
@@ -394,6 +394,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
     const row = { ...form };
     row.pId = form.pId ? form.pId : 0;
     if (row.id) {
+        console.log("updateMenu", row);
         updateMenu(row).then(() => {
             ElMessage({
                 type: "success",
@@ -403,6 +404,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addMenu", row);
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",

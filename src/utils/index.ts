@@ -185,7 +185,7 @@ export const toTuofeng = (str: string) => {
     });
 };
 export const validatePermission = (val: boolean | undefined) => {
-    if (val === undefined) {
+    if (val === true) {
         return true;
     }
     return false;

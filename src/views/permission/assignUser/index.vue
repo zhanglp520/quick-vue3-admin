@@ -81,7 +81,7 @@ const tableToolbar = reactive<IToolbar>({
             name: "分配用户",
             position: "left",
             type: "primary",
-            hidden: validatePermission(permissionBtn.value?.assignUser),
+            hidden: !validatePermission(permissionBtn.value?.assignUser),
             click() {
                 handleAssign();
             }
