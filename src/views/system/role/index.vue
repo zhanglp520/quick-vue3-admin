@@ -224,6 +224,7 @@ const handleFormSubmit = (form: IRole, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addRole", row);
         addRole(row).then(() => {
             ElMessage({
                 type: "success",

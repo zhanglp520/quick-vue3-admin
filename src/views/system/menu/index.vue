@@ -404,6 +404,7 @@ const handleFormSubmit = (form: IMenu, done: any) => {
         });
     } else {
         row.id = undefined;
+        console.log("addMenu", row);
         addMenu(row).then(() => {
             ElMessage({
                 type: "success",
