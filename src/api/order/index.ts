@@ -7,3 +7,4 @@ import { defaultVersion } from "../index";
 const parentModule = "/order";
 const apiUrl = `${defaultVersion}${parentModule}`;
 export const qqGroup = `${apiUrl}/qqGroups`;
+export const qqFrend = `${apiUrl}/qqFrends`;

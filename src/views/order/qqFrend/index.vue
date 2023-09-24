@@ -9,37 +9,31 @@ import {
     IActionbar,
     IToolbar
 } from "@ainiteam/quick-vue3-ui";
-import * as XLSX from "xlsx";
 
 /**导入项目文件 */
 import { validatePermission } from "@/utils";
-import { downloadExcel, exportExcel } from "@/utils/download";
-import { useAuthStore } from "@/store/modules/auth";
 import { useUserStore } from "@/store/modules/user";
 import {
-    exportUser,
-    getUserPageList,
-    addUser,
-    updateUser,
-    deleteUser,
-    batchDeleteUser,
-    resetUserPassword,
-    enableUser,
-    disableUser,
-    downloadFileStream
-} from "@/api/system/user";
-import { ISearchUser, IUser, IUserPermissionButton } from "@/types";
+    getQQFrendPageList,
+    addQQFrend,
+    updateQQFrend,
+    deleteQQFrend,
+    batchDeleteQQFrend,
+    excuteOrder,
+    batchExcuteOrder
+} from "@/api/order/qqFrend";
+import { ISearchQQFrend, IQQFrend, IQQFrendPermissionButton } from "@/types";
 
 /**
  * 属性
  */
-const loginStore = useAuthStore();
+
 const userStore = useUserStore();
 const loading = ref(false);
-const tableDataList = reactive<Array<IUser>>([]);
-const uploadRef = ref<HTMLElement | null>(null);
-const permissionBtn = computed<IUserPermissionButton>(() => {
-    return userStore.getPermissionBtns as IUserPermissionButton;
+const tableDataList = reactive<Array<IQQFrend>>([]);
+
+const permissionBtn = computed<IQQFrendPermissionButton>(() => {
+    return userStore.getPermissionBtns as IQQFrendPermissionButton;
 });
 
 /**
@@ -55,14 +49,38 @@ const page = reactive<IPage>({
 /**
  * 搜索
  */
-const searchForm = reactive<ISearchUser>({
-    keyword: ""
+const searchForm = reactive<ISearchQQFrend>({
+    orderId: "",
+    keyword: "",
+    content: "",
+    status: ""
 });
 const searchFormItems = reactive<Array<IFormItem>>([
     {
-        label: "",
+        label: "订单编号",
+        vModel: "orderId",
+        placeholder: "订单编号"
+    },
+    {
+        label: "关键字",
         vModel: "keyword",
-        placeholder: "用户名|手机号"
+        placeholder: "关键字"
+    },
+    {
+        label: "状态",
+        vModel: "status",
+        type: "select",
+        options: [
+            {
+                label: "未处理",
+                value: "0"
+            },
+            {
+                label: "已处理",
+                value: "1"
+            }
+        ],
+        placeholder: "状态"
     }
 ]);
 
@@ -71,122 +89,53 @@ const searchFormItems = reactive<Array<IFormItem>>([
  */
 const handleBatchDelete = (data: any, done: any) => {
     const { ids } = data;
-    ElMessageBox.confirm("你真的删除选择的用户吗？", "警告", {
+    ElMessageBox.confirm("你真的删除选择的订单吗？", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
     }).then(() => {
-        batchDeleteUser(ids).then(() => {
+        batchDeleteQQFrend(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功"
+                message: "qq群订单删除成功"
             });
             done();
         });
     });
 };
-const handleExport = () => {
-    exportUser().then((res) => {
-        downloadExcel(res, "用户列表");
+
+const handleBatchExcute = (data: any, done: any) => {
+    const { ids } = data;
+    ElMessageBox.confirm(`你真的处理选择的订单吗？`, "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+    }).then(() => {
+        batchExcuteOrder(ids).then(() => {
+            ElMessage({
+                type: "success",
+                message: "qq群订单处理成功"
+            });
+            done();
+        });
     });
 };
-const handlePrint = () => {
-    window.print();
-};
-const changeFile = (event: any) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = (e: any) => {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: "binary", cellDates: true });
-        const wsname = workbook.SheetNames[0];
-        const outdata = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
-        console.log(outdata, "outdata");
-    };
+const handleDetail = (item: IQQFrend, done: any) => {
+    const form = { ...item };
+    form.content = JSON.stringify(JSON.parse(form.content), null, 8);
+    done(form);
 };
 const tableToolbar = reactive<IToolbar>({
-    importButtonName: "导入（默认后端方式）",
-    exportButtonName: "导出（默认后端方式）",
-    hiddenBatchDeleteButton: !validatePermission(
-        permissionBtn.value?.batchDelete
-    ),
-    hiddenImportButton: !validatePermission(permissionBtn.value?.import),
-    hiddenExportButton: !validatePermission(permissionBtn.value?.export),
-    hiddenAddButton: !validatePermission(permissionBtn.value?.add),
-    hiddenPrintButton: !validatePermission(permissionBtn.value?.print),
-    position: "right",
+    hiddenImportButton: true,
+    hiddenExportButton: true,
+    hiddenPrintButton: true,
+    hiddenAddButton: true,
     btns: [
         {
-            name: "下载模板(浏览器下载方式)",
-            position: "left",
-            type: "warning",
-            hidden: !validatePermission(permissionBtn.value?.download),
-            click() {
-                window.location.href = `${
-                    import.meta.env.VITE_APP_BASE_URL
-                }/api/v2/downloads?filePath=templates/用户模板.xlsx`;
-            }
-        },
-        {
-            name: "下载模板(流文件方式)",
-            position: "left",
-            type: "success",
-            hidden: !validatePermission(permissionBtn.value?.download),
-            click() {
-                downloadFileStream("templates/用户模板.xlsx").then((res) => {
-                    downloadExcel(res, "用户导入模板");
-                });
-            }
-        },
-        {
-            name: "导入(前端方式)",
-            position: "left",
-            type: "warning",
-            hidden: !validatePermission(permissionBtn.value?.import),
-            click() {
-                const fileBtn = uploadRef.value as HTMLInputElement;
-                fileBtn.click();
-            }
-        },
-        {
-            name: "导出(前端方式)",
-            position: "left",
-            type: "danger",
-            hidden: !validatePermission(permissionBtn.value?.export),
-            click() {
-                // 导出的字段映射
-                const columns = [
-                    {
-                        label: "编号",
-                        value: "id"
-                    },
-                    {
-                        label: "用户编号",
-                        value: "userId"
-                    },
-                    {
-                        label: "用户名",
-                        value: "userName"
-                    },
-                    {
-                        label: "姓名",
-                        value: "fullName"
-                    },
-                    {
-                        label: "手机号",
-                        value: "phone"
-                    },
-                    {
-                        label: "邮箱",
-                        value: "email"
-                    },
-                    {
-                        label: "地址",
-                        value: "address"
-                    }
-                ];
-                exportExcel(tableDataList, "用户列表", columns);
+            name: "批量处理",
+            hidden: !validatePermission(permissionBtn.value.batchExcute),
+            click(data: any, done: any) {
+                handleBatchExcute(data, done);
             }
         }
     ]
@@ -195,8 +144,8 @@ const tableToolbar = reactive<IToolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的删除【${item.userName}】的用户吗？`, "警告", {
+const handleDelete = (item: IQQFrend, done: any) => {
+    ElMessageBox.confirm(`你真的删除【${item.orderId}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -204,39 +153,17 @@ const handleDelete = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        deleteUser(item.id).then(() => {
+        deleteQQFrend(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功"
+                message: "qq群订单删除成功"
             });
             done();
         });
     });
 };
-const handleResetPassword = (item: IUser, done: any) => {
-    ElMessageBox.confirm(
-        `你真的重置【${item.userName}】用户的密码吗？`,
-        "警告",
-        {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-        }
-    ).then(() => {
-        if (!item.id) {
-            return;
-        }
-        resetUserPassword(item.id).then(() => {
-            ElMessage({
-                type: "success",
-                message: "置用户密码重成功"
-            });
-            done();
-        });
-    });
-};
-const handleEnable = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的启用【${item.userName}】的用户吗？`, "警告", {
+const handleExcute = (item: IQQFrend, done: any) => {
+    ElMessageBox.confirm(`你真的处理【${item.orderId}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -244,64 +171,28 @@ const handleEnable = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        enableUser(item.id).then(() => {
+        excuteOrder(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户启用成功"
-            });
-            done();
-        });
-    });
-};
-const handleDisable = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的禁用【${item.userName}】的用户吗？`, "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-    }).then(() => {
-        if (!item.id) {
-            return;
-        }
-        disableUser(item.id).then(() => {
-            ElMessage({
-                type: "success",
-                message: "用户禁用成功"
+                message: "qq群订单处理成功"
             });
             done();
         });
     });
 };
 const tableActionbar = reactive<IActionbar>({
-    width: 300,
-    hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
-    hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail),
+    width: 200,
+    hiddenEditButton: true,
     btns: [
         {
-            name: "重置密码",
-            hidden: !validatePermission(permissionBtn.value?.resetPassword),
-            click(item: IUser, done: any) {
-                handleResetPassword(item, done);
-            }
-        },
-        {
-            name: "启用",
-            hidden: !validatePermission(permissionBtn.value?.enabled),
-            click(item: IUser, done: any) {
-                handleEnable(item, done);
+            name: "处理",
+            position: "left",
+            hidden: !validatePermission(permissionBtn.value.excute),
+            click(item: any, done: any) {
+                handleExcute(item, done);
             },
-            render(row: IUser) {
-                return row.enabled === 0;
-            }
-        },
-        {
-            name: "禁用",
-            hidden: !validatePermission(permissionBtn.value?.disabled),
-            click(item: IUser, done: any) {
-                handleDisable(item, done);
-            },
-            render(row: IUser) {
-                return row.enabled !== 0;
+            render(row: any) {
+                return !(row.status === 1);
             }
         }
     ]
@@ -313,60 +204,90 @@ const tableActionbar = reactive<IActionbar>({
 const tableColumns = reactive<Array<IColumn>>([
     {
         width: "50",
-        type: "selection"
+        type: "selection",
+        align: "center"
     },
     {
-        width: "60",
-        type: "index",
-        label: "序号"
+        label: "下单时间",
+        prop: "createTime",
+        width: "180",
+        align: "center"
     },
     {
-        label: "用户编号",
-        prop: "userId",
-        width: "100"
-    },
-    {
-        label: "用户名",
-        prop: "userName",
-        width: "100"
-    },
-    {
-        label: "姓名",
-        prop: "fullName",
-        width: "100"
-    },
-    {
-        label: "手机号",
-        prop: "phone",
-        width: "180"
-    },
-    {
-        label: "邮箱",
-        prop: "email",
-        width: "200"
-    },
-    {
-        label: "是否启用",
-        prop: "enabled",
-        width: "200",
-        format: (row: IUser) => {
-            return row.enabled === 1 ? "启用" : "禁用";
+        label: "状态",
+        prop: "status",
+        width: "100",
+        align: "center",
+        format: (row: IQQFrend) => {
+            return row.status === 1 ? "已处理" : "未处理";
         }
     },
     {
-        label: "创建时间",
-        prop: "createTime",
-        width: "200"
+        label: "编号",
+        prop: "id",
+        width: "100",
+        align: "center"
     },
     {
-        label: "地址",
-        prop: "address",
-        width: "200"
+        label: "订单编号",
+        prop: "orderId",
+        width: "200",
+        align: "center"
     },
     {
-        label: "备注",
-        prop: "remark"
+        label: "订单消息",
+        prop: "content",
+        width: "200",
+        align: "center",
+        format: (row: IQQFrend) => {
+            const obj = JSON.parse(row.content);
+            return obj && obj.raw_message;
+        }
+    },
+
+    {
+        label: "我的QQ",
+        prop: "content",
+        width: "200",
+        align: "center",
+        slot: true,
+        type: "link",
+        format: (row: IQQFrend) => {
+            const obj = JSON.parse(row.content);
+            return obj && obj.self_id;
+        }
+    },
+    {
+        label: "QQ号",
+        prop: "content",
+        width: "200",
+        align: "center",
+        slot: true,
+        type: "link",
+        format: (row: IQQFrend) => {
+            const obj = JSON.parse(row.content);
+            return obj && obj.sender && obj.sender.user_id;
+        }
+    },
+    {
+        label: "QQ昵称",
+        prop: "content",
+        width: "100",
+        align: "center",
+        format: (row: IQQFrend) => {
+            const obj = JSON.parse(row.content);
+            return obj && obj.sender && obj.sender.nickname;
+        }
     }
+    // {
+    //     label: "内容",
+    //     prop: "content",
+    //     width: "200"
+    // },
+    // {
+    //     label: "备注",
+    //     prop: "remark"
+    // }
 ]);
 
 /**
@@ -374,14 +295,14 @@ const tableColumns = reactive<Array<IColumn>>([
  */
 const loadData = (parmas: object) => {
     loading.value = true;
-    getUserPageList(parmas)
+    getQQFrendPageList(parmas)
         .then((res) => {
             loading.value = false;
-            const { data: userList, total } = res;
-            console.log("userList", userList);
-            if (userList) {
+            const { data: qqFrendList, total } = res;
+            console.log("qqFrendList", qqFrendList);
+            if (qqFrendList) {
                 tableDataList.length = 0;
-                tableDataList.push(...userList);
+                tableDataList.push(...qqFrendList);
             }
             page.total = total;
         })
@@ -394,231 +315,78 @@ const loadData = (parmas: object) => {
  * 表单
  */
 const dialogTitle = reactive({
-    add: "添加用户",
-    edit: "编辑用户",
-    detail: "用户详情"
+    add: "添加qq群",
+    edit: "编辑qq群",
+    detail: "qq群详情"
 });
-const validateUserId = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^YH_\d+$/;
-    if (!reg.test(value)) {
-        callback(new Error("用户编号必须是以YH_开头和数字组合"));
-    } else {
-        callback();
-    }
-};
-const validateUserName = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^[a-zA-Z0-9]{4,16}$/;
-    if (!reg.test(value)) {
-        callback(new Error("用户必须是4-16位的字母、数字"));
-    } else {
-        callback();
-    }
-};
-const validateFullName = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^[\u4e00-\u9fa5]{2,4}$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法姓名"));
-    } else {
-        callback();
-    }
-};
-const validatePhone = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg =
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法手机号"));
-    } else {
-        callback();
-    }
-};
-const validateEmail = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法邮箱"));
-    } else {
-        callback();
-    }
-};
-const formModel = reactive<IUser>({
+const formModel = reactive<IQQFrend>({
     id: undefined,
-    userId: "",
-    userName: "",
-    fullName: "",
-    phone: "",
-    email: "",
-    address: "",
+    orderId: "",
+    keyword: "",
+    content: "",
     remark: ""
 });
 const formItems = reactive<Array<IFormItem>>([
     {
-        label: "用户编号",
+        label: "订单编号",
         labelWidth: "80px",
-        vModel: "userId",
+        vModel: "orderId",
         editReadonly: true,
-        placeholder: "请输入用户编号",
-        prop: "userId",
+        placeholder: "订单编号",
+        prop: "orderId",
         rules: [
             {
                 required: true,
-                message: "请输入用户编号",
-                trigger: "blur"
-            },
-            {
-                validator: validateUserId,
+                message: "订单编号不能为空",
                 trigger: "blur"
             }
         ]
     },
     {
-        label: "用户名",
+        label: "内容",
         labelWidth: "80px",
-        vModel: "userName",
-        placeholder: "请输入用户名",
-        prop: "userName",
-        rules: [
-            {
-                required: true,
-                message: "请输入用户名",
-                trigger: "blur"
-            },
-            {
-                validator: validateUserName,
-                trigger: "blur"
-            }
-        ]
-    },
-    {
-        label: "姓名",
-        labelWidth: "80px",
-        vModel: "fullName",
-        placeholder: "请输入姓名",
-        prop: "fullName",
-        rules: [
-            {
-                validator: validateFullName,
-
-                trigger: "blur"
-            }
-        ]
-    },
-    {
-        label: "手机号",
-        labelWidth: "80px",
-        vModel: "phone",
-        placeholder: "请输入手机号",
-        prop: "phone",
-        rules: [
-            {
-                validator: validatePhone,
-                trigger: "blur"
-            }
-        ]
-    },
-    {
-        label: "邮箱",
-        labelWidth: "80px",
-        vModel: "email",
-        placeholder: "请输入邮箱",
-        prop: "email",
-        rules: [
-            {
-                validator: validateEmail,
-                trigger: "blur"
-            }
-        ]
-    },
-    {
-        label: "地址",
-        labelWidth: "80px",
-        vModel: "address",
-        placeholder: "请输入地址",
-        prop: "address"
-    },
-    {
-        label: "备注",
-        labelWidth: "80px",
-        vModel: "remark",
-        placeholder: "请输入备注",
+        vModel: "content",
+        placeholder: "内容",
         type: "textarea",
-        prop: "remark"
+        editHidden: true,
+        prop: "content",
+        rules: [
+            {
+                required: true,
+                message: "内容不能为空",
+                trigger: "blur"
+            }
+        ]
     }
+    // {
+    //     label: "备注",
+    //     labelWidth: "80px",
+    //     vModel: "remark",
+    //     placeholder: "备注",
+    //     type: "textarea"
+    // }
 ]);
-const handleFormSubmit = (form: IUser, done: any) => {
+const handleFormSubmit = (form: IQQFrend, done: any) => {
     const row = { ...form };
     if (row.id) {
-        console.log("updateUser", row);
-        updateUser(row).then(() => {
+        console.log("updateQQFrend", row);
+        updateQQFrend(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户修改成功"
+                message: "qq群修改成功"
             });
             done();
         });
     } else {
-        console.log("addUser", row);
-        addUser(row).then(() => {
+        console.log("addQQFrend", row);
+        addQQFrend(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户创建成功"
+                message: "qq群创建成功"
             });
             done();
         });
     }
-};
-
-/**
- * 导入
- */
-const dialogVisible = ref(false);
-const action = `${
-    import.meta.env.VITE_APP_BASE_URL
-}/api/v2/system/users/importUser`;
-const headers = reactive({
-    authorization: `Bearer ${loginStore.getAccessToken}`
-});
-const handleImport = () => {
-    // const handleImport = (done: any) => {
-    dialogVisible.value = true;
-};
-
-const handleSuccess = () => {
-    // const handleSuccess = (data: any) => {
-    // const {
-    //   response,
-    //   uploadFile,
-    //   uploadFiles
-    // }=data
-    ElMessage({
-        type: "success",
-        message: "导入用户成功."
-    });
-    dialogVisible.value = false;
-    loadData({
-        keyword: "",
-        current: 1,
-        size: 10
-    });
-};
-const handleError = () => {
-    ElMessage({
-        type: "success",
-        message: "导入用户失败."
-    });
-    dialogVisible.value = false;
-};
-const handleClose = () => {
-    dialogVisible.value = false;
 };
 </script>
 <template>
@@ -639,24 +407,6 @@ const handleClose = () => {
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-batch-delete="handleBatchDelete"
-        @on-import="handleImport"
-        @on-export="handleExport"
-        @on-print="handlePrint"
+        @on-detail="handleDetail"
     ></quick-crud>
-    <quick-upload
-        :dialog-visible="dialogVisible"
-        :action="action"
-        :headers="headers"
-        @on-success="handleSuccess"
-        @on-error="handleError"
-        @on-close="handleClose"
-    ></quick-upload>
-    <input
-        ref="uploadRef"
-        style="display: none"
-        type="file"
-        accept=".xls,.xlsx"
-        class="upload-file"
-        @change="changeFile($event)"
-    />
 </template>

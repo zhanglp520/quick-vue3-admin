@@ -2,11 +2,13 @@
 import { computed, onMounted, ref } from "vue";
 import * as echarts from "echarts";
 import { Tickets } from "@element-plus/icons-vue";
-import { getOrderStatistics } from "@/api/order/qqGroup";
+import { getQQGroupOrderStatistics } from "@/api/order/qqGroup";
+import { getQQFrendOrderStatistics } from "@/api/order/qqFrend";
 import { useTabStore } from "@/store/modules/tab";
 import { useUserStore } from "@/store/modules/user";
 import { ITab } from "@/types/tab";
 import { IMenu } from "@/types/menu";
+import { startSpeak } from "@/utils/speech";
 
 const tabStore = useTabStore();
 const userStore = useUserStore();
@@ -14,6 +16,8 @@ const userStore = useUserStore();
 const permissionMenuList = computed(() => userStore.getPermissionMenuList);
 
 const isOpen = ref(false);
+const dayCountTemp1 = ref(0);
+const dayCount1 = ref(0);
 const dayCountTemp = ref(0);
 const dayCount = ref(0);
 const yesterdayCount = ref(0);
@@ -125,7 +129,7 @@ const radarOption = {
     ]
 };
 const noticeMe = () => {
-    getOrderStatistics().then((res) => {
+    getQQGroupOrderStatistics().then((res) => {
         const { data: payload } = res;
         const {
             dayOrderNum,
@@ -141,7 +145,7 @@ const noticeMe = () => {
         dayData.value = day;
     });
     setInterval(() => {
-        getOrderStatistics().then((res) => {
+        getQQGroupOrderStatistics().then((res) => {
             const { data: payload } = res;
             const {
                 dayOrderNum,
@@ -171,6 +175,24 @@ const noticeMe = () => {
                 }
             }
         });
+        getQQFrendOrderStatistics().then((res) => {
+            const { data: payload } = res;
+            const { dayOrderNum } = payload;
+            dayCount1.value = dayOrderNum;
+            console.log(
+                "提醒条件，前面的数量大于后面的则会提醒",
+                dayCount1.value,
+                dayCountTemp1.value
+            );
+
+            if (dayCount1.value > 0 && dayCount1.value > dayCountTemp1.value) {
+                console.log("有新的qq好友消息，即将播放音乐");
+                dayCountTemp1.value = dayCount1.value;
+                if (isOpen.value) {
+                    startSpeak("你有一条新的qq好友消息，请前往查看");
+                }
+            }
+        });
     }, 1000 * 3);
 };
 const goOrder = () => {
@@ -186,6 +208,7 @@ const goOrder = () => {
         // tabStore.addTab(tab)
     }
 };
+
 onMounted(() => {
     noticeMe();
     const arr = ["myChart1", "myChart2", "myChart3", "myChart4"];
