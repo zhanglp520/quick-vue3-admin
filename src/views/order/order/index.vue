@@ -15,31 +15,31 @@ import * as XLSX from "xlsx";
 import { validatePermission } from "@/utils";
 import { downloadExcel, exportExcel } from "@/utils/download";
 import { useAuthStore } from "@/store/modules/auth";
-import { useUserStore } from "@/store/modules/user";
+import { useOrderStore } from "@/store/modules/order";
 import {
-    exportUser,
-    getUserPageList,
-    addUser,
-    updateUser,
-    deleteUser,
-    batchDeleteUser,
-    resetUserPassword,
-    enableUser,
-    disableUser,
+    exportOrder,
+    getOrderPageList,
+    addOrder,
+    updateOrder,
+    deleteOrder,
+    batchDeleteOrder,
+    resetOrderPassword,
+    enableOrder,
+    disableOrder,
     downloadFileStream
-} from "@/api/system/user";
-import { ISearchUser, IUser, IUserPermissionButton } from "@/types";
+} from "@/api/system/order";
+import { ISearchOrder, IOrder, IOrderPermissionButton } from "@/types";
 
 /**
  * 属性
  */
 const loginStore = useAuthStore();
-const userStore = useUserStore();
+const orderStore = useOrderStore();
 const loading = ref(false);
-const tableDataList = reactive<Array<IUser>>([]);
+const tableDataList = reactive<Array<IOrder>>([]);
 const uploadRef = ref<HTMLElement | null>(null);
-const permissionBtn = computed<IUserPermissionButton>(() => {
-    return userStore.getPermissionBtns as IUserPermissionButton;
+const permissionBtn = computed<IOrderPermissionButton>(() => {
+    return orderStore.getPermissionBtns as IOrderPermissionButton;
 });
 
 /**
@@ -55,14 +55,14 @@ const page = reactive<IPage>({
 /**
  * 搜索
  */
-const searchForm = reactive<ISearchUser>({
+const searchForm = reactive<ISearchOrder>({
     keyword: ""
 });
 const searchFormItems = reactive<Array<IFormItem>>([
     {
         label: "",
         vModel: "keyword",
-        placeholder: "用户名|手机号"
+        placeholder: "订单名|手机号"
     }
 ]);
 
@@ -71,23 +71,23 @@ const searchFormItems = reactive<Array<IFormItem>>([
  */
 const handleBatchDelete = (data: any, done: any) => {
     const { ids } = data;
-    ElMessageBox.confirm("你真的删除选择的用户吗？", "警告", {
+    ElMessageBox.confirm("你真的删除选择的订单吗？", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
     }).then(() => {
-        batchDeleteUser(ids).then(() => {
+        batchDeleteOrder(ids).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功"
+                message: "订单删除成功"
             });
             done();
         });
     });
 };
 const handleExport = () => {
-    exportUser().then((res) => {
-        downloadExcel(res, "用户列表");
+    exportOrder().then((res) => {
+        downloadExcel(res, "订单列表");
     });
 };
 const handlePrint = () => {
@@ -125,7 +125,7 @@ const tableToolbar = reactive<IToolbar>({
             click() {
                 window.location.href = `${
                     import.meta.env.VITE_APP_BASE_URL
-                }/api/v2/downloads?filePath=templates/用户模板.xlsx`;
+                }/api/v2/downloads?filePath=templates/订单模板.xlsx`;
             }
         },
         {
@@ -134,8 +134,8 @@ const tableToolbar = reactive<IToolbar>({
             type: "success",
             hidden: !validatePermission(permissionBtn.value?.download),
             click() {
-                downloadFileStream("templates/用户模板.xlsx").then((res) => {
-                    downloadExcel(res, "用户导入模板");
+                downloadFileStream("templates/订单模板.xlsx").then((res) => {
+                    downloadExcel(res, "订单导入模板");
                 });
             }
         },
@@ -162,12 +162,12 @@ const tableToolbar = reactive<IToolbar>({
                         value: "id"
                     },
                     {
-                        label: "用户编号",
-                        value: "userId"
+                        label: "订单编号",
+                        value: "orderId"
                     },
                     {
-                        label: "用户名",
-                        value: "userName"
+                        label: "订单名",
+                        value: "orderName"
                     },
                     {
                         label: "姓名",
@@ -186,7 +186,7 @@ const tableToolbar = reactive<IToolbar>({
                         value: "address"
                     }
                 ];
-                exportExcel(tableDataList, "用户列表", columns);
+                exportExcel(tableDataList, "订单列表", columns);
             }
         }
     ]
@@ -195,8 +195,8 @@ const tableToolbar = reactive<IToolbar>({
 /**
  * 操作栏
  */
-const handleDelete = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的删除【${item.userName}】的用户吗？`, "警告", {
+const handleDelete = (item: IOrder, done: any) => {
+    ElMessageBox.confirm(`你真的删除【${item.orderName}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -204,18 +204,18 @@ const handleDelete = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        deleteUser(item.id).then(() => {
+        deleteOrder(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户删除成功"
+                message: "订单删除成功"
             });
             done();
         });
     });
 };
-const handleResetPassword = (item: IUser, done: any) => {
+const handleResetPassword = (item: IOrder, done: any) => {
     ElMessageBox.confirm(
-        `你真的重置【${item.userName}】用户的密码吗？`,
+        `你真的重置【${item.orderName}】订单的密码吗？`,
         "警告",
         {
             confirmButtonText: "确定",
@@ -226,17 +226,17 @@ const handleResetPassword = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        resetUserPassword(item.id).then(() => {
+        resetOrderPassword(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "置用户密码重成功"
+                message: "置订单密码重成功"
             });
             done();
         });
     });
 };
-const handleEnable = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的启用【${item.userName}】的用户吗？`, "警告", {
+const handleEnable = (item: IOrder, done: any) => {
+    ElMessageBox.confirm(`你真的启用【${item.orderName}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -244,17 +244,17 @@ const handleEnable = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        enableUser(item.id).then(() => {
+        enableOrder(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户启用成功"
+                message: "订单启用成功"
             });
             done();
         });
     });
 };
-const handleDisable = (item: IUser, done: any) => {
-    ElMessageBox.confirm(`你真的禁用【${item.userName}】的用户吗？`, "警告", {
+const handleDisable = (item: IOrder, done: any) => {
+    ElMessageBox.confirm(`你真的禁用【${item.orderName}】的订单吗？`, "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -262,10 +262,10 @@ const handleDisable = (item: IUser, done: any) => {
         if (!item.id) {
             return;
         }
-        disableUser(item.id).then(() => {
+        disableOrder(item.id).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户禁用成功"
+                message: "订单禁用成功"
             });
             done();
         });
@@ -280,27 +280,27 @@ const tableActionbar = reactive<IActionbar>({
         {
             name: "重置密码",
             hidden: !validatePermission(permissionBtn.value?.resetPassword),
-            click(item: IUser, done: any) {
+            click(item: IOrder, done: any) {
                 handleResetPassword(item, done);
             }
         },
         {
             name: "启用",
             hidden: !validatePermission(permissionBtn.value?.enabled),
-            click(item: IUser, done: any) {
+            click(item: IOrder, done: any) {
                 handleEnable(item, done);
             },
-            render(row: IUser) {
+            render(row: IOrder) {
                 return row.enabled === 0;
             }
         },
         {
             name: "禁用",
             hidden: !validatePermission(permissionBtn.value?.disabled),
-            click(item: IUser, done: any) {
+            click(item: IOrder, done: any) {
                 handleDisable(item, done);
             },
-            render(row: IUser) {
+            render(row: IOrder) {
                 return row.enabled !== 0;
             }
         }
@@ -321,47 +321,47 @@ const tableColumns = reactive<Array<IColumn>>([
         label: "序号"
     },
     {
-        label: "用户编号",
-        prop: "userId",
-        width: "100"
+        width: "100",
+        label: "订单编号",
+        prop: "orderId"
     },
     {
-        label: "用户名",
-        prop: "userName",
-        width: "100"
+        width: "100",
+        label: "订单名",
+        prop: "orderName"
     },
     {
+        width: "100",
         label: "姓名",
-        prop: "fullName",
-        width: "100"
+        prop: "fullName"
     },
     {
+        width: "120",
         label: "手机号",
-        prop: "phone",
-        width: "180"
+        prop: "phone"
     },
     {
-        label: "邮箱",
-        prop: "email",
-        width: "200"
-    },
-    {
-        label: "是否启用",
-        prop: "enabled",
         width: "200",
-        format: (row: IUser) => {
+        label: "邮箱",
+        prop: "email"
+    },
+    {
+        width: "60",
+        label: "启用",
+        prop: "enabled",
+        format: (row: IOrder) => {
             return row.enabled === 1 ? "启用" : "禁用";
         }
     },
     {
+        width: "180",
         label: "创建时间",
-        prop: "createTime",
-        width: "200"
+        prop: "createTime"
     },
     {
+        width: "150",
         label: "地址",
-        prop: "address",
-        width: "200"
+        prop: "address"
     },
     {
         label: "备注",
@@ -374,14 +374,14 @@ const tableColumns = reactive<Array<IColumn>>([
  */
 const loadData = (parmas: object) => {
     loading.value = true;
-    getUserPageList(parmas)
+    getOrderPageList(parmas)
         .then((res) => {
             loading.value = false;
-            const { data: userList, total } = res;
-            console.log("userList", userList);
-            if (userList) {
+            const { data: orderList, total } = res;
+            console.log("orderList", orderList);
+            if (orderList) {
                 tableDataList.length = 0;
-                tableDataList.push(...userList);
+                tableDataList.push(...orderList);
             }
             page.total = total;
         })
@@ -394,24 +394,24 @@ const loadData = (parmas: object) => {
  * 表单
  */
 const dialogTitle = reactive({
-    add: "添加用户",
-    edit: "编辑用户",
-    detail: "用户详情"
+    add: "添加订单",
+    edit: "编辑订单",
+    detail: "订单详情"
 });
-const validateUserId = (rule: any, value: string, callback: any) => {
+const validateOrderId = (rule: any, value: string, callback: any) => {
     console.log("rule", rule);
     const reg = /^YH_\d+$/;
     if (!reg.test(value)) {
-        callback(new Error("用户编号必须是以YH_开头和数字组合"));
+        callback(new Error("订单编号必须是以YH_开头和数字组合"));
     } else {
         callback();
     }
 };
-const validateUserName = (rule: any, value: string, callback: any) => {
+const validateOrderName = (rule: any, value: string, callback: any) => {
     console.log("rule", rule);
     const reg = /^[a-zA-Z0-9]{4,16}$/;
     if (!reg.test(value)) {
-        callback(new Error("用户必须是4-16位的字母、数字"));
+        callback(new Error("订单必须是4-16位的字母、数字"));
     } else {
         callback();
     }
@@ -450,10 +450,10 @@ const validateEmail = (rule: any, value: string, callback: any) => {
         callback();
     }
 };
-const formModel = reactive<IUser>({
+const formModel = reactive<IOrder>({
     id: undefined,
-    userId: "",
-    userName: "",
+    orderId: "",
+    orderName: "",
     fullName: "",
     phone: "",
     email: "",
@@ -462,38 +462,38 @@ const formModel = reactive<IUser>({
 });
 const formItems = reactive<Array<IFormItem>>([
     {
-        label: "用户编号",
+        label: "订单编号",
         labelWidth: "80px",
-        vModel: "userId",
+        vModel: "orderId",
         editReadonly: true,
-        placeholder: "请输入用户编号",
-        prop: "userId",
+        placeholder: "请输入订单编号",
+        prop: "orderId",
         rules: [
             {
                 required: true,
-                message: "请输入用户编号",
+                message: "请输入订单编号",
                 trigger: "blur"
             },
             {
-                validator: validateUserId,
+                validator: validateOrderId,
                 trigger: "blur"
             }
         ]
     },
     {
-        label: "用户名",
+        label: "订单名",
         labelWidth: "80px",
-        vModel: "userName",
-        placeholder: "请输入用户名",
-        prop: "userName",
+        vModel: "orderName",
+        placeholder: "请输入订单名",
+        prop: "orderName",
         rules: [
             {
                 required: true,
-                message: "请输入用户名",
+                message: "请输入订单名",
                 trigger: "blur"
             },
             {
-                validator: validateUserName,
+                validator: validateOrderName,
                 trigger: "blur"
             }
         ]
@@ -507,7 +507,6 @@ const formItems = reactive<Array<IFormItem>>([
         rules: [
             {
                 validator: validateFullName,
-
                 trigger: "blur"
             }
         ]
@@ -554,23 +553,24 @@ const formItems = reactive<Array<IFormItem>>([
         prop: "remark"
     }
 ]);
-const handleFormSubmit = (form: IUser, done: any) => {
+const handleFormSubmit = (form: IOrder, done: any) => {
     const row = { ...form };
     if (row.id) {
-        console.log("updateUser", row);
-        updateUser(row).then(() => {
+        console.log("updateOrder", row);
+        updateOrder(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户修改成功"
+                message: "订单修改成功"
             });
             done();
         });
     } else {
-        console.log("addUser", row);
-        addUser(row).then(() => {
+        row.id = undefined;
+        console.log("addOrder", row);
+        addOrder(row).then(() => {
             ElMessage({
                 type: "success",
-                message: "用户创建成功"
+                message: "订单创建成功"
             });
             done();
         });
@@ -583,7 +583,7 @@ const handleFormSubmit = (form: IUser, done: any) => {
 const dialogVisible = ref(false);
 const action = `${
     import.meta.env.VITE_APP_BASE_URL
-}/api/v2/system/users/importUser`;
+}/api/v2/system/orders/importOrder`;
 const headers = reactive({
     authorization: `Bearer ${loginStore.getAccessToken}`
 });
@@ -601,7 +601,7 @@ const handleSuccess = () => {
     // }=data
     ElMessage({
         type: "success",
-        message: "导入用户成功."
+        message: "导入订单成功."
     });
     dialogVisible.value = false;
     loadData({
@@ -613,7 +613,7 @@ const handleSuccess = () => {
 const handleError = () => {
     ElMessage({
         type: "success",
-        message: "导入用户失败."
+        message: "导入订单失败."
     });
     dialogVisible.value = false;
 };

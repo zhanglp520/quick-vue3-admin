@@ -21,7 +21,7 @@ import {
     batchDeleteQQFrend,
     excuteOrder,
     batchExcuteOrder
-} from "@/api/order/qqFrend";
+} from "@/api/qq/qqFrend";
 import { ISearchQQFrend, IQQFrend, IQQFrendPermissionButton } from "@/types";
 
 /**

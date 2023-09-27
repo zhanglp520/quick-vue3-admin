@@ -22,7 +22,7 @@ import {
     batchDeleteQQGroup,
     excuteOrder,
     batchExcuteOrder
-} from "@/api/order/qqGroup";
+} from "@/api/qq/qqGroup";
 import { ISearchQQGroup, IQQGroup, IQQGroupPermissionButton } from "@/types";
 import { getDictionaryList } from "@/api/system/dictionary";
 

@@ -2,8 +2,8 @@
 import { computed, onMounted, ref } from "vue";
 import * as echarts from "echarts";
 import { Tickets } from "@element-plus/icons-vue";
-import { getQQGroupOrderStatistics } from "@/api/order/qqGroup";
-import { getQQFrendOrderStatistics } from "@/api/order/qqFrend";
+import { getQQGroupOrderStatistics } from "@/api/qq/qqGroup";
+import { getQQFrendOrderStatistics } from "@/api/qq/qqFrend";
 import { useTabStore } from "@/store/modules/tab";
 import { useUserStore } from "@/store/modules/user";
 import { ITab } from "@/types/tab";
@@ -169,7 +169,9 @@ const noticeMe = () => {
                 console.log("有新的订单，即将播放音乐");
                 dayCountTemp.value = dayCount.value;
                 if (isOpen.value) {
-                    const myAudio = document.getElementById("audio");
+                    const myAudio = document.getElementById(
+                        "audio"
+                    ) as HTMLMediaElement;
                     myAudio.muted = false;
                     myAudio.play();
                 }
@@ -186,10 +188,10 @@ const noticeMe = () => {
             );
 
             if (dayCount1.value > 0 && dayCount1.value > dayCountTemp1.value) {
-                console.log("有新的qq好友消息，即将播放音乐");
+                console.log("有新的qq好友消息,即将播放音乐");
                 dayCountTemp1.value = dayCount1.value;
                 if (isOpen.value) {
-                    startSpeak("你有一条新的qq好友消息，请前往查看");
+                    startSpeak("你有一条新的qq好友消息,请前往查看");
                 }
             }
         });
@@ -213,7 +215,7 @@ onMounted(() => {
     noticeMe();
     const arr = ["myChart1", "myChart2", "myChart3", "myChart4"];
     arr.forEach((element) => {
-        let options;
+        let options: any;
         if (element === "myChart1") {
             options = barOption;
         } else if (element === "myChart2") {
