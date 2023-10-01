@@ -50,7 +50,7 @@ const permissionBtn = computed<IDictionaryPermissionButton>(() => {
  */
 const handleAdd = (item: IDictionary, done: any) => {
     const form = { ...item };
-    form.dicTypeId = Number(currentTreeData.value.id);
+    form.dicTypeId = currentTreeData.value.id;
     done(form);
 };
 const tableToolbar = reactive<IToolbar>({
