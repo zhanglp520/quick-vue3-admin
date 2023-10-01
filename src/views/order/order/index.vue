@@ -1,45 +1,48 @@
 <script lang="ts" setup>
 /**导入第三方库 */
 import { ref, reactive, computed } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox, UploadProps } from "element-plus";
 import {
     IColumn,
     IFormItem,
     IPage,
     IActionbar,
-    IToolbar
+    IToolbar,
+    IOptions
 } from "@ainiteam/quick-vue3-ui";
-import * as XLSX from "xlsx";
 
 /**导入项目文件 */
-import { validatePermission } from "@/utils";
-import { downloadExcel, exportExcel } from "@/utils/download";
+import { selectFormat, validatePermission } from "@/utils";
 import { useAuthStore } from "@/store/modules/auth";
-import { useOrderStore } from "@/store/modules/order";
+import { useUserStore } from "@/store/modules/user";
 import {
-    exportOrder,
     getOrderPageList,
     addOrder,
     updateOrder,
     deleteOrder,
     batchDeleteOrder,
-    resetOrderPassword,
-    enableOrder,
-    disableOrder,
-    downloadFileStream
-} from "@/api/system/order";
-import { ISearchOrder, IOrder, IOrderPermissionButton } from "@/types";
+    getDictionaryList
+} from "@/api/order/order";
+import {
+    ISearchOrder,
+    IOrder,
+    IOrderPermissionButton,
+    IDictionary
+} from "@/types";
 
 /**
  * 属性
  */
 const loginStore = useAuthStore();
-const orderStore = useOrderStore();
+const userStore = useUserStore();
 const loading = ref(false);
 const tableDataList = reactive<Array<IOrder>>([]);
-const uploadRef = ref<HTMLElement | null>(null);
+
+const orderDic = reactive<Array<IDictionary>>([]);
+const orderStatusSelectData = reactive<Array<IOptions>>([]);
+
 const permissionBtn = computed<IOrderPermissionButton>(() => {
-    return orderStore.getPermissionBtns as IOrderPermissionButton;
+    return userStore.getPermissionBtns as IOrderPermissionButton;
 });
 
 /**
@@ -85,111 +88,15 @@ const handleBatchDelete = (data: any, done: any) => {
         });
     });
 };
-const handleExport = () => {
-    exportOrder().then((res) => {
-        downloadExcel(res, "订单列表");
-    });
-};
-const handlePrint = () => {
-    window.print();
-};
-const changeFile = (event: any) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = (e: any) => {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: "binary", cellDates: true });
-        const wsname = workbook.SheetNames[0];
-        const outdata = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
-        console.log(outdata, "outdata");
-    };
-};
+
 const tableToolbar = reactive<IToolbar>({
-    importButtonName: "导入（默认后端方式）",
-    exportButtonName: "导出（默认后端方式）",
     hiddenBatchDeleteButton: !validatePermission(
         permissionBtn.value?.batchDelete
     ),
     hiddenImportButton: !validatePermission(permissionBtn.value?.import),
     hiddenExportButton: !validatePermission(permissionBtn.value?.export),
     hiddenAddButton: !validatePermission(permissionBtn.value?.add),
-    hiddenPrintButton: !validatePermission(permissionBtn.value?.print),
-    position: "right",
-    btns: [
-        {
-            name: "下载模板(浏览器下载方式)",
-            position: "left",
-            type: "warning",
-            hidden: !validatePermission(permissionBtn.value?.download),
-            click() {
-                window.location.href = `${
-                    import.meta.env.VITE_APP_BASE_URL
-                }/api/v2/downloads?filePath=templates/订单模板.xlsx`;
-            }
-        },
-        {
-            name: "下载模板(流文件方式)",
-            position: "left",
-            type: "success",
-            hidden: !validatePermission(permissionBtn.value?.download),
-            click() {
-                downloadFileStream("templates/订单模板.xlsx").then((res) => {
-                    downloadExcel(res, "订单导入模板");
-                });
-            }
-        },
-        {
-            name: "导入(前端方式)",
-            position: "left",
-            type: "warning",
-            hidden: !validatePermission(permissionBtn.value?.import),
-            click() {
-                const fileBtn = uploadRef.value as HTMLInputElement;
-                fileBtn.click();
-            }
-        },
-        {
-            name: "导出(前端方式)",
-            position: "left",
-            type: "danger",
-            hidden: !validatePermission(permissionBtn.value?.export),
-            click() {
-                // 导出的字段映射
-                const columns = [
-                    {
-                        label: "编号",
-                        value: "id"
-                    },
-                    {
-                        label: "订单编号",
-                        value: "orderId"
-                    },
-                    {
-                        label: "订单名",
-                        value: "orderName"
-                    },
-                    {
-                        label: "姓名",
-                        value: "fullName"
-                    },
-                    {
-                        label: "手机号",
-                        value: "phone"
-                    },
-                    {
-                        label: "邮箱",
-                        value: "email"
-                    },
-                    {
-                        label: "地址",
-                        value: "address"
-                    }
-                ];
-                exportExcel(tableDataList, "订单列表", columns);
-            }
-        }
-    ]
+    hiddenPrintButton: !validatePermission(permissionBtn.value?.print)
 });
 
 /**
@@ -213,98 +120,12 @@ const handleDelete = (item: IOrder, done: any) => {
         });
     });
 };
-const handleResetPassword = (item: IOrder, done: any) => {
-    ElMessageBox.confirm(
-        `你真的重置【${item.orderName}】订单的密码吗？`,
-        "警告",
-        {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-        }
-    ).then(() => {
-        if (!item.id) {
-            return;
-        }
-        resetOrderPassword(item.id).then(() => {
-            ElMessage({
-                type: "success",
-                message: "置订单密码重成功"
-            });
-            done();
-        });
-    });
-};
-const handleEnable = (item: IOrder, done: any) => {
-    ElMessageBox.confirm(`你真的启用【${item.orderName}】的订单吗？`, "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-    }).then(() => {
-        if (!item.id) {
-            return;
-        }
-        enableOrder(item.id).then(() => {
-            ElMessage({
-                type: "success",
-                message: "订单启用成功"
-            });
-            done();
-        });
-    });
-};
-const handleDisable = (item: IOrder, done: any) => {
-    ElMessageBox.confirm(`你真的禁用【${item.orderName}】的订单吗？`, "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-    }).then(() => {
-        if (!item.id) {
-            return;
-        }
-        disableOrder(item.id).then(() => {
-            ElMessage({
-                type: "success",
-                message: "订单禁用成功"
-            });
-            done();
-        });
-    });
-};
+
 const tableActionbar = reactive<IActionbar>({
     width: 300,
     hiddenEditButton: !validatePermission(permissionBtn.value?.edit),
     hiddenDeleteButton: !validatePermission(permissionBtn.value?.delete),
-    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail),
-    btns: [
-        {
-            name: "重置密码",
-            hidden: !validatePermission(permissionBtn.value?.resetPassword),
-            click(item: IOrder, done: any) {
-                handleResetPassword(item, done);
-            }
-        },
-        {
-            name: "启用",
-            hidden: !validatePermission(permissionBtn.value?.enabled),
-            click(item: IOrder, done: any) {
-                handleEnable(item, done);
-            },
-            render(row: IOrder) {
-                return row.enabled === 0;
-            }
-        },
-        {
-            name: "禁用",
-            hidden: !validatePermission(permissionBtn.value?.disabled),
-            click(item: IOrder, done: any) {
-                handleDisable(item, done);
-            },
-            render(row: IOrder) {
-                return row.enabled !== 0;
-            }
-        }
-    ]
+    hiddenDetailButton: !validatePermission(permissionBtn.value?.detail)
 });
 
 /**
@@ -322,35 +143,39 @@ const tableColumns = reactive<Array<IColumn>>([
     },
     {
         width: "100",
+        label: "状态",
+        prop: "status",
+        format: (row: IOrder) => {
+            const obj = orderDic.find((x: IDictionary) => x.id === row.status);
+            return obj && obj.dicName;
+        }
+    },
+    {
+        width: "150",
         label: "订单编号",
         prop: "orderId"
     },
     {
         width: "100",
-        label: "订单名",
+        label: "订单名称",
         prop: "orderName"
     },
-    {
-        width: "100",
-        label: "姓名",
-        prop: "fullName"
-    },
-    {
-        width: "120",
-        label: "手机号",
-        prop: "phone"
-    },
+    // {
+    //     width: "100",
+    //     label: "订单图片",
+    //     prop: "imgUrl"
+    // },
+    // {
+    //     width: "120",
+    //     label: "订单介绍",
+    //     prop: "intro"
+    // },
     {
         width: "200",
-        label: "邮箱",
-        prop: "email"
-    },
-    {
-        width: "60",
-        label: "启用",
-        prop: "enabled",
+        label: "交付时间",
+        prop: "deliveryTime",
         format: (row: IOrder) => {
-            return row.enabled === 1 ? "启用" : "禁用";
+            return row.deliveryTime;
         }
     },
     {
@@ -359,20 +184,33 @@ const tableColumns = reactive<Array<IColumn>>([
         prop: "createTime"
     },
     {
-        width: "150",
-        label: "地址",
-        prop: "address"
-    },
-    {
         label: "备注",
         prop: "remark"
     }
 ]);
 
 /**
+ * 加载订单下拉框数据
+ */
+const loadSelectData = () => {
+    getDictionaryList("orderStatus").then((res) => {
+        const { data: orderStatusList } = res;
+        orderDic.length = 0;
+        orderDic.push(...orderStatusList);
+        const data1 = selectFormat(orderStatusList, {
+            value: "id",
+            label: "dicName"
+        });
+        orderStatusSelectData.length = 0;
+        orderStatusSelectData.push(...data1);
+    });
+};
+
+/**
  * 加载数据
  */
 const loadData = (parmas: object) => {
+    loadSelectData();
     loading.value = true;
     getOrderPageList(parmas)
         .then((res) => {
@@ -398,68 +236,35 @@ const dialogTitle = reactive({
     edit: "编辑订单",
     detail: "订单详情"
 });
-const validateOrderId = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^YH_\d+$/;
-    if (!reg.test(value)) {
-        callback(new Error("订单编号必须是以YH_开头和数字组合"));
-    } else {
-        callback();
-    }
-};
-const validateOrderName = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^[a-zA-Z0-9]{4,16}$/;
-    if (!reg.test(value)) {
-        callback(new Error("订单必须是4-16位的字母、数字"));
-    } else {
-        callback();
-    }
-};
-const validateFullName = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^[\u4e00-\u9fa5]{2,4}$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法姓名"));
-    } else {
-        callback();
-    }
-};
-const validatePhone = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg =
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法手机号"));
-    } else {
-        callback();
-    }
-};
-const validateEmail = (rule: any, value: string, callback: any) => {
-    console.log("rule", rule);
-    const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    if (!value) {
-        callback();
-    } else if (!reg.test(value)) {
-        callback(new Error("非法邮箱"));
-    } else {
-        callback();
-    }
-};
+
 const formModel = reactive<IOrder>({
     id: undefined,
     orderId: "",
-    orderName: "",
-    fullName: "",
-    phone: "",
-    email: "",
-    address: "",
-    remark: ""
+    orderName: "ssss",
+    intro: "fffff",
+    imgUrl: "ddd",
+    deliveryTime: "",
+    remark: "sss"
 });
+const handleAvatarSuccess: UploadProps["onSuccess"] = (
+    response,
+    uploadFile
+) => {
+    console.log("handleAvatarSuccess", response);
+    formModel.imgUrl = URL.createObjectURL(uploadFile.raw!);
+};
+
+const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
+    if (rawFile.type !== "image/jpeg") {
+        ElMessage.error("Avatar picture must be JPG format!");
+        return false;
+    }
+    if (rawFile.size / 1024 / 1024 > 2) {
+        ElMessage.error("Avatar picture size can not exceed 2MB!");
+        return false;
+    }
+    return true;
+};
 const formItems = reactive<Array<IFormItem>>([
     {
         label: "订单编号",
@@ -468,81 +273,83 @@ const formItems = reactive<Array<IFormItem>>([
         editReadonly: true,
         placeholder: "请输入订单编号",
         prop: "orderId",
-        rules: [
-            {
-                required: true,
-                message: "请输入订单编号",
-                trigger: "blur"
-            },
-            {
-                validator: validateOrderId,
-                trigger: "blur"
-            }
-        ]
+        addHidden: true,
+        editDisabled: true
     },
     {
-        label: "订单名",
+        label: "订单名称",
         labelWidth: "80px",
         vModel: "orderName",
-        placeholder: "请输入订单名",
+        placeholder: "请输入订单名称",
         prop: "orderName",
         rules: [
             {
                 required: true,
-                message: "请输入订单名",
-                trigger: "blur"
-            },
-            {
-                validator: validateOrderName,
+                message: "请输入订单名称",
                 trigger: "blur"
             }
         ]
     },
     {
-        label: "姓名",
+        label: "简介",
         labelWidth: "80px",
-        vModel: "fullName",
-        placeholder: "请输入姓名",
-        prop: "fullName",
+        vModel: "intro",
+        placeholder: "请输入简介",
+        prop: "intro",
+        type: "textarea",
         rules: [
             {
-                validator: validateFullName,
+                required: true,
+                message: "请输入简介",
                 trigger: "blur"
             }
         ]
     },
     {
-        label: "手机号",
+        label: "图片",
         labelWidth: "80px",
-        vModel: "phone",
-        placeholder: "请输入手机号",
-        prop: "phone",
+        vModel: "imgUrl",
+        // placeholder: "请输入姓名",
+        prop: "imgUrl",
+        type: "avatar",
+        actionUrl: `${
+            import.meta.env.VITE_APP_BASE_URL
+        }/api/v2/uploads/uploadFile`,
+        headers: {
+            authorization: `Bearer ${loginStore.getAccessToken}`
+        },
+        success: handleAvatarSuccess,
+        beforeUpload: beforeAvatarUpload,
         rules: [
             {
-                validator: validatePhone,
-                trigger: "blur"
+                required: true,
+                message: "请选择订单图片",
+                trigger: "change"
             }
         ]
     },
     {
-        label: "邮箱",
+        label: "订单状态",
         labelWidth: "80px",
-        vModel: "email",
-        placeholder: "请输入邮箱",
-        prop: "email",
+        vModel: "status",
+        placeholder: "请选择订单状态",
+        type: "select",
+        options: orderStatusSelectData
+    },
+    {
+        label: "交付时间",
+        labelWidth: "80px",
+        vModel: "deliveryTime",
+        placeholders: ["请选择交付时间", "请选择交付时间"],
+        prop: "deliveryTime",
+        type: "datetimerange",
         rules: [
             {
-                validator: validateEmail,
-                trigger: "blur"
+                required: true,
+                message: "请选择交付时间",
+                trigger: "change"
             }
         ]
-    },
-    {
-        label: "地址",
-        labelWidth: "80px",
-        vModel: "address",
-        placeholder: "请输入地址",
-        prop: "address"
     },
     {
         label: "备注",
@@ -566,6 +373,8 @@ const handleFormSubmit = (form: IOrder, done: any) => {
         });
     } else {
         row.id = undefined;
+        row.orderId = undefined;
+        row.deliveryTime = form.deliveryTime ? form.deliveryTime[0] : "";
         console.log("addOrder", row);
         addOrder(row).then(() => {
             ElMessage({
@@ -575,50 +384,6 @@ const handleFormSubmit = (form: IOrder, done: any) => {
             done();
         });
     }
-};
-
-/**
- * 导入
- */
-const dialogVisible = ref(false);
-const action = `${
-    import.meta.env.VITE_APP_BASE_URL
-}/api/v2/system/orders/importOrder`;
-const headers = reactive({
-    authorization: `Bearer ${loginStore.getAccessToken}`
-});
-const handleImport = () => {
-    // const handleImport = (done: any) => {
-    dialogVisible.value = true;
-};
-
-const handleSuccess = () => {
-    // const handleSuccess = (data: any) => {
-    // const {
-    //   response,
-    //   uploadFile,
-    //   uploadFiles
-    // }=data
-    ElMessage({
-        type: "success",
-        message: "导入订单成功."
-    });
-    dialogVisible.value = false;
-    loadData({
-        keyword: "",
-        current: 1,
-        size: 10
-    });
-};
-const handleError = () => {
-    ElMessage({
-        type: "success",
-        message: "导入订单失败."
-    });
-    dialogVisible.value = false;
-};
-const handleClose = () => {
-    dialogVisible.value = false;
 };
 </script>
 <template>
@@ -639,24 +404,5 @@ const handleClose = () => {
         @on-form-submit="handleFormSubmit"
         @on-delete="handleDelete"
         @on-batch-delete="handleBatchDelete"
-        @on-import="handleImport"
-        @on-export="handleExport"
-        @on-print="handlePrint"
     ></quick-crud>
-    <quick-upload
-        :dialog-visible="dialogVisible"
-        :action="action"
-        :headers="headers"
-        @on-success="handleSuccess"
-        @on-error="handleError"
-        @on-close="handleClose"
-    ></quick-upload>
-    <input
-        ref="uploadRef"
-        style="display: none"
-        type="file"
-        accept=".xls,.xlsx"
-        class="upload-file"
-        @change="changeFile($event)"
-    />
 </template>
